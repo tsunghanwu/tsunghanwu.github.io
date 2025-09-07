@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tsung-Han Wu | Data & Modeling Specialist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #020617; /* slate-950 */
+            --bg-medium: #1e293b; /* slate-800 */
+            --primary: #22d3ee; /* cyan-400 */
+            --accent: #06b6d4; /* cyan-500 */
+            --text-light: #e2e8f0; /* slate-200 */
+            --text-dark: #9ca3af; /* slate-400 */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+        }
+        .font-mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+        .glass-effect {
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .section-grid-bg {
+             background-image:
+                linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px);
+            background-size: 3rem 3rem;
+            background-position: center center;
+        }
+        .skill-card {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background-color: var(--bg-medium);
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            border: 1px solid #334155; /* slate-700 */
+            font-family: 'Roboto Mono', monospace;
+            transition: all 0.2s ease-in-out;
+            cursor: default;
+        }
+        .skill-card:hover {
+            transform: translateY(-3px);
+            background-color: #334155; /* slate-700 */
+            box-shadow: 0 4px 10px rgba(34, 211, 238, 0.2);
+        }
+        #hero-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 0;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body class="bg-slate-950">
+    <div id="hero-animation"></div>
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-effect">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold font-mono tracking-tighter text-cyan-400">&lt;Tsung-Han Wu /&gt;</a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="hover:text-cyan-400 transition-colors duration-300">About</a>
+                <a href="#experience" class="hover:text-cyan-400 transition-colors duration-300">Experience</a>
+                <a href="#skills" class="hover:text-cyan-400 transition-colors duration-300">Skills</a>
+                <a href="#contact" class="bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold py-2 px-4 rounded-lg transition-all duration-300">Contact</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#about" class="block py-2 hover:text-cyan-400">About</a>
+            <a href="#experience" class="block py-2 hover:text-cyan-400">Experience</a>
+            <a href="#skills" class="block py-2 hover:text-cyan-400">Skills</a>
+            <a href="#contact" class="block mt-2 bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold py-2 px-4 rounded-lg text-center">Contact</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 relative z-10">
+
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center pt-24 md:pt-0">
+            <div class="w-full md:w-3/4 lg:w-2/3">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
+                    Hi, I'm <span class="text-cyan-400">Tsung-Han Wu</span>.
+                </h1>
+                <p class="mt-4 text-xl md:text-2xl text-slate-300">
+                    I build bridges between semiconductor processes and data-driven insights using TCAD, advanced modeling, and machine learning.
+                </p>
+                <p class="mt-6 font-mono text-slate-400">// TCAD | Process Modeling | Machine Learning | DTCO</p>
+                <div class="mt-8 flex gap-4 flex-wrap">
+                    <a href="#experience" class="bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-sitemap mr-2"></i> View My Experience
+                    </a>
+                    <a href="your-resume-link.pdf" target="_blank" class="border border-slate-600 hover:bg-slate-800 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300">
+                       <i class="fas fa-download mr-2"></i> Download CV
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-24 section-grid-bg">
+            <h2 class="text-4xl font-bold text-center mb-12">
+                <span class="font-mono text-cyan-400">&lt;</span>About Me<span class="font-mono text-cyan-400">/&gt;</span>
+            </h2>
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/3 flex justify-center">
+                    <div class="w-64 h-64 md:w-80 md:h-80 relative group">
+                        <svg class="absolute inset-0 w-full h-full text-cyan-500 opacity-50 group-hover:opacity-75 transition-opacity" viewBox="0 0 100 100">
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:var(--accent);stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:var(--primary);stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M50 0 L100 25 L100 75 L50 100 L0 75 L0 25 Z" stroke="url(#grad1)" stroke-width="2" fill="none"></path>
+                            <path d="M0 25 L100 75" stroke="currentColor" stroke-width="0.5"></path>
+                            <path d="M0 75 L100 25" stroke="currentColor" stroke-width="0.5"></path>
+                            <path d="M50 0 L50 100" stroke="currentColor" stroke-width="0.5"></path>
+                            <path d="M25 12.5 L75 12.5 L75 87.5 L25 87.5 Z" stroke="currentColor" stroke-width="1" fill="none"></path>
+                        </svg>
+                         <img src="https://placehold.co/400x400/0f0b1a/FFFFFF?text=THW" alt="Tsung-Han Wu" class="rounded-full w-full h-full object-cover relative z-10 p-8 transform group-hover:scale-105 transition-transform">
+                    </div>
+                </div>
+                <div class="w-full md:w-2/3 text-lg text-slate-300">
+                    <p class="mb-4">
+                        Hello! I'm an accomplished Staff Applications Engineer at Synopsys with extensive experience in the semiconductor industry. My passion lies in bridging the gap between process technology and design through advanced TCAD applications and machine learning.
+                    </p>
+                    <p class="mb-4">
+                        My expertise involves developing and deploying TCAD applications for process modeling, flow emulation, and Design-Technology Co-Optimization (DTCO). At Lam Research, I successfully improved wafer-to-wafer etch depth variation by over 30% using regression-based ML models and developed multiple in-spec plasma etching processes for FinFET fabrication.
+                    </p>
+                    <p>
+                        I am proficient in automating complex workflows using Python and TCL, modeling nano-scale plasma etching, and performing parasitic extraction. I thrive on partnering with R&D teams to validate cutting-edge features and providing expert technical support to ensure customer success.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-24">
+            <h2 class="text-4xl font-bold text-center mb-16">
+                <span class="font-mono text-cyan-400">&lt;</span>Experience<span class="font-mono text-cyan-400">/&gt;</span>
+            </h2>
+            <div class="max-w-3xl mx-auto">
+                <div class="relative border-l-2 border-slate-700">
+                    <!-- Experience Item 1 -->
+                    <div class="mb-12 ml-8 pl-4">
+                        <div class="absolute w-4 h-4 bg-cyan-500 rounded-full mt-1.5 -left-2 border-2 border-slate-800"></div>
+                        <time class="mb-1 text-sm font-mono leading-none text-slate-500">Jun 2020 - Present</time>
+                        <h3 class="text-xl font-semibold text-white">Staff Applications Engineer</h3>
+                        <p class="mb-4 text-base font-normal text-slate-400">Synopsys Inc. | Hsinchu County, Taiwan</p>
+                        <ul class="list-disc list-inside text-slate-300 space-y-2 marker:text-cyan-400">
+                            <li>Develop and optimize TCAD applications for process technology modeling, ML integration, and DTCO.</li>
+                            <li>Implement multi-level flow automation using Python and TCL.</li>
+                            <li>Partner with R&D to develop, verify, and validate cutting-edge features.</li>
+                            <li>Provide expertise in technical support to ensure regional customer success.</li>
+                        </ul>
+                    </div>
+                    <!-- Experience Item 2 -->
+                    <div class="mb-12 ml-8 pl-4">
+                        <div class="absolute w-4 h-4 bg-cyan-500 rounded-full mt-1.5 -left-2 border-2 border-slate-800"></div>
+                        <time class="mb-1 text-sm font-mono leading-none text-slate-500">Jan 2019 - Jun 2020</time>
+                        <h3 class="text-xl font-semibold text-white">Senior Process Analytics Engineer</h3>
+                        <p class="mb-4 text-base font-normal text-slate-400">Lam Research | Hsinchu City, Taiwan</p>
+                        <ul class="list-disc list-inside text-slate-300 space-y-2 marker:text-cyan-400">
+                            <li>Delivered smart manufacturing solutions, improving wafer-to-wafer etch depth variation by >30%.</li>
+                            <li>Trained, optimized, and deployed regression-based machine learning models to production tools (MLOps).</li>
+                            <li>Performed data processing (ETL) and statistical analysis with metrology and production data.</li>
+                        </ul>
+                    </div>
+                     <!-- Experience Item 3 -->
+                    <div class="ml-8 pl-4">
+                        <div class="absolute w-4 h-4 bg-cyan-500 rounded-full mt-1.5 -left-2 border-2 border-slate-800"></div>
+                        <time class="mb-1 text-sm font-mono leading-none text-slate-500">Apr 2015 - Dec 2018</time>
+                        <h3 class="text-xl font-semibold text-white">Senior Process Engineer</h3>
+                        <p class="mb-4 text-base font-normal text-slate-400">Lam Research | Hsinchu City, Taiwan</p>
+                        <ul class="list-disc list-inside text-slate-300 space-y-2 marker:text-cyan-400">
+                            <li>Collaborated with a key customer's R&D team on FEOL FinFET fabrication process development.</li>
+                            <li>Developed multiple in-spec plasma etching processes, securing 3 generations of critical applications.</li>
+                            <li>Improved process non-uniformity by 40-50% for multiple SADP applications.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-24 section-grid-bg">
+            <h2 class="text-4xl font-bold text-center mb-16">
+                <span class="font-mono text-cyan-400">&lt;</span>Skills<span class="font-mono text-cyan-400">/&gt;</span>
+            </h2>
+            <div class="max-w-6xl mx-auto space-y-16">
+                <!-- Machine Learning & Data Science -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-center mb-8 text-cyan-400 font-mono">Machine Learning & Data Science</h3>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <div class="skill-card">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#EE4C2C" d="M11.53 22.5c0 0-1.22-4.26-1.22-7.12 0-2.85 2.22-6.09 2.22-6.09s2.22 3.24 2.22 6.09c0 2.86-1.22 7.12-1.22 7.12h-2zm.21-21c1.84 0 3.35 1.52 3.35 3.36s-1.5 3.37-3.35 3.37-3.35-1.52-3.35-3.37S9.9 1.5 11.74 1.5zm6.75 4.88c1.84 0 3.35 1.52 3.35 3.37s-1.5 3.37-3.35 3.37-3.35-1.52-3.35-3.37 1.5-3.37 3.35-3.37zM4.98 6.38c1.84 0 3.35 1.52 3.35 3.37S6.82 13.12 4.98 13.12s-3.35-1.52-3.35-3.37 1.5-3.37 3.35-3.37z"/></svg>
+                            <span>PyTorch</span>
+                        </div>
+                        <div class="skill-card">
+                            <svg class="w-6 h-6" fill="#F47F24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m13.23,19.34l-6.4,3.7v-7.39l6.4-3.71ZM14.77,19.34V12l6.4-3.7v7.39Zm-1.54-9.33l-6.4-3.71 6.4-3.7 6.4,3.7ZM6.83,21.19l6.4,3.71v.65l-6.4-3.71V21.19Zm7.94,4.36v-.65l6.4-3.7v.65Zm-14.77-5.02L6.4,24v-11L0,9.33Zm21.2,5.02L24,18V9.33L17.6,13Z"/></svg>
+                            <span>TensorFlow</span>
+                        </div>
+                        <div class="skill-card"><i class="fas fa-brain text-cyan-400"></i><span>Machine Learning</span></div>
+                        <div class="skill-card"><i class="fas fa-chart-pie text-yellow-400"></i><span>Data Science</span></div>
+                        <div class="skill-card">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.625 3.375L9.375 9L14.625 14.625L20.25 9L14.625 3.375Z" fill="#F7931E"></path><path d="M3.75 9.375L9 14.625L14.625 9.375L9.375 3.75L3.75 9.375Z" fill="#34A853"></path><path d="M9.375 15L3.75 20.625L9.375 20.25L15 14.625L9.375 15Z" fill="#4285F4"></path></svg>
+                            <span>Scikit-Learn</span>
+                        </div>
+                        <div class="skill-card"><i class="fas fa-database text-slate-400"></i><span>SQL</span></div>
+                        <div class="skill-card"><i class="fas fa-chart-bar text-yellow-400"></i><span>JMP</span></div>
+                    </div>
+                </div>
+                <!-- Semiconductor & Process Engineering -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-center mb-8 text-cyan-400 font-mono">Semiconductor & Process Engineering</h3>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <div class="skill-card"><i class="fas fa-microchip text-green-500"></i><span>TCAD</span></div>
+                        <div class="skill-card"><i class="fas fa-cogs text-indigo-400"></i><span>Process Sim</span></div>
+                        <div class="skill-card"><i class="fas fa-dice text-red-400"></i><span>Monte Carlo</span></div>
+                        <div class="skill-card"><i class="fas fa-draw-polygon text-amber-400"></i><span>FEA</span></div>
+                        <div class="skill-card"><i class="fas fa-industry text-gray-400"></i><span>Process Dev</span></div>
+                        <div class="skill-card"><i class="fas fa-vial text-lime-400"></i><span>DOE</span></div>
+                        <div class="skill-card"><i class="fas fa-chart-line text-cyan-400"></i><span>SPC</span></div>
+                        <div class="skill-card"><i class="fas fa-bolt text-yellow-500"></i><span>Plasma Etching</span></div>
+                        <div class="skill-card"><i class="fas fa-atom text-cyan-400"></i><span>Materials Science</span></div>
+                    </div>
+                </div>
+                <!-- Software & Tools -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-center mb-8 text-cyan-400 font-mono">Software & Tools</h3>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <div class="skill-card"><i class="fab fa-python text-blue-500"></i><span>Python</span></div>
+                        <div class="skill-card"><i class="fas fa-code text-gray-300"></i><span>Tcl</span></div>
+                        <div class="skill-card"><i class="fab fa-git-alt text-orange-500"></i><span>Git</span></div>
+                        <div class="skill-card"><i class="fab fa-linux text-white"></i><span>Linux</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 text-center">
+             <h2 class="text-4xl font-bold text-center mb-4">
+                <span class="font-mono text-cyan-400">&lt;</span>Get In Touch<span class="font-mono text-cyan-400">/&gt;</span>
+            </h2>
+            <p class="max-w-2xl mx-auto text-lg text-slate-300 mb-8">
+                I'm currently open to new opportunities and collaborations. Feel free to reach out if you have a project in mind, want to connect, or just want to say hi!
+            </p>
+            <div class="relative inline-block">
+                 <a href="mailto:your.email@example.com" id="email-link" class="bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold py-4 px-8 rounded-lg transition-all duration-300 text-xl font-mono transform hover:scale-105">
+                   your.email@example.com
+                </a>
+                 <button id="copy-email" class="absolute -right-12 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-lg p-2" title="Copy email">
+                     <i class="far fa-copy"></i>
+                 </button>
+                 <div id="copy-message" class="absolute top-full mt-2 text-sm text-green-400 opacity-0 transition-opacity">Copied!</div>
+            </div>
+            <div class="mt-12 flex justify-center gap-8 text-3xl">
+                <a href="https://github.com/your-username" target="_blank" class="text-slate-400 hover:text-cyan-400 transform hover:scale-125 transition-transform"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/your-username" target="_blank" class="text-slate-400 hover:text-cyan-400 transform hover:scale-125 transition-transform"><i class="fab fa-linkedin"></i></a>
+                <a href="https://twitter.com/your-username" target="_blank" class="text-slate-400 hover:text-cyan-400 transform hover:scale-125 transition-transform"><i class="fab fa-twitter"></i></a>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-6">
+        <div class="container mx-auto text-center text-slate-500">
+            <p class="font-mono">Designed & Built by Tsung-Han Wu &copy; <span id="year"></span></p>
+        </div>
+    </footer>
+
+    <script>
+        // --- 3D Hero Animation ---
+        let scene, camera, renderer, particles;
+        let mouseX = 0, mouseY = 0;
+        const container = document.getElementById('hero-animation');
+
+        function init3D() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+
+            const particleCount = 5000;
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount; i++) {
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos((Math.random() * 2) - 1);
+                const radius = 2.5 + Math.random() * 0.5;
+                
+                positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+                positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+                positions[i * 3 + 2] = radius * Math.cos(phi);
+            }
+            
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            
+            const material = new THREE.PointsMaterial({ 
+                color: 0x22d3ee, // --primary (cyan-400)
+                size: 0.015 
+            });
+            
+            particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            animate3D();
+        }
+
+        function animate3D() {
+            requestAnimationFrame(animate3D);
+
+            particles.rotation.y += 0.0005 + (mouseX * 0.0005);
+            particles.rotation.x += 0.0005 + (mouseY * 0.0005);
+            
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onMouseMove(event) {
+            mouseX = (event.clientX - window.innerWidth / 2) / 1000;
+            mouseY = (event.clientY - window.innerHeight / 2) / 1000;
+        }
+
+        window.addEventListener('resize', onWindowResize, false);
+        document.addEventListener('mousemove', onMouseMove, false);
+        init3D();
+
+
+        // --- Other Scripts ---
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('bg-opacity-90');
+            } else {
+                header.classList.remove('bg-opacity-90');
+            }
+        });
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Email copy functionality
+        const copyButton = document.getElementById('copy-email');
+        const emailLink = document.getElementById('email-link');
+        const copyMessage = document.getElementById('copy-message');
+
+        copyButton.addEventListener('click', () => {
+            const email = emailLink.textContent.trim();
+            const tempInput = document.createElement('input');
+            document.body.appendChild(tempInput);
+            tempInput.value = email;
+            tempInput.select();
+            
+            try {
+                let successful = document.execCommand('copy');
+                if (successful) {
+                    copyMessage.classList.remove('opacity-0');
+                    setTimeout(() => {
+                        copyMessage.classList.add('opacity-0');
+                    }, 2000);
+                }
+            } catch (err) { console.error('Fallback: Oops, unable to copy', err); }
+            
+            document.body.removeChild(tempInput);
+        });
+    </script>
+</body>
+</html>
