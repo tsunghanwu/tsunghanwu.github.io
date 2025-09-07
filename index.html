@@ -227,11 +227,17 @@
                             </svg>
                             <span>TensorFlow</span>
                         </div>
-                        <div class="skill-card"><i class="fas fa-brain text-cyan-400"></i><span>Machine Learning</span></div>
-                        <div class="skill-card"><i class="fas fa-chart-pie text-yellow-400"></i><span>Data Science</span></div>
                         <div class="skill-card">
                             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.625 3.375L9.375 9L14.625 14.625L20.25 9L14.625 3.375Z" fill="#F7931E"></path><path d="M3.75 9.375L9 14.625L14.625 9.375L9.375 3.75L3.75 9.375Z" fill="#34A853"></path><path d="M9.375 15L3.75 20.625L9.375 20.25L15 14.625L9.375 15Z" fill="#4285F4"></path></svg>
                             <span>Scikit-Learn</span>
+                        </div>
+                        <div class="skill-card">
+                           <i class="fas fa-table text-purple-400"></i>
+                           <span>Pandas</span>
+                        </div>
+                        <div class="skill-card">
+                            <svg class="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3zM21 9H3M21 15H3M9 3v18M15 3v18"></path></svg>
+                            <span>Numpy</span>
                         </div>
                         <div class="skill-card"><i class="fas fa-database text-slate-400"></i><span>SQL</span></div>
                         <div class="skill-card"><i class="fas fa-chart-bar text-yellow-400"></i><span>JMP</span></div>
@@ -242,14 +248,12 @@
                     <h3 class="text-2xl font-semibold text-center mb-8 text-cyan-400 font-mono">Semiconductor & Process Engineering</h3>
                     <div class="flex flex-wrap justify-center gap-4">
                         <div class="skill-card"><i class="fas fa-microchip text-green-500"></i><span>TCAD</span></div>
-                        <div class="skill-card"><i class="fas fa-cogs text-indigo-400"></i><span>Process Sim</span></div>
+                        <div class="skill-card"><i class="fas fa-shapes text-purple-400"></i><span>Level Set Method</span></div>
+                        <div class="skill-card"><i class="fas fa-draw-polygon text-amber-400"></i><span>Finite Element Analysis</span></div>
                         <div class="skill-card"><i class="fas fa-dice text-red-400"></i><span>Monte Carlo</span></div>
-                        <div class="skill-card"><i class="fas fa-draw-polygon text-amber-400"></i><span>FEA</span></div>
-                        <div class="skill-card"><i class="fas fa-industry text-gray-400"></i><span>Process Dev</span></div>
                         <div class="skill-card"><i class="fas fa-vial text-lime-400"></i><span>DOE</span></div>
                         <div class="skill-card"><i class="fas fa-chart-line text-cyan-400"></i><span>SPC</span></div>
                         <div class="skill-card"><i class="fas fa-bolt text-yellow-500"></i><span>Plasma Etching</span></div>
-                        <div class="skill-card"><i class="fas fa-atom text-cyan-400"></i><span>Materials Science</span></div>
                     </div>
                 </div>
                 <!-- Software & Tools -->
@@ -260,6 +264,7 @@
                         <div class="skill-card"><i class="fas fa-code text-gray-300"></i><span>Tcl</span></div>
                         <div class="skill-card"><i class="fab fa-git-alt text-orange-500"></i><span>Git</span></div>
                         <div class="skill-card"><i class="fab fa-linux text-white"></i><span>Linux</span></div>
+                        <div class="skill-card"><i class="fas fa-project-diagram text-sky-400"></i><span>Dask</span></div>
                     </div>
                 </div>
             </div>
@@ -270,21 +275,12 @@
              <h2 class="text-4xl font-bold text-center mb-4">
                 <span class="font-mono text-cyan-400"># </span>Get In Touch<span class="font-mono text-cyan-400"></span>
             </h2>
-            <p class="max-w-2xl mx-auto text-lg text-slate-300 mb-8"></p>
-            <div class="relative inline-block">
-                 <a href="mailto:your.email@example.com" id="email-link" class="bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold py-4 px-8 rounded-lg transition-all duration-300 text-xl font-mono transform hover:scale-105">
-                   your.email@example.com
-                </a>
-                 <button id="copy-email" class="absolute -right-12 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-lg p-2" title="Copy email">
-                     <i class="far fa-copy"></i>
-                 </button>
-                 <div id="copy-message" class="absolute top-full mt-2 text-sm text-green-400 opacity-0 transition-opacity">Copied!</div>
-            </div>
-            <div class="mt-12 flex justify-center gap-8 text-3xl">
-                <a href="https://github.com/your-username" target="_blank" class="text-slate-400 hover:text-cyan-400 transform hover:scale-125 transition-transform"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/your-username" target="_blank" class="text-slate-400 hover:text-cyan-400 transform hover:scale-125 transition-transform"><i class="fab fa-linkedin"></i></a>
-                <a href="https://twitter.com/your-username" target="_blank" class="text-slate-400 hover:text-cyan-400 transform hover:scale-125 transition-transform"><i class="fab fa-twitter"></i></a>
-            </div>
+            <p class="max-w-2xl mx-auto text-lg text-slate-300 mb-8">
+                Feel free to connect with me on LinkedIn!
+            </p>
+            <a href="https://linkedin.com/in/tsung-han-wu/" target="_blank" class="inline-block bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold py-4 px-8 rounded-lg transition-all duration-300 text-xl font-mono transform hover:scale-105">
+                <i class="fab fa-linkedin mr-3"></i> Connect on LinkedIn
+            </a>
         </section>
 
     </main>
@@ -388,31 +384,6 @@
         });
 
         document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Email copy functionality
-        const copyButton = document.getElementById('copy-email');
-        const emailLink = document.getElementById('email-link');
-        const copyMessage = document.getElementById('copy-message');
-
-        copyButton.addEventListener('click', () => {
-            const email = emailLink.textContent.trim();
-            const tempInput = document.createElement('input');
-            document.body.appendChild(tempInput);
-            tempInput.value = email;
-            tempInput.select();
-            
-            try {
-                let successful = document.execCommand('copy');
-                if (successful) {
-                    copyMessage.classList.remove('opacity-0');
-                    setTimeout(() => {
-                        copyMessage.classList.add('opacity-0');
-                    }, 2000);
-                }
-            } catch (err) { console.error('Fallback: Oops, unable to copy', err); }
-            
-            document.body.removeChild(tempInput);
-        });
     </script>
 </body>
 </html>
