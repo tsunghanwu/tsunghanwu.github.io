@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tsung-Han Wu | Process Modeling Specialist</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,13 +57,14 @@
             background-color: #334155; /* slate-700 */
             box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2);
         }
-        #particles-js {
+        #bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1; /* Make it the absolute background */
+            opacity: 0.3;
         }
         main, header, footer {
              position: relative; /* Ensure content stays on top */
@@ -72,7 +73,7 @@
     </style>
 </head>
 <body>
-    <div id="particles-js"></div>
+    <canvas id="bg-canvas"></canvas>
 
     <!-- Header -->
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-effect">
@@ -296,73 +297,67 @@
     </footer>
 
     <script>
-        // --- Constellation Animation ---
-        particlesJS('particles-js', {
-          "particles": {
-            "number": {
-              "value": 150,
-              "density": {
-                "enable": true,
-                "value_area": 800
-              }
-            },
-            "color": {
-              "value": "#0ea5e9"
-            },
-            "shape": {
-              "type": "circle"
-            },
-            "opacity": {
-              "value": 0.2,
-              "random": true
-            },
-            "size": {
-              "value": 2,
-              "random": false
-            },
-            "line_linked": {
-              "enable": true,
-              "distance": 500,
-              "color": "#0ea5e9",
-              "opacity": 0.15,
-              "width": 1
-            },
-            "move": {
-              "enable": true,
-              "speed": 1,
-              "direction": "none",
-              "random": false,
-              "straight": false,
-              "out_mode": "out",
-              "bounce": false
-            }
-          },
-          "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-              "onhover": {
-                "enable": true,
-                "mode": "repulse"
-              },
-              "onclick": {
-                "enable": true,
-                "mode": "push"
-              },
-              "resize": true
-            },
-            "modes": {
-              "repulse": {
-                "distance": 100,
-                "duration": 0.4
-              },
-              "push": {
-                "particles_nb": 4
-              }
-            }
-          },
-          "retina_detect": true
+        // --- 3D Wireframe Terrain Animation ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.querySelector('#bg-canvas'),
         });
 
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        
+        camera.position.setZ(10);
+        camera.position.setY(8);
+        camera.rotation.x = -0.6; // Steeper angle for a better top-down view
+
+        // Increased plane size and vertex density for more detail
+        const geometry = new THREE.PlaneGeometry(60, 60, 50, 50);
+        // Changed color to a silicon-like grey
+        const material = new THREE.MeshBasicMaterial({ color: 0x9ca3af, wireframe: true });
+        const plane = new THREE.Mesh(geometry, material);
+
+        plane.rotation.x = -Math.PI / 2;
+        scene.add(plane);
+
+        const clock = new THREE.Clock();
+
+        function animate() {
+            const t = clock.getElapsedTime();
+            const positions = plane.geometry.attributes.position;
+
+            for (let i = 0; i < positions.count; i++) {
+                const x = positions.getX(i);
+                const y = positions.getY(i);
+
+                // Layer 1: Broad, slow-moving topographical features
+                const z1 = 1.0 * Math.sin(x / 8 + t * 0.1) * Math.cos(y / 8 + t * 0.05);
+                
+                // Layer 2: Medium frequency, faster waves for texture
+                const z2 = 0.4 * Math.sin(x / 3 + t * 0.2) * Math.cos(y / 4 + t * 0.1);
+                
+                // Layer 3: High frequency, "etching detail"
+                const z3 = 0.2 * Math.sin(x * 4.0 + t * 0.4) * Math.cos(y * 4.0 + t * 0.4);
+
+                // Etching effect: The overall depth increases over time with an ease-in effect
+                const etchFactor = 1.0 + Math.tanh(0.025*t) * 4.0; 
+
+                const z = (z1 + z2 + z3) * etchFactor;
+                positions.setZ(i, z);
+            }
+            positions.needsUpdate = true;
+
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
 
         // --- Other Scripts ---
         // Mobile menu toggle
