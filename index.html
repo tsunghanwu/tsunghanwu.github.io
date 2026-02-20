@@ -4,97 +4,135 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tsung-Han Wu | Process Modeling Specialist</title>
+    <meta name="description" content="Tsung-Han Wu - Staff Engineer specializing in semiconductor process modeling, applied ML, and data science.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tsunghanwu.github.io/">
+    <meta property="og:title" content="Tsung-Han Wu | Process Modeling Specialist">
+    <meta property="og:description" content="Staff Engineer specializing in semiconductor process modeling, applied ML, and data science.">
+    <meta property="og:image" content="https://tsunghanwu.github.io/MyAvatar.jpg">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg-dark: #020617; /* slate-950 */
-            --bg-medium: #1e293b; /* slate-800 */
-            --primary: #0ea5e9; /* sky-500 */
-            --accent: #0284c7; /* sky-600 */
-            --text-light: #e2e8f0; /* slate-200 */
-            --text-dark: #9ca3af; /* slate-400 */
+            --bg-dark: #020617;
+            --bg-medium: #0f172a;
+            --primary: #0ea5e9;
+            --accent: #38bdf8;
+            --text-light: #f1f5f9;
+            --text-muted: #94a3b8;
         }
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-light);
+            overflow-x: hidden;
         }
-        .font-mono {
-            font-family: 'Roboto Mono', monospace;
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .glass-effect {
-            background: rgba(17, 24, 39, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        .glass-card:hover {
+            border-color: rgba(14, 165, 233, 0.4);
+            box-shadow: 0 0 30px rgba(14, 165, 233, 0.1);
+            transform: translateY(-4px);
         }
-        .section-grid-bg {
-             background-image:
-                linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
-            background-size: 3rem 3rem;
-            background-position: center center;
+
+        .text-gradient {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .skill-card {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            background-color: var(--bg-medium);
-            padding: 0.75rem 1.25rem;
-            border-radius: 0.5rem;
-            border: 1px solid #334155; /* slate-700 */
-            font-family: 'Roboto Mono', monospace;
-            transition: all 0.2s ease-in-out;
-            cursor: default;
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .skill-card:hover {
-            transform: translateY(-3px);
-            background-color: #334155; /* slate-700 */
-            box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2);
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
+
         #bg-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Make it the absolute background */
-            opacity: 0.3;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.35;
         }
-        main, header, footer {
-             position: relative; /* Ensure content stays on top */
-             z-index: 1;
+
+        .scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            z-index: 100;
+            width: 0%;
+        }
+
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .experience-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+        }
+        .experience-item.active .experience-details {
+            max-height: 1000px;
+            transition: max-height 1s ease-in-out;
+            margin-top: 1.5rem;
+        }
+        .chevron-icon {
+            transition: transform 0.3s ease;
+        }
+        .experience-item.active .chevron-icon {
+            transform: rotate(180deg);
         }
     </style>
 </head>
 <body>
+    <div class="scroll-progress" id="scroll-bar"></div>
     <canvas id="bg-canvas"></canvas>
 
     <!-- Header -->
-    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-effect">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold font-mono tracking-tighter text-sky-400"># My Personal Page</a>
-            <nav class="hidden md:flex space-x-8 items-center">
-                <a href="#about" class="hover:text-sky-400 transition-colors duration-300">About</a>
-                <a href="#experience" class="hover:text-sky-400 transition-colors duration-300">Experience</a>
-                <a href="#skills" class="hover:text-sky-400 transition-colors duration-300">Skills</a>
-                <a href="#contact" class="bg-sky-500 hover:bg-sky-600 text-slate-900 font-bold py-2 px-4 rounded-lg transition-all duration-300">Contact</a>
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b border-transparent">
+        <div class="container mx-auto px-6 py-5 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold font-mono tracking-tighter text-sky-400 flex items-center gap-2">
+                <span class="w-2 h-2 bg-sky-500 rounded-full animate-pulse"></span>
+                tsunghanwu.io
+            </a>
+            <nav class="hidden md:flex space-x-12 items-center text-xs font-bold tracking-[0.2em]">
+                <a href="#about" class="nav-link text-slate-400 hover:text-white transition-colors">ABOUT</a>
+                <a href="#experience" class="nav-link text-slate-400 hover:text-white transition-colors">EXPERIENCE</a>
+                <a href="#skills" class="nav-link text-slate-400 hover:text-white transition-colors">SKILLS</a>
+                <a href="#contact" class="px-6 py-2 glass-card hover:bg-sky-500 hover:text-slate-950 hover:border-transparent rounded-full transition-all duration-300">CONNECT</a>
             </nav>
-            <button id="mobile-menu-button" class="md:hidden text-2xl">
+            <button id="mobile-menu-button" class="md:hidden text-2xl" aria-label="Toggle Menu">
                 <i class="fas fa-bars"></i>
             </button>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
-            <a href="#about" class="block py-2 hover:text-sky-400">About</a>
-            <a href="#experience" class="block py-2 hover:text-sky-400">Experience</a>
-            <a href="#skills" class="block py-2 hover:text-sky-400">Skills</a>
-            <a href="#contact" class="block mt-2 bg-sky-500 hover:bg-sky-600 text-slate-900 font-bold py-2 px-4 rounded-lg text-center">Contact</a>
         </div>
     </header>
 
@@ -102,107 +140,175 @@
 
         <!-- Hero Section -->
         <section id="home" class="min-h-screen flex items-center pt-24 md:pt-0">
-            <div class="w-full md:w-3/4 lg:w-2/3">
-                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
-                    Hi, I'm <span class="text-sky-400">Tsung-Han Wu</span>
+            <div class="max-w-5xl">
+                <div class="inline-flex items-center px-3 py-1 mb-8 rounded-full glass-card border-sky-500/20 text-sky-400 text-[10px] font-bold tracking-[0.2em] font-mono">
+                    <span class="mr-2">⚡</span> MY DIGITAL BUSINESS CARD
+                </div>
+                <h1 class="text-6xl md:text-9xl font-bold leading-[0.9] tracking-tighter mb-10">
+                    <span class="text-gradient">Tsung-Han Wu</span>
                 </h1>
-                <p class="mt-4 text-xl md:text-2xl text-slate-300">
-                    Bridging semiconductor processes and model-driven insights
+                <p class="text-xl md:text-2xl text-slate-400 max-w-2xl leading-relaxed mb-6">
+                    Bridging processes technology and model-driven insights
                 </p>
-                <p class="mt-6 font-mono text-slate-400">Staff Engineer | Process Modeling and ML | Silicon Technology Solutions</p>
-                <div class="mt-8 flex gap-4 flex-wrap">
-                    <a href="#experience" class="bg-sky-500 hover:bg-sky-600 text-slate-900 font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105">
-                        <i class="fas fa-sitemap mr-2"></i> View My Experience
+                <p class="font-mono text-slate-500 mb-12 uppercase tracking-widest text-sm">Staff Engineer | Process Modeling and ML | Silicon Technology Solutions</p>
+                <div class="flex gap-8 items-center">
+                    <a href="#experience" class="px-10 py-5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-2xl transition-all shadow-2xl shadow-sky-500/20 transform hover:scale-105">
+                        View Experience
                     </a>
-                    <!--
-                    <a href="your-resume-link.pdf" target="_blank" class="border border-slate-600 hover:bg-slate-800 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300">
-                       <i class="fas fa-download mr-2"></i> Download CV
+                    <a href="#contact" class="group flex items-center gap-3 text-slate-300 hover:text-sky-400 transition-colors font-bold tracking-wide">
+                        Get in touch <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-2"></i>
                     </a>
-                    -->
                 </div>
             </div>
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-24 section-grid-bg">
-            <h2 class="text-4xl font-bold text-center mb-12">
-                <span class="font-mono text-sky-400"># </span>About Me<span class="font-mono text-sky-400"></span>
-            </h2>
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="w-full md:w-1/3 flex justify-center">
-                    <div class="w-64 h-64 md:w-80 md:h-80 relative group">
-                        <svg class="absolute inset-0 w-full h-full text-sky-500 opacity-50 group-hover:opacity-75 transition-opacity" viewBox="0 0 100 100">
-                            <defs>
-                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:var(--accent);stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:var(--primary);stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <path d="M50 0 L100 25 L100 75 L50 100 L0 75 L0 25 Z" stroke="url(#grad1)" stroke-width="2" fill="none"></path>
-                            <path d="M0 25 L100 75" stroke="currentColor" stroke-width="0.5"></path>
-                            <path d="M0 75 L100 25" stroke="currentColor" stroke-width="0.5"></path>
-                            <path d="M50 0 L50 100" stroke="currentColor" stroke-width="0.5"></path>
-                            <path d="M25 12.5 L75 12.5 L75 87.5 L25 87.5 Z" stroke="currentColor" stroke-width="1" fill="none"></path>
-                        </svg>
-                         <img src="MyAvatar.jpg" alt="Tsung-Han Wu" class="rounded-full w-full h-full object-cover relative z-10 p-8 transform group-hover:scale-105 transition-transform">
+        <section id="about" class="py-40 reveal">
+            <div class="grid md:grid-cols-2 gap-24 items-center">
+                <div class="relative">
+                    <div class="w-full aspect-square rounded-3xl glass-card overflow-hidden group">
+                        <img src="MyAvatar.jpg" alt="Tsung-Han Wu" class="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                    </div>
+                    <div class="absolute -bottom-8 -right-8 glass-card p-8 rounded-2xl hidden md:block">
+                        <div class="flex gap-10">
+                            <div>
+                                <p class="text-4xl font-bold text-sky-400 font-mono">10+</p>
+                                <p class="text-[10px] text-slate-500 uppercase font-bold tracking-[0.2em]">Years Exp</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="w-full md:w-2/3 text-lg text-slate-300">
-                    <p class="mb-4">
-                        A highly motivated and results-oriented professional with expertise in semiconductor manufacturing process technology, applied machine learning and data science. 
-                    </p>
-                    <p class="mb-4">
-                        Proven ability to leverage analytical skills and technical competence to drive quality improvements and deliver innovative solutions.
-                    </p>
-                    <p class="mb-4">
-                        Strong interpersonal skills facilitate effective collaboration and communication across teams.
-                    </p>
+                <div>
+                    <h2 class="text-5xl font-bold mb-10 flex items-center gap-6">
+                        <span class="text-sky-500 text-3xl font-mono">01.</span>
+                        About Me
+                    </h2>
+                    <div class="space-y-8 text-xl text-slate-400 leading-relaxed">
+                        <p>
+                            A highly motivated and results-oriented professional with expertise in semiconductor manufacturing process technology, applied machine learning and data science. 
+                        </p>
+                        <p>
+                            Proven ability to leverage analytical skills and technical competence to drive quality improvements and deliver innovative solutions.
+                        </p>
+                        <p>
+                            Strong interpersonal skills facilitate effective collaboration and communication across teams.
+                        </p>
+                        <div class="pt-8 grid grid-cols-2 gap-6">
+                            <div class="flex items-center gap-4 text-sm text-slate-300 font-medium">
+                                <span class="w-2 h-2 bg-sky-500 rounded-full shadow-[0_0_10px_rgba(14,165,233,0.5)]"></span> TCAD Process Modeling
+                            </div>
+                            <div class="flex items-center gap-4 text-sm text-slate-300 font-medium">
+                                <span class="w-2 h-2 bg-sky-500 rounded-full shadow-[0_0_10px_rgba(14,165,233,0.5)]"></span> Applied Machine Learning
+                            </div>
+                            <div class="flex items-center gap-4 text-sm text-slate-300 font-medium">
+                                <span class="w-2 h-2 bg-sky-500 rounded-full shadow-[0_0_10px_rgba(14,165,233,0.5)]"></span> DTCO Workflows
+                            </div>
+                            <div class="flex items-center gap-4 text-sm text-slate-300 font-medium">
+                                <span class="w-2 h-2 bg-sky-500 rounded-full shadow-[0_0_10px_rgba(14,165,233,0.5)]"></span> Optimization Methods
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Experience Section -->
-        <section id="experience" class="py-24">
-            <h2 class="text-4xl font-bold text-center mb-16">
-                <span class="font-mono text-sky-400"># </span>Experience<span class="font-mono text-sky-400"></span>
+        <section id="experience" class="py-40 reveal">
+            <h2 class="text-5xl font-bold mb-24 text-center flex justify-center items-center gap-6">
+                <span class="text-sky-500 text-3xl font-mono">02.</span>
+                Experience
             </h2>
-            <div class="max-w-3xl mx-auto">
-                <div class="relative border-l-2 border-slate-700">
-                    <!-- Experience Item 1 -->
-                    <div class="mb-12 ml-8 pl-4">
-                        <div class="absolute w-4 h-4 bg-sky-500 rounded-full mt-1.5 -left-2 border-2 border-slate-800"></div>
-                        <time class="mb-1 text-sm font-mono leading-none text-slate-500">Jun 2020 - Present</time>
-                        <h3 class="text-xl font-semibold text-white">Staff Applications Engineer</h3>
-                        <p class="mb-4 text-base font-normal text-slate-400">Synopsys, Taiwan</p>
-                        <ul class="list-disc list-inside text-slate-300 space-y-2 marker:text-sky-400">
-                            <li>Develop and optimize TCAD applications for process modeling, applied ML, and DTCO.</li>
-                            <li>Develop and optimize model generation and calibration flows / methodologies.</li>
-                            <li>Model nano-scale plasma etching topographical effect.</li>
-                            <li>Provide expertise in technical support to ensure regional customer success.</li>
+            <div class="max-w-4xl mx-auto space-y-6">
+                <!-- Item 1 -->
+                <div class="experience-item glass-card p-8 rounded-3xl group cursor-pointer transition-all hover:border-sky-500/30">
+                    <div class="flex justify-between items-center">
+                        <div class="flex-1">
+                            <div class="flex flex-col md:flex-row justify-between mb-2">
+                                <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Staff Applications Engineer</h3>
+                                <span class="text-slate-500 text-sm font-mono mt-2 md:mt-0 bg-slate-900/50 px-4 py-1 rounded-full self-start">Jun 2020 — Present</span>
+                            </div>
+                            <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Synopsys, Taiwan</p>
+                        </div>
+                        <i class="fas fa-chevron-down text-slate-600 ml-6 chevron-icon group-hover:text-sky-400"></i>
+                    </div>
+                    
+                    <div class="experience-details">
+                        <ul class="space-y-4 text-slate-400 text-lg border-t border-slate-800/50 pt-6">
+                            <li class="flex gap-4">
+                                <span class="text-sky-500">▹</span>
+                                Develop and optimize TCAD applications for process modeling, ML, and DTCO.
+                            </li>
+                            <li class="flex gap-4">
+                                <span class="text-sky-500">▹</span>
+                                Develop and optimize model generation and calibration flows / methodologies.
+                            </li>
+                            <li class="flex gap-4">
+                                <span class="text-sky-500">▹</span>
+                                Model nano-scale plasma etching topographical effects and calibration flows.
+                            </li>
                         </ul>
                     </div>
-                    <!-- Experience Item 2 -->
-                    <div class="mb-12 ml-8 pl-4">
-                        <div class="absolute w-4 h-4 bg-sky-500 rounded-full mt-1.5 -left-2 border-2 border-slate-800"></div>
-                        <time class="mb-1 text-sm font-mono leading-none text-slate-500">Jan 2019 - Jun 2020</time>
-                        <h3 class="text-xl font-semibold text-white">Senior Process Analytics Engineer</h3>
-                        <p class="mb-4 text-base font-normal text-slate-400">Lam Research, Taiwan</p>
-                        <ul class="list-disc list-inside text-slate-300 space-y-2 marker:text-sky-400">
-                            <li>Delivered smart manufacturing solutions, improving wafer-to-wafer etch depth variation.</li>
-                            <li>Trained, optimized, and deployed machine learning models to production tools.</li>
-                            <li>Performed data processing and statistical analysis with metrology and production data.</li>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="experience-item glass-card p-8 rounded-3xl group cursor-pointer transition-all hover:border-sky-500/30">
+                    <div class="flex justify-between items-center">
+                        <div class="flex-1">
+                            <div class="flex flex-col md:flex-row justify-between mb-2">
+                                <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Senior Process Analytics Engineer</h3>
+                                <span class="text-slate-500 text-sm font-mono mt-2 md:mt-0 bg-slate-900/50 px-4 py-1 rounded-full self-start">Jan 2019 — Jun 2020</span>
+                            </div>
+                            <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Lam Research, Taiwan</p>
+                        </div>
+                        <i class="fas fa-chevron-down text-slate-600 ml-6 chevron-icon group-hover:text-sky-400"></i>
+                    </div>
+                    
+                    <div class="experience-details">
+                        <ul class="space-y-4 text-slate-400 text-lg border-t border-slate-800/50 pt-6">
+                            <li class="flex gap-4">
+                                <span class="text-sky-500">▹</span>
+                                Delivered smart manufacturing solutions, improving wafer-to-wafer etch depth variation.
+                            </li>
+                            <li class="flex gap-4">
+                                <span class="text-sky-500">▹</span>
+                                Trained, optimized, and deployed machine learning models to production tools.
+                            </li>
+                            <li class="flex gap-4">
+                                <span class="text-sky-500">▹</span>
+                                Performed data processing and statistical analysis with metrology and production data.
+                            </li>
                         </ul>
                     </div>
-                     <!-- Experience Item 3 -->
-                    <div class="ml-8 pl-4">
-                        <div class="absolute w-4 h-4 bg-sky-500 rounded-full mt-1.5 -left-2 border-2 border-slate-800"></div>
-                        <time class="mb-1 text-sm font-mono leading-none text-slate-500">Apr 2015 - Dec 2018</time>
-                        <h3 class="text-xl font-semibold text-white">Senior Process Engineer</h3>
-                        <p class="mb-4 text-base font-normal text-slate-400">Lam Research, Taiwan</p>
-                        <ul class="list-disc list-inside text-slate-300 space-y-2 marker:text-sky-400">
-                            <li>Collaborated with a key customer's R&D team on FEOL FinFET process development.</li>
-                            <li>Developed in-spec plasma etching processes for multiple critical applications.</li>
-                            <li>Improved process non-uniformity for multiple SADP applications.</li>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="experience-item glass-card p-8 rounded-3xl group cursor-pointer transition-all hover:border-sky-500/30">
+                    <div class="flex justify-between items-center">
+                        <div class="flex-1">
+                            <div class="flex flex-col md:flex-row justify-between mb-2">
+                                <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Senior Process Engineer</h3>
+                                <span class="text-slate-500 text-sm font-mono mt-2 md:mt-0 bg-slate-900/50 px-4 py-1 rounded-full self-start">Apr 2015 — Dec 2018</span>
+                            </div>
+                            <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Lam Research, Taiwan</p>
+                        </div>
+                        <i class="fas fa-chevron-down text-slate-600 ml-6 chevron-icon group-hover:text-sky-400"></i>
+                    </div>
+                    
+                    <div class="experience-details">
+                        <ul class="space-y-4 text-slate-400 text-lg border-t border-slate-800/50 pt-6">
+                            <li class="flex gap-4">
+                                <span class="text-sky-500">▹</span>
+                                Collaborated with a key customer's R&D team on FEOL FinFET process development.                     
+                            </li>
+                            <li class="flex gap-4">
+                                <span class="text-sky-500">▹</span>
+                                Developed in-spec plasma etching processes for multiple critical applications.
+                            </li>
+                            <li class="flex gap-4">
+                                <span class="text-sky-500">▹</span>
+                                Improved process non-uniformity for multiple SADP applications.
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -210,88 +316,79 @@
         </section>
 
         <!-- Skills Section -->
-        <section id="skills" class="py-24 section-grid-bg">
-            <h2 class="text-4xl font-bold text-center mb-16">
-                <span class="font-mono text-sky-400"># </span>Skills<span class="font-mono text-sky-400"></span>
+        <section id="skills" class="py-40 reveal">
+            <h2 class="text-5xl font-bold mb-24 text-center flex justify-center items-center gap-6">
+                <span class="text-sky-500 text-3xl font-mono">03.</span>
+                Expertise
             </h2>
-            <div class="max-w-3xl mx-auto space-y-16">
-                <!-- Machine Learning & Data Science -->
-                <div>
-                    <h3 class="text-2xl font-semibold text-center mb-8 text-sky-400 font-mono">Machine Learning & Data Science</h3>
-                    <div class="flex flex-wrap justify-center gap-4">
-                        <div class="skill-card">
-                            <svg class="w-6 h-6" viewBox="-27 0 310 310" xmlns="http://www.w3.org/2000/svg">
-                                <path fill="#EE4C2C" d="M218.281037,90.106412 C268.572988,140.398363 268.572988,221.075034 218.281037,271.716235 C169.036835,322.008186 88.0109141,322.008186 37.7189632,271.716235 C-12.5729877,221.424284 -12.5729877,140.398363 37.7189632,90.106412 L127.825375,0 L127.825375,45.053206 L119.443383,53.4351978 L59.7216917,113.156889 C22.0027285,150.177353 22.0027285,210.946794 59.7216917,248.665757 C96.7421555,286.38472 157.511596,286.38472 195.230559,248.665757 C232.949523,211.645293 232.949523,150.875853 195.230559,113.156889 L218.281037,90.106412 Z M173.227831,84.5184175 C163.969338,84.5184175 156.463847,77.0129263 156.463847,67.7544338 C156.463847,58.4959413 163.969338,50.9904502 173.227831,50.9904502 C182.486323,50.9904502 189.991814,58.4959413 189.991814,67.7544338 C189.991814,77.0129263 182.486323,84.5184175 173.227831,84.5184175 Z"/>
-                            </svg>
-                            <span>PyTorch</span>
-                        </div>
-                       <div class="skill-card">
-                            <svg class="w-6 h-6" viewBox="-9 0 274 274" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M145.726081,42.0651946 L145.726081,84.1347419 L218.586952,126.204312 L218.586952,84.1347419 L145.726081,42.0651946 Z M-1.98726454e-07,84.1347419 L-1.98726454e-07,126.204312 L36.4304238,147.234755 L36.4304238,105.169527 L-1.98726454e-07,84.1347419 Z M109.291294,105.169527 L72.8608701,126.204312 L72.8608701,252.404316 L109.291294,273.439101 L109.291294,189.304303 L145.726081,210.339088 L145.726081,168.26954 L109.291294,147.234755 L109.291294,105.169527 Z" fill="E55B2D"></path><path d="M145.726081,42.0651946 L36.4304238,105.169527 L36.4304238,147.234755 L109.291294,105.169527 L109.291294,147.234755 L145.726081,126.204312 L145.726081,42.0651946 Z M255.021717,63.0999794 L218.586952,84.1347419 L218.586952,126.204312 L255.021717,105.169527 L255.021717,63.0999794 Z M182.156505,147.234755 L145.726081,168.26954 L145.726081,210.339088 L182.156505,189.304303 L182.156505,147.234755 Z M145.726081,210.339088 L109.291294,189.304303 L109.291294,273.439101 L145.726081,252.404316 L145.726081,210.339088 Z" fill="#ED8E24"></path><path d="M145.726081,-3.41864288e-05 L-1.98726454e-07,84.1347419 L36.4304238,105.169527 L145.726081,42.0651946 L218.586952,84.1347419 L255.021717,63.0999794 L145.726081,-3.41864288e-05 Z M145.726081,126.204312 L109.291294,147.234755 L145.726081,168.26954 L182.156505,147.234755 L145.726081,126.204312 Z" fill="#F8BF3C"></path></svg>
-                            </svg>
-                            <span>TensorFlow</span>
-                        </div>
-                        <div class="skill-card">
-                            <svg class="w-6 h-6" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="#f89939" d="M98.18 88.13c15.63-15.62 18.23-38.36 5.8-50.78-12.43-12.42-35.17-9.82-50.8 5.8-15.63 15.62-11.11 45.48-5.8 50.78 4.29 4.29 35.17 9.82 50.8-5.8Z"/><path fill="#3499cd" d="M34.04 65.56c-9.07-9.06-22.27-10.57-29.48-3.37-7.21 7.21-5.7 20.4 3.37 29.46 9.07 9.07 26.4 6.44 29.48 3.37 2.49-2.49 5.71-20.4-3.37-29.46Z"/><path fill="#010101" d="M123.82 85.68c-.58 0-.87-.35-.87-1.06 0-.53.35-1.69 1.04-3.46 1.01-2.59 1.52-4.45 1.52-5.58 0-.68-.2-1.25-.6-1.7-.4-.45-.9-.68-1.5-.68-.88 0-1.89.41-3.03 1.24-1.14.83-2.67 2.32-4.6 4.48.28-1.4.88-3.32 1.78-5.76l-4.31.83c-.98 2.12-1.69 4.03-2.13 5.73-.22.83-.38 1.69-.49 2.56-1.35 1.31-2.23 2.1-2.61 2.39-.39.29-.8.43-1.22.43-.39 0-.7-.15-.93-.44-.23-.29-.34-.69-.34-1.18 0-.53.1-1.14.3-1.83s.64-1.99 1.33-3.9l1.64-4.52-1.61.07c-1.46 2.78-3.17 4.28-5.13 4.49.53-1.38.8-2.44.8-3.18 0-.94-.46-1.41-1.38-1.41-1.09 0-1.94.51-2.55 1.54-.62 1.03-.93 2-.93 2.91s.51 1.55 1.52 2c-.66.97-1.4 1.88-2.2 2.74-.95.94-1.69 1.66-2.23 2.13-.55.49-1.06.73-1.52.73-.72 0-1.08-.51-1.08-1.52s.4-2.75 1.2-5.35l1.56-5.18h-.99l-3.61 2c-.59-1.35-1.62-2.03-3.09-2.03-1.17 0-2.51.5-4.03 1.49-1.52.99-2.77 2.28-3.74 3.89-.75 1.24-1.21 2.54-1.38 3.88-1.36 1.36-2.38 2.24-3.06 2.65-.71.42-1.45.63-2.23.63-1.99 0-3.22-1.15-3.69-3.45 5.19-1.52 7.78-3.5 7.78-5.94 0-.92-.33-1.66-.99-2.23-.66-.57-1.54-.85-2.63-.85-2.11 0-4.03 1.01-5.76 3.03-1.57 1.83-2.42 3.86-2.57 6.09-1.43 1.41-2.51 2.34-3.21 2.79-.72.46-1.4.69-2.03.69s-1.13-.3-1.5-.9c-.38-.6-.57-1.41-.57-2.44 0-.46.05-1.3.14-2.53 2.36-2.56 4.09-4.96 5.2-7.21 1.11-2.25 1.66-4.58 1.66-6.98 0-.85-.11-1.52-.33-2.02-.22-.5-.5-.75-.84-.75-.07 0-.18.02-.32.07l-4.49 1.66c-1.53 2.92-2.84 6.11-3.91 9.58-1.07 3.46-1.61 6.43-1.61 8.9 0 1.65.38 2.96 1.16 3.94.77.98 1.79 1.47 3.05 1.47 1.1 0 2.25-.35 3.46-1.05 1.21-.7 2.61-1.79 4.22-3.26s0-.02 0-.02c.19 1.11.65 2.04 1.37 2.8.99 1.02 2.28 1.54 3.88 1.54 1.44 0 2.75-.35 3.94-1.05 1.15-.67 2.44-1.72 3.88-3.11.12 1.04.46 1.94 1.03 2.71.73.97 1.61 1.46 2.64 1.46s2.09-.4 3.09-1.2c1-.8 2.08-2.05 3.26-3.73-.11 3.29.77 4.93 2.63 4.93.74 0 1.52-.27 2.33-.81s2.16-1.71 4.05-3.5c1.64-1.62 2.84-3.14 3.61-4.56 1.04-.18 1.99-.49 2.86-.94-1.78 2.79-2.67 5.02-2.67 6.68 0 .9.25 1.65.74 2.25.49.6 1.1.91 1.82.91 1.57 0 3.8-1.41 6.68-4.2 0 .22-.02.43-.02.65 0 .78.07 1.96.19 3.55l3.91-.92c0-1.06.02-1.9.05-2.53.06-.84.18-1.76.35-2.76.11-.59.38-1.15.81-1.68l.99-1.15c.36-.42.71-.8 1.02-1.13.37-.39.7-.72.99-.99.33-.29.62-.53.87-.69.27-.16.49-.25.65-.25.29 0 .44.19.44.57s-.28 1.26-.83 2.65c-1.04 2.59-1.56 4.52-1.56 5.78 0 .93.24 1.67.73 2.23.48.55 1.12.83 1.91.83 1.94 0 4.28-1.44 7-4.31V82.3c-1.93 2.27-3.32 3.41-4.18 3.41Zm-65.26-8.29c.8-3.91 1.62-6.94 2.45-9.11.83-2.17 1.47-3.26 1.9-3.26.2 0 .37.13.5.4.13.26.19.62.19 1.05 0 1.49-.46 3.26-1.4 5.33-.93 2.06-2.15 3.93-3.64 5.59Zm11.79-.98c.71-1.19 1.45-1.78 2.23-1.78.82 0 1.24.57 1.24 1.7 0 2.29-1.51 3.85-4.53 4.7 0-1.9.35-3.44 1.06-4.62Zm17.48 5.85c-1.04 2.01-2.16 3.01-3.33 3.01-.48 0-.88-.2-1.19-.59-.31-.39-.47-.91-.47-1.55 0-1.68.53-3.53 1.58-5.53 1.05-2 2.17-3 3.35-3 .49 0 .89.18 1.18.56.29.37.44.89.44 1.55 0 1.7-.52 3.55-1.56 5.56Z"/><path fill="#fff" d="M75.46 64.88c.15.21.22.48.22.8s-.09.61-.27.88-.44.49-.79.64c-.34.15-.73.23-1.16.23-.72 0-1.26-.15-1.64-.45s-.62-.74-.72-1.33l.93-.15c.05.37.2.66.43.85.24.2.57.3 1 .3s.75-.09.96-.26c.21-.17.31-.38.31-.62 0-.21-.09-.38-.28-.5-.13-.08-.45-.19-.96-.32-.69-.17-1.16-.32-1.43-.45s-.47-.3-.6-.53-.21-.47-.21-.74c0-.25.06-.47.17-.68.11-.21.27-.38.46-.52.15-.11.34-.2.59-.27.25-.07.52-.11.81-.11.43 0 .81.06 1.14.19.33.12.57.29.73.51.16.21.26.5.32.86l-.92.12c-.04-.28-.16-.51-.36-.67-.2-.16-.48-.24-.85-.24-.43 0-.74.07-.92.21-.18.14-.28.31-.28.5 0 .12.04.23.11.33.08.1.2.18.36.25.09.03.37.11.83.24.66.18 1.12.32 1.39.43.26.11.47.28.62.49Zm4.47 1.44c-.25.23-.55.34-.92.34-.46 0-.83-.17-1.11-.5s-.43-.88-.43-1.62.15-1.27.44-1.6.68-.51 1.15-.51c.31 0 .58.09.8.28.22.19.37.47.46.84l.91-.14c-.11-.56-.35-.99-.73-1.29-.38-.3-.87-.45-1.47-.45-.48 0-.91.11-1.32.34-.4.22-.71.56-.9 1.01-.2.45-.3.97-.3 1.57 0 .92.23 1.63.69 2.12.46.49 1.07.74 1.82.74.6 0 1.11-.18 1.53-.54.41-.36.67-.86.77-1.49l-.92-.12c-.07.47-.22.81-.47 1.04Zm2.19.98h.94v-5.52h-.94v5.52Zm0-6.55h.94v-1.08h-.94v1.08Zm6.73 1.02h-1.21l-2.22 2.25v-4.35h-.94v7.62h.94V65.1l.66-.63 1.83 2.82h1.16l-2.33-3.47 2.11-2.05Zm.96-1.02h.94v-1.08h-.94v1.08Zm0 6.55h.94v-5.52h-.94v5.52Zm4.41-.84c-.17.02-.31.04-.41.04-.14 0-.25-.02-.32-.07s-.13-.11-.16-.18c-.03-.08-.05-.25-.05-.51v-3.23h.94v-.73h-.94v-1.93l-.93.56v1.37h-.69v.73h.69v3.18c0 .56.04.93.11 1.1.08.18.21.32.39.42.19.11.45.16.79.16.21 0 .44-.03.71-.08l-.14-.83Z"/></path></svg>
-                            <span>Scikit-Learn</span>
-                        </div>
-                        <div class="skill-card">
-                           <i class="fas fa-table text-purple-400"></i>
-                           <span>Pandas</span>
-                        </div>
-                        <div class="skill-card">
-                            <svg class="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3zM21 9H3M21 15H3M9 3v18M15 3v18"></path></svg>
-                            <span>Numpy</span>
-                        </div>
-                        <div class="skill-card"><i class="fas fa-database text-slate-400"></i><span>SQL</span></div>
-                        <div class="skill-card"><i class="fas fa-chart-bar text-yellow-400"></i><span>JMP</span></div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <div class="col-span-2 row-span-2 glass-card p-10 rounded-[2.5rem] flex flex-col justify-between overflow-hidden relative group">
+                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fas fa-brain text-9xl text-sky-400"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold mb-6">Machine Learning</h3>
+                        <p class="text-slate-400 text-lg leading-relaxed">Deep expertise in leveraging ML for physical process modeling and optimization.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-3 mt-10">
+                        <span class="px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20">PyTorch</span>
+                        <span class="px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20">TensorFlow</span>
+                        <span class="px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20">Scikit-Learn</span>
                     </div>
                 </div>
-                <!-- Process Simulation & Engineering -->
-                <div>
-                    <h3 class="text-2xl font-semibold text-center mb-8 text-sky-400 font-mono">Process Simulation & Engineering</h3>
-                    <div class="flex flex-wrap justify-center gap-4">
-                        <div class="skill-card"><i class="fas fa-microchip text-green-500"></i><span>TCAD</span></div>
-                        <div class="skill-card"><i class="fas fa-shapes text-purple-400"></i><span>Level Set Method</span></div>
-                        <div class="skill-card"><i class="fas fa-draw-polygon text-amber-400"></i><span>Finite Element Analysis</span></div>
-                        <div class="skill-card"><i class="fas fa-dice text-red-400"></i><span>Monte Carlo</span></div>
-                        <div class="skill-card"><i class="fas fa-vial text-lime-400"></i><span>DOE</span></div>
-                        <div class="skill-card"><i class="fas fa-chart-line text-sky-400"></i><span>SPC</span></div>
-                        <div class="skill-card"><i class="fas fa-bolt text-yellow-500"></i><span>Plasma Etching</span></div>
+                <div class="glass-card p-8 rounded-[2rem] flex flex-col items-center justify-center text-center group hover:bg-green-500/5">
+                    <i class="fas fa-microchip text-5xl text-green-500 mb-6 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-bold tracking-wider">TCAD Process Modeling</span>
+                    <p class="text-sm text-slate-400 font-mono mt-1">Levelset and PMC Methods</p>
+                </div>
+                <div class="glass-card p-8 rounded-[2rem] flex flex-col items-center justify-center text-center group hover:bg-blue-500/5">
+                    <i class="fab fa-python text-5xl text-blue-500 mb-6 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-bold tracking-wider">Python Programming</span>
+                </div>
+                <div class="col-span-2 glass-card p-8 rounded-[2rem] flex items-center justify-between group">
+                    <div class="flex items-center gap-6">
+                        <div class="w-16 h-16 bg-amber-500/10 rounded-2xl flex items-center justify-center border border-amber-500/20">
+                            <i class="fas fa-chart-line text-2xl text-amber-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-xl font-bold text-white">Process Analytics</p>
+                            <p class="text-sm text-slate-400 font-mono mt-1">DOE, SPC, and Statistical Methods</p>
+                        </div>
                     </div>
                 </div>
-                <!-- Software & Tools -->
-                <div>
-                    <h3 class="text-2xl font-semibold text-center mb-8 text-sky-400 font-mono">Software & Tools</h3>
-                    <div class="flex flex-wrap justify-center gap-4">
-                        <div class="skill-card"><i class="fab fa-python text-blue-500"></i><span>Python</span></div>
-                        <div class="skill-card"><i class="fas fa-code text-gray-300"></i><span>Tcl</span></div>
-                        <div class="skill-card"><i class="fab fa-git-alt text-orange-500"></i><span>Git</span></div>
-                        <div class="skill-card"><i class="fab fa-linux text-white"></i><span>Linux</span></div>
-                        <div class="skill-card"><i class="fas fa-project-diagram text-sky-400"></i><span>Dask</span></div>
-                    </div>
+                <div class="glass-card p-8 rounded-[2rem] flex flex-col items-center justify-center text-center group hover:bg-white/5">
+                    <i class="fab fa-linux text-5xl text-white mb-6 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-bold tracking-wider">Linux</span>
+                </div>
+                <div class="glass-card p-8 rounded-[2rem] flex flex-col items-center justify-center text-center group hover:bg-orange-500/5">
+                    <i class="fab fa-git-alt text-5xl text-orange-500 mb-6 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-bold tracking-wider">Git</span>
                 </div>
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-24 text-center">
-             <h2 class="text-4xl font-bold text-center mb-4">
-                <span class="font-mono text-sky-400"># </span>Get In Touch<span class="font-mono text-sky-400"></span>
-            </h2>
-            <p class="max-w-2xl mx-auto text-lg text-slate-300 mb-8">
-                Feel free to connect with me on LinkedIn!
-            </p>
-            <a href="https://linkedin.com/in/tsung-han-wu/" target="_blank" class="inline-block bg-sky-500 hover:bg-sky-600 text-slate-900 font-bold py-4 px-8 rounded-lg transition-all duration-300 text-xl font-mono transform hover:scale-105">
-                <i class="fab fa-linkedin mr-3"></i> Connect on LinkedIn
-            </a>
+        <section id="contact" class="py-40 reveal">
+            <div class="max-w-5xl mx-auto glass-card rounded-[4rem] p-16 md:p-32 text-center relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-sky-500 to-transparent"></div>
+                <h2 class="text-5xl md:text-8xl font-bold mb-10 tracking-tighter">Let's Connect!</h2>
+                <div class="flex flex-col md:flex-row gap-8 justify-center items-center">
+                    <a href="https://linkedin.com/in/tsung-han-wu/" target="_blank" class="px-12 py-6 bg-white text-slate-950 font-bold rounded-2xl hover:bg-sky-400 transition-all flex items-center gap-4 text-xl shadow-2xl">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                        Connect
+                    </a>
+                </div>
+            </div>
         </section>
 
     </main>
     
     <!-- Footer -->
-    <footer class="border-t border-slate-800 py-6">
-        <div class="container mx-auto text-center text-slate-500">
-            <p class="font-mono">Designed & Built by Tsung-Han Wu &copy; <span id="year"></span></p>
+    <footer class="border-t border-slate-900 py-12">
+        <div class="container mx-auto text-center">
+            <p class="font-mono text-sm text-slate-600 tracking-widest">
+                TSUNG-HAN WU &copy; <span id="year"></span> | DESIGNED FOR IMPACT
+            </p>
         </div>
     </footer>
 
@@ -299,28 +396,28 @@
         // --- 3D Wireframe Terrain Animation ---
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({
-            canvas: document.querySelector('#bg-canvas'),
-        });
+        const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg-canvas'), antialias: true, alpha: true });
 
-        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(window.innerWidth, window.innerHeight);
         
-        camera.position.setZ(10);
-        camera.position.setY(8);
-        camera.rotation.x = -0.6; // Steeper angle for a better top-down view
+        camera.position.set(0, 8, 12);
+        camera.lookAt(0, 0, 0);
 
-        // Increased plane size and vertex density for more detail
-        const geometry = new THREE.PlaneGeometry(60, 60, 50, 50);
-        // Changed color to a silicon-like grey
-        const material = new THREE.MeshBasicMaterial({ color: 0x9ca3af, wireframe: true });
+        const geometry = new THREE.PlaneGeometry(80, 80, 60, 60);
+        const material = new THREE.MeshBasicMaterial({ color: 0x0ea5e9, wireframe: true, transparent: true, opacity: 0.2 });
         const plane = new THREE.Mesh(geometry, material);
-
         plane.rotation.x = -Math.PI / 2;
         scene.add(plane);
 
-        const clock = new THREE.Clock();
+        let mouseX = 0;
+        let mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) - 0.5;
+            mouseY = (e.clientY / window.innerHeight) - 0.5;
+        });
 
+        const clock = new THREE.Clock();
         function animate() {
             const t = clock.getElapsedTime();
             const positions = plane.geometry.attributes.position;
@@ -328,28 +425,19 @@
             for (let i = 0; i < positions.count; i++) {
                 const x = positions.getX(i);
                 const y = positions.getY(i);
-
-                // Layer 1: Broad, slow-moving topographical features
-                const z1 = 1.0 * Math.sin(x / 8 + t * 0.1) * Math.cos(y / 8 + t * 0.05);
-                
-                // Layer 2: Medium frequency, faster waves for texture
-                const z2 = 0.4 * Math.sin(x / 3 + t * 0.2) * Math.cos(y / 4 + t * 0.1);
-                
-                // Layer 3: High frequency, "etching detail"
-                const z3 = 0.2 * Math.sin(x * 4.0 + t * 0.4) * Math.cos(y * 4.0 + t * 0.4);
-
-                // Etching effect: The overall depth increases over time with an ease-in effect
-                const etchFactor = 1.0 + Math.tanh(0.025*t) * 4.0; 
-
-                const z = (z1 + z2 + z3) * etchFactor;
+                const z = 2 * Math.sin(x / 10 + t * 0.2) * Math.cos(y / 10 + t * 0.1) +
+                          0.5 * Math.sin(x / 2 + t * 0.5);
                 positions.setZ(i, z);
             }
             positions.needsUpdate = true;
-
-            requestAnimationFrame(animate);
+            
+            // Parallax effect
+            plane.rotation.z = mouseX * 0.05;
+            plane.rotation.y = mouseX * 0.05;
+            
             renderer.render(scene, camera);
+            requestAnimationFrame(animate);
         }
-
         animate();
 
         window.addEventListener('resize', () => {
@@ -358,28 +446,53 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // --- Other Scripts ---
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+        // --- Intersection Observer for Reveal ---
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
             });
-        });
+        }, { threshold: 0.1 });
+        reveals.forEach(r => observer.observe(r));
 
-        // Header scroll effect
+        // --- Scroll Progress & Header ---
+        const scrollBar = document.getElementById('scroll-bar');
         const header = document.getElementById('header');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('bg-opacity-90');
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            scrollBar.style.width = scrolled + "%";
+
+            if (winScroll > 50) {
+                header.classList.add('bg-slate-950/80', 'backdrop-blur-xl', 'border-slate-800', 'py-3');
+                header.classList.remove('py-5', 'border-transparent');
             } else {
-                header.classList.remove('bg-opacity-90');
+                header.classList.remove('bg-slate-950/80', 'backdrop-blur-xl', 'border-slate-800', 'py-3');
+                header.classList.add('py-5', 'border-transparent');
             }
+        });
+
+        // Mobile Menu
+        const btn = document.getElementById('mobile-menu-button');
+        btn.onclick = () => { /* Simple toggle logic could be added here if needed */ };
+        
+        // Experience Accordion
+        const expItems = document.querySelectorAll('.experience-item');
+        expItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all items
+                expItems.forEach(other => {
+                    other.classList.remove('active');
+                });
+
+                // If the clicked item wasn't active, open it
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
         });
 
         document.getElementById('year').textContent = new Date().getFullYear();
