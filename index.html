@@ -178,6 +178,36 @@
                 visibility: visible;
             }
         }
+        
+        /* Role progression styles */
+        .role-progression {
+            border-left: 2px solid rgba(14, 165, 233, 0.3);
+            padding-left: 1.5rem;
+            margin-left: 0.5rem;
+        }
+        .role-entry {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+        .role-entry:last-child {
+            padding-bottom: 0;
+        }
+        .role-entry::before {
+            content: '';
+            position: absolute;
+            left: -1.65rem;
+            top: 0.25rem;
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid var(--bg-medium);
+            box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.3);
+        }
+        .role-entry.current::before {
+            background: #22c55e;
+            box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -296,7 +326,7 @@
                 Experience
             </h2>
             <div class="max-w-4xl mx-auto space-y-6" role="list" aria-label="Work experience">
-                <!-- Item 1 -->
+                <!-- Item 1: Synopsys -->
                 <article class="experience-item glass-card p-8 rounded-3xl group cursor-pointer transition-all hover:border-sky-500/30" role="listitem">
                     <button class="w-full flex justify-between items-center text-left p-0 bg-transparent focus-ring rounded-xl" aria-expanded="false" aria-controls="exp-details-1">
                         <div class="flex-1 pr-4">
@@ -327,13 +357,13 @@
                     </div>
                 </article>
 
-                <!-- Item 2 -->
+                <!-- Item 2: Lam Research (Merged) -->
                 <article class="experience-item glass-card p-8 rounded-3xl group cursor-pointer transition-all hover:border-sky-500/30" role="listitem">
                     <button class="w-full flex justify-between items-center text-left p-0 bg-transparent focus-ring rounded-xl" aria-expanded="false" aria-controls="exp-details-2">
                         <div class="flex-1 pr-4">
                             <div class="flex flex-col md:flex-row justify-between mb-2">
-                                <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Senior Process Analytics Engineer</h3>
-                                <span class="text-slate-500 text-sm font-mono mt-2 md:mt-0 bg-slate-900/50 px-4 py-1 rounded-full self-start">Jan 2019 — Jun 2020</span>
+                                <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Senior Process Analytics Engineer → Senior Process Engineer</h3>
+                                <span class="text-slate-500 text-sm font-mono mt-2 md:mt-0 bg-slate-900/50 px-4 py-1 rounded-full self-start">Apr 2015 — Jun 2020</span>
                             </div>
                             <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Lam Research, Taiwan</p>
                         </div>
@@ -341,51 +371,66 @@
                     </button>
                     
                     <div id="exp-details-2" class="experience-details" role="region" aria-label="Role details">
-                        <ul class="space-y-4 text-slate-400 text-lg border-t border-slate-800/50 pt-6" role="list">
-                            <li class="flex gap-4" role="listitem">
-                                <span class="text-sky-500" aria-hidden="true">▹</span>
-                                Delivered smart manufacturing solutions, improving wafer-to-wafer etch depth variation.
-                            </li>
-                            <li class="flex gap-4" role="listitem">
-                                <span class="text-sky-500" aria-hidden="true">▹</span>
-                                Trained, optimized, and deployed machine learning models to production tools.
-                            </li>
-                            <li class="flex gap-4" role="listitem">
-                                <span class="text-sky-500" aria-hidden="true">▹</span>
-                                Performed data processing and statistical analysis with metrology and production data.
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Item 3 -->
-                <article class="experience-item glass-card p-8 rounded-3xl group cursor-pointer transition-all hover:border-sky-500/30" role="listitem">
-                    <button class="w-full flex justify-between items-center text-left p-0 bg-transparent focus-ring rounded-xl" aria-expanded="false" aria-controls="exp-details-3">
-                        <div class="flex-1 pr-4">
-                            <div class="flex flex-col md:flex-row justify-between mb-2">
-                                <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Senior Process Engineer</h3>
-                                <span class="text-slate-500 text-sm font-mono mt-2 md:mt-0 bg-slate-900/50 px-4 py-1 rounded-full self-start">Apr 2015 — Dec 2018</span>
+                        <div class="border-t border-slate-800/50 pt-6">
+                            <!-- Role Progression Timeline -->
+                            <div class="role-progression mb-8">
+                                <div class="role-entry current">
+                                    <div class="flex flex-col md:flex-row justify-between mb-2">
+                                        <h4 class="text-xl font-bold text-slate-200">Senior Process Analytics Engineer</h4>
+                                        <span class="text-slate-500 text-sm font-mono bg-slate-900/50 px-3 py-1 rounded-full self-start">Jan 2019 — Jun 2020</span>
+                                    </div>
+                                    <ul class="space-y-3 text-slate-400 text-lg ml-4" role="list">
+                                        <li class="flex gap-4" role="listitem">
+                                            <span class="text-sky-500" aria-hidden="true">▹</span>
+                                            Delivered smart manufacturing solutions, improving wafer-to-wafer etch depth variation.
+                                        </li>
+                                        <li class="flex gap-4" role="listitem">
+                                            <span class="text-sky-500" aria-hidden="true">▹</span>
+                                            Trained, optimized, and deployed machine learning models to production tools.
+                                        </li>
+                                        <li class="flex gap-4" role="listitem">
+                                            <span class="text-sky-500" aria-hidden="true">▹</span>
+                                            Performed data processing and statistical analysis with metrology and production data.
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="role-entry">
+                                    <div class="flex flex-col md:flex-row justify-between mb-2">
+                                        <h4 class="text-xl font-bold text-slate-200">Senior Process Engineer</h4>
+                                        <span class="text-slate-500 text-sm font-mono bg-slate-900/50 px-3 py-1 rounded-full self-start">Apr 2015 — Dec 2018</span>
+                                    </div>
+                                    <ul class="space-y-3 text-slate-400 text-lg ml-4" role="list">
+                                        <li class="flex gap-4" role="listitem">
+                                            <span class="text-sky-500" aria-hidden="true">▹</span>
+                                            Collaborated with a key customer's R&D team on FEOL FinFET process development.
+                                        </li>
+                                        <li class="flex gap-4" role="listitem">
+                                            <span class="text-sky-500" aria-hidden="true">▹</span>
+                                            Developed in-spec plasma etching processes for multiple critical applications.
+                                        </li>
+                                        <li class="flex gap-4" role="listitem">
+                                            <span class="text-sky-500" aria-hidden="true">▹</span>
+                                            Improved process non-uniformity for multiple SADP applications.
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Lam Research, Taiwan</p>
+                            
+                            <!-- Key Progression Highlight -->
+                            <div class="glass-card p-6 rounded-2xl border border-sky-500/20 bg-sky-500/5">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 bg-sky-500/10 rounded-xl flex items-center justify-center flex-shrink-0" aria-hidden="true">
+                                        <i class="fas fa-arrow-up text-sky-400"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-bold text-sky-400 mb-2">Career Progression</h5>
+                                        <p class="text-slate-300 text-base leading-relaxed">
+                                            Promoted from Senior Process Engineer to Senior Process Analytics Engineer, transitioning from hands-on process development to data-driven smart manufacturing solutions. Leveraged deep process expertise to build ML models for production deployment, bridging physical process knowledge with advanced analytics.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <i class="fas fa-chevron-down text-slate-600 ml-6 chevron-icon group-hover:text-sky-400" aria-hidden="true"></i>
-                    </button>
-                    
-                    <div id="exp-details-3" class="experience-details" role="region" aria-label="Role details">
-                        <ul class="space-y-4 text-slate-400 text-lg border-t border-slate-800/50 pt-6" role="list">
-                            <li class="flex gap-4" role="listitem">
-                                <span class="text-sky-500" aria-hidden="true">▹</span>
-                                Collaborated with a key customer's R&D team on FEOL FinFET process development.                     
-                            </li>
-                            <li class="flex gap-4" role="listitem">
-                                <span class="text-sky-500" aria-hidden="true">▹</span>
-                                Developed in-spec plasma etching processes for multiple critical applications.
-                            </li>
-                            <li class="flex gap-4" role="listitem">
-                                <span class="text-sky-500" aria-hidden="true">▹</span>
-                                Improved process non-uniformity for multiple SADP applications.
-                            </li>
-                        </ul>
                     </div>
                 </article>
             </div>
