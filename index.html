@@ -3,22 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tsung-Han Wu | Process Modeling and Simulation Specialist</title>
-    <meta name="description" content="Tsung-Han Wu - Sr. Staff Engineer specializing in semiconductor process modeling and simulation.">
-    
-    <!-- Open Graph / Facebook -->
+    <title>Tsung-Han Wu | Sr. Staff Engineer, Process Modeling &amp; ML</title>
+    <meta name="description" content="Tsung-Han Wu — Sr. Staff Engineer specializing in semiconductor process modeling, simulation, and applied machine learning.">
+    <link rel="canonical" href="https://tsunghanwu.github.io/">
+    <meta name="theme-color" content="#020617">
+
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tsunghanwu.github.io/">
-    <meta property="og:title" content="Tsung-Han Wu | Process Modeling and Simulation Specialist">
-    <meta property="og:description" content="Sr. Staff Engineer specializing in semiconductor process modeling and simulation">
-    <meta property="og:image" content="https://tsunghanwu.github.io/MyAvatar.jpg">
+    <meta property="og:title" content="Tsung-Han Wu | Sr. Staff Engineer, Process Modeling &amp; ML">
+    <meta property="og:description" content="Sr. Staff Engineer specializing in semiconductor process modeling, simulation, and applied machine learning.">
+    <meta property="og:image" content="https://tsunghanwu.github.io/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tsung-Han Wu | Sr. Staff Engineer, Process Modeling &amp; ML">
+    <meta name="twitter:description" content="Sr. Staff Engineer specializing in semiconductor process modeling, simulation, and applied machine learning.">
+    <meta name="twitter:image" content="https://tsunghanwu.github.io/og-image.jpg">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Tsung-Han Wu",
+      "url": "https://tsunghanwu.github.io/",
+      "image": "https://tsunghanwu.github.io/MyAvatar.jpg",
+      "jobTitle": "Senior Staff Applications Engineer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Synopsys"
+      },
+      "sameAs": [
+        "https://linkedin.com/in/tsung-han-wu/"
+      ],
+      "knowsAbout": [
+        "Process Modeling",
+        "TCAD",
+        "Machine Learning",
+        "Semiconductor Process Engineering"
+      ]
+    }
+    </script>
     
     <style>
         :root {
@@ -40,6 +77,10 @@
                 transition-duration: 0.01ms !important;
                 scroll-behavior: auto !important;
             }
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+            }
         }
 
         body {
@@ -49,12 +90,30 @@
             overflow-x: hidden;
         }
         .font-mono { font-family: 'Roboto Mono', monospace; }
+
+        .skip-link {
+            position: absolute;
+            left: 1rem;
+            top: -100%;
+            z-index: 200;
+            padding: 0.75rem 1.25rem;
+            background: var(--primary);
+            color: var(--bg-dark);
+            font-weight: 700;
+            border-radius: 0.5rem;
+            transition: top var(--transition-fast);
+        }
+        .skip-link:focus {
+            top: 1rem;
+            outline: 2px solid #fff;
+            outline-offset: 2px;
+        }
         
         .glass-card {
             background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all var(--transition-normal);
+            transition: border-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-normal);
         }
         .glass-card:hover {
             border-color: rgba(14, 165, 233, 0.4);
@@ -72,9 +131,10 @@
         .reveal {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .reveal.active {
+        .reveal.active,
+        .no-js .reveal {
             opacity: 1;
             transform: translateY(0);
         }
@@ -85,6 +145,7 @@
             width: 100%; height: 100%;
             z-index: -1;
             opacity: 0.35;
+            pointer-events: none;
         }
 
         .scroll-progress {
@@ -116,13 +177,17 @@
         .nav-link:focus-visible::after { width: 100%; }
 
         .experience-details {
-            max-height: 0;
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.45s ease, margin-top 0.45s ease;
+            margin-top: 0;
+        }
+        .experience-details > .experience-details-inner {
             overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+            min-height: 0;
         }
         .experience-item.active .experience-details {
-            max-height: 1000px;
-            transition: max-height 1s ease-in-out;
+            grid-template-rows: 1fr;
             margin-top: 1.5rem;
         }
         .chevron-icon {
@@ -133,53 +198,48 @@
         }
 
         .focus-ring:focus-visible {
-            outline: none;
-            ring: 2px;
-            ring-offset: 2px;
-            ring-offset-slate-950;
-            ring-sky-500;
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
         }
 
         .hero-title {
             font-size: clamp(3rem, 8vw, 7rem);
         }
 
-        @media (max-width: 768px) {
-            .mobile-menu {
-                position: fixed;
-                top: 0; right: 0; bottom: 0;
-                width: 80%;
-                max-width: 320px;
-                background: rgba(15, 23, 42, 0.95);
-                backdrop-filter: blur(20px);
-                border-left: 1px solid rgba(255, 255, 255, 0.08);
-                z-index: 60;
-                transform: translateX(100%);
-                transition: transform var(--transition-normal);
-                padding: 6rem 2rem 2rem;
-                display: flex;
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-            .mobile-menu.open {
-                transform: translateX(0);
-            }
-            .mobile-menu-overlay {
-                position: fixed;
-                inset: 0;
-                background: rgba(0,0,0,0.5);
-                z-index: 50;
-                opacity: 0;
-                visibility: hidden;
-                transition: all var(--transition-fast);
-            }
-            .mobile-menu-overlay.open {
-                opacity: 1;
-                visibility: visible;
-            }
+        .mobile-menu {
+            position: fixed;
+            top: 0; right: 0; bottom: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 60;
+            transform: translateX(100%);
+            transition: transform var(--transition-normal);
+            padding: 6rem 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            visibility: hidden;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+            visibility: visible;
+        }
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity var(--transition-fast), visibility var(--transition-fast);
+        }
+        .mobile-menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
         }
         
-        /* Role progression styles */
         .role-progression {
             border-left: 2px solid rgba(14, 165, 233, 0.3);
             padding-left: 1.5rem;
@@ -208,23 +268,18 @@
             background: #22c55e;
             box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3);
         }
-
-        @media (max-width: 768px) {
-            .mobile-menu {
-                width: 100%;
-                max-width: none;
-            }
-        }
     </style>
 </head>
-<body>
+<body class="no-js">
+    <script>document.body.classList.remove('no-js');</script>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div class="scroll-progress" id="scroll-bar" aria-hidden="true"></div>
     <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
     <!-- Header -->
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b border-transparent" role="banner">
-        <div class="container mx-auto px-6 py-5 flex justify-between items-center">
-            <a href="#" class="text-xl font-bold font-mono tracking-tighter text-sky-400 flex items-center gap-2 focus-ring rounded-md px-2 py-1 -mx-2 -my-1" aria-label="Tsung-Han Wu Home">
+        <div id="header-inner" class="container mx-auto px-6 py-5 flex justify-between items-center transition-all duration-500">
+            <a href="#home" class="text-xl font-bold font-mono tracking-tighter text-sky-400 flex items-center gap-2 focus-ring rounded-md px-2 py-1 -mx-2 -my-1" aria-label="Tsung-Han Wu Home">
                 <span class="w-2 h-2 bg-sky-500 rounded-full animate-pulse" aria-hidden="true"></span>
                 tsunghanwu.io
             </a>
@@ -234,15 +289,15 @@
                 <a href="#skills" class="nav-link text-slate-400 hover:text-white transition-colors">SKILLS</a>
                 <a href="#contact" class="px-6 py-2 glass-card hover:bg-sky-500 hover:text-slate-950 hover:border-transparent rounded-full transition-all duration-300 focus-ring">CONNECT</a>
             </nav>
-            <button id="mobile-menu-button" class="md:hidden text-2xl p-2 focus-ring rounded-lg" aria-label="Toggle Menu" aria-expanded="false" aria-controls="mobile-menu">
+            <button id="mobile-menu-button" class="md:hidden text-2xl p-2 focus-ring rounded-lg" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
                 <i class="fas fa-bars" aria-hidden="true"></i>
             </button>
         </div>
     </header>
 
     <!-- Mobile Menu -->
-    <div id="mobile-menu-overlay" class="mobile-menu-overlay" aria-hidden="true"></div>
-    <nav id="mobile-menu" class="mobile-menu md:hidden" aria-label="Mobile navigation">
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay md:hidden" aria-hidden="true"></div>
+    <nav id="mobile-menu" class="mobile-menu md:hidden" aria-label="Mobile navigation" aria-hidden="true" inert>
         <a href="#about" class="text-lg font-medium text-slate-300 hover:text-sky-400 transition-colors focus-ring rounded px-2 py-1">About</a>
         <a href="#experience" class="text-lg font-medium text-slate-300 hover:text-sky-400 transition-colors focus-ring rounded px-2 py-1">Experience</a>
         <a href="#skills" class="text-lg font-medium text-slate-300 hover:text-sky-400 transition-colors focus-ring rounded px-2 py-1">Skills</a>
@@ -261,7 +316,7 @@
                     <span class="text-gradient">Tsung-Han Wu</span>
                 </h1>
                 <p class="text-xl md:text-2xl text-slate-400 max-w-2xl leading-relaxed mb-6">
-                    Bridging processes technology and model-driven insights
+                    Bridging process technology and model-driven insights
                 </p>
                 <p class="font-mono text-slate-500 mb-12 uppercase tracking-widest text-sm">Sr. Staff Engineer | Process Modeling and ML | Silicon Technology Solutions</p>
                 <div class="flex flex-col sm:flex-row gap-4 items-center sm:items-center">
@@ -279,8 +334,11 @@
         <section id="about" class="py-40 reveal" aria-labelledby="about-title">
             <div class="grid md:grid-cols-2 gap-24 items-center">
                 <div class="relative">
-                    <div class="w-full aspect-square rounded-3xl glass-card overflow-hidden group">
-                        <img src="MyAvatar.jpg" alt="Tsung-Han Wu, Senior Staff Engineer" class="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000" loading="lazy" width="400" height="400">
+                    <div class="w-full aspect-square rounded-3xl glass-card overflow-hidden group relative">
+                        <picture>
+                            <source srcset="MyAvatar.webp" type="image/webp">
+                            <img src="MyAvatar.jpg" alt="Tsung-Han Wu, Senior Staff Engineer" class="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000" width="800" height="800" decoding="async">
+                        </picture>
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" aria-hidden="true"></div>
                     </div>
                     <div class="absolute -bottom-8 -right-8 glass-card p-8 rounded-2xl hidden md:block" aria-hidden="true">
@@ -334,11 +392,11 @@
             </h2>
             <div class="max-w-4xl mx-auto space-y-6" role="list" aria-label="Work experience">
                 <!-- Item 1: Synopsys -->
-                <article class="experience-item glass-card p-8 rounded-3xl group cursor-pointer transition-all hover:border-sky-500/30" role="listitem">
-                    <button class="w-full flex justify-between items-center text-left p-0 bg-transparent focus-ring rounded-xl" aria-expanded="false" aria-controls="exp-details-1">
+                <article class="experience-item glass-card p-8 rounded-3xl group transition-all hover:border-sky-500/30" role="listitem">
+                    <button class="w-full flex justify-between items-center text-left p-0 bg-transparent focus-ring rounded-xl" aria-expanded="false" aria-controls="exp-details-1" id="exp-trigger-1">
                         <div class="flex-1 pr-4">
                             <div class="flex flex-col md:flex-row justify-between mb-2">
-                                <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Senior Applications Engineer → Senior Staff Applications Engineer</h3>
+                                <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Senior Applications Engineer<br>→ Senior Staff Applications Engineer</h3>
                                 <span class="text-slate-500 text-sm font-mono mt-2 md:mt-0 bg-slate-900/50 px-4 py-1 rounded-full self-start">Jun 2020 — Present</span>
                             </div>
                             <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Synopsys, Taiwan</p>
@@ -346,7 +404,8 @@
                         <i class="fas fa-chevron-down text-slate-600 ml-6 chevron-icon group-hover:text-sky-400" aria-hidden="true"></i>
                     </button>
                     
-                    <div id="exp-details-1" class="experience-details" role="region" aria-label="Role details">
+                    <div id="exp-details-1" class="experience-details" role="region" aria-labelledby="exp-trigger-1" inert>
+                        <div class="experience-details-inner">
                         <div class="role-progression mb-8">
                             <div class="role-entry current">
                                 <div class="flex flex-col md:flex-row justify-between mb-2">
@@ -417,19 +476,20 @@
                                 </div>
                                 <div>
                                     <h5 class="font-bold text-sky-400 mb-2">Career Progression</h5>
-                                    <p class="text-slate-300 text-base leading-relaxed">Advanced through three progressive roles spanning TCAD process modeling, machine learning optimization, and strategic account ownership. Directs enterprise LLM solution deployment and R&D feature validation for key accounts, while driving model generation automation and high-fidelity simulation for advanced node technologies.</p>
+                                    <p class="text-slate-300 text-base leading-relaxed">Advanced through three progressive roles spanning TCAD process modeling, machine learning optimization, and strategic account ownership. Directs enterprise LLM solution deployment and R&amp;D feature validation for key accounts, while driving model generation automation and high-fidelity simulation for advanced node technologies.</p>
                                 </div>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </article>
 
                 <!-- Item 2: Lam Research -->
-                <article class="experience-item glass-card p-8 rounded-3xl group cursor-pointer transition-all hover:border-sky-500/30" role="listitem">
-                    <button class="w-full flex justify-between items-center text-left p-0 bg-transparent focus-ring rounded-xl" aria-expanded="false" aria-controls="exp-details-2">
+                <article class="experience-item glass-card p-8 rounded-3xl group transition-all hover:border-sky-500/30" role="listitem">
+                    <button class="w-full flex justify-between items-center text-left p-0 bg-transparent focus-ring rounded-xl" aria-expanded="false" aria-controls="exp-details-2" id="exp-trigger-2">
                         <div class="flex-1 pr-4">
                             <div class="flex flex-col md:flex-row justify-between mb-2">
-                                <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Senior Process Engineer → Senior Process Analytics Engineer</h3>
+                                <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Senior Process Engineer<br>→ Senior Process Analytics Engineer</h3>
                                 <span class="text-slate-500 text-sm font-mono mt-2 md:mt-0 bg-slate-900/50 px-4 py-1 rounded-full self-start">Apr 2015 — Jun 2020</span>
                             </div>
                             <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Lam Research, Taiwan</p>
@@ -437,7 +497,8 @@
                         <i class="fas fa-chevron-down text-slate-600 ml-6 chevron-icon group-hover:text-sky-400" aria-hidden="true"></i>
                     </button>
                     
-                    <div id="exp-details-2" class="experience-details" role="region" aria-label="Role details">
+                    <div id="exp-details-2" class="experience-details" role="region" aria-labelledby="exp-trigger-2" inert>
+                        <div class="experience-details-inner">
                         <div class="border-t border-slate-800/50 pt-6">
                             <!-- Role Progression Timeline -->
                             <div class="role-progression mb-8">
@@ -496,6 +557,7 @@
                                 </div>
                             </div>
                         </div>
+                        </div>
                     </div>
                 </article>
             </div>
@@ -507,8 +569,8 @@
                 <span class="text-sky-500 text-3xl font-mono">03.</span>
                 Expertise
             </h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
-                <div class="col-span-2 row-span-2 glass-card p-10 rounded-[2.5rem] flex flex-col justify-between overflow-hidden relative group">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto" role="list" aria-label="Expertise areas">
+                <div class="col-span-2 row-span-2 glass-card p-10 rounded-[2.5rem] flex flex-col justify-between overflow-hidden relative group" role="listitem">
                     <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity" aria-hidden="true">
                         <i class="fas fa-brain text-9xl text-sky-400"></i>
                     </div>
@@ -516,13 +578,13 @@
                         <h3 class="text-3xl font-bold mb-6">Machine Learning</h3>
                         <p class="text-slate-400 text-lg leading-relaxed">Deep expertise in leveraging ML for physical process modeling and optimization.</p>
                     </div>
-                    <div class="flex flex-wrap gap-3 mt-10" role="list" aria-label="ML technologies">
-                        <span class="px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20" role="listitem">PyTorch</span>
-                        <span class="px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20" role="listitem">TensorFlow</span>
-                        <span class="px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20" role="listitem">Scikit-Learn</span>
+                    <div class="flex flex-wrap gap-3 mt-10">
+                        <span class="px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20">PyTorch</span>
+                        <span class="px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20">TensorFlow</span>
+                        <span class="px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20">Scikit-Learn</span>
                     </div>
                 </div>
-                <div class="col-span-2 row-span-2 glass-card p-10 rounded-[2.5rem] flex flex-col justify-between overflow-hidden relative group">
+                <div class="col-span-2 row-span-2 glass-card p-10 rounded-[2.5rem] flex flex-col justify-between overflow-hidden relative group" role="listitem">
                     <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity" aria-hidden="true">
                         <i class="fas fa-microchip text-9xl text-green-400"></i>
                     </div>
@@ -530,10 +592,10 @@
                         <h3 class="text-3xl font-bold mb-6">TCAD Process Modeling</h3>
                         <p class="text-slate-400 text-lg leading-relaxed">Expert in developing topographical models of semiconductor process steps.</p>
                     </div>
-                    <div class="flex flex-wrap gap-3 mt-10" role="list" aria-label="TCAD technologies">
-                        <span class="px-4 py-2 bg-green-500/10 text-green-400 text-xs font-bold font-mono rounded-xl border border-green-500/20" role="listitem">Levelset Method</span>
-                        <span class="px-4 py-2 bg-green-500/10 text-green-400 text-xs font-bold font-mono rounded-xl border border-green-500/20" role="listitem">Particle Monte Carlo</span>
-                        <span class="px-4 py-2 bg-green-500/10 text-green-400 text-xs font-bold font-mono rounded-xl border border-green-500/20" role="listitem">Finite Element Analysis</span>
+                    <div class="flex flex-wrap gap-3 mt-10">
+                        <span class="px-4 py-2 bg-green-500/10 text-green-400 text-xs font-bold font-mono rounded-xl border border-green-500/20">Levelset Method</span>
+                        <span class="px-4 py-2 bg-green-500/10 text-green-400 text-xs font-bold font-mono rounded-xl border border-green-500/20">Particle Monte Carlo</span>
+                        <span class="px-4 py-2 bg-green-500/10 text-green-400 text-xs font-bold font-mono rounded-xl border border-green-500/20">Finite Element Analysis</span>
                     </div>
                 </div>
                 <div class="col-span-2 glass-card p-8 rounded-[2rem] flex items-center justify-between group hover:border-sky-500/30 transition-all" role="listitem">
@@ -582,121 +644,32 @@
     <footer class="border-t border-slate-900 py-12" role="contentinfo">
         <div class="container mx-auto text-center">
             <p class="font-mono text-sm text-slate-600 tracking-widest">
-                TSUNG-HAN WU &copy; <span id="year">2025</span> | DESIGNED FOR IMPACT
+                TSUNG-HAN WU &copy; <span id="year">2026</span> | DESIGNED FOR IMPACT
             </p>
         </div>
     </footer>
 
     <script>
-        // --- 3D Wireframe Terrain Animation (Optimized) ---
-        (function() {
-            const canvas = document.querySelector('#bg-canvas');
-            if (!canvas) return;
-            
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
-
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            
-            camera.position.set(0, 8, 12);
-            camera.lookAt(0, 0, 0);
-
-            // Reduced geometry complexity for better performance
-            const geometry = new THREE.PlaneGeometry(60, 60, 40, 40);
-            const material = new THREE.MeshBasicMaterial({ 
-                color: 0x0ea5e9, 
-                wireframe: true, 
-                transparent: true, 
-                opacity: 0.15 
-            });
-            const plane = new THREE.Mesh(geometry, material);
-            plane.rotation.x = -Math.PI / 2;
-            scene.add(plane);
-
-            let mouseX = 0;
-            let mouseY = 0;
-            let animationId = null;
-            const clock = new THREE.Clock();
-            
-            // Throttled mousemove handler
-            let ticking = false;
-            window.addEventListener('mousemove', (e) => {
-                if (!ticking) {
-                    requestAnimationFrame(() => {
-                        mouseX = (e.clientX / window.innerWidth) - 0.5;
-                        mouseY = (e.clientY / window.innerHeight) - 0.5;
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            }, { passive: true });
-
-            function animate() {
-                const t = clock.getElapsedTime();
-                const positions = plane.geometry.attributes.position;
-
-                // Batch update vertices for better performance
-                for (let i = 0, l = positions.count; i < l; i++) {
-                    const x = positions.getX(i);
-                    const y = positions.getY(i);
-                    const z = 1.5 * Math.sin(x / 8 + t * 0.15) * Math.cos(y / 8 + t * 0.08) +
-                              0.3 * Math.sin(x / 1.5 + t * 0.3);
-                    positions.setZ(i, z);
-                }
-                positions.needsUpdate = true;
-                
-                // Subtle parallax effect
-                plane.rotation.z = mouseX * 0.03;
-                plane.rotation.y = mouseX * 0.03;
-                
-                renderer.render(scene, camera);
-                animationId = requestAnimationFrame(animate);
-            }
-            
-            // Start animation only if not reduced motion
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-            if (!prefersReducedMotion.matches) {
-                animate();
-            }
-
-            // Cleanup on page unload
-            window.addEventListener('beforeunload', () => {
-                if (animationId) cancelAnimationFrame(animationId);
-                renderer.dispose();
-                geometry.dispose();
-                material.dispose();
-            });
-
-            // Handle resize with debounce
-            let resizeTimeout;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(() => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-                }, 100);
-            }, { passive: true });
-        })();
-
         // --- Intersection Observer for Reveal ---
         const reveals = document.querySelectorAll('.reveal');
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '50px' });
-        reveals.forEach(r => revealObserver.observe(r));
+        if (reveals.length && 'IntersectionObserver' in window) {
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '50px' });
+            reveals.forEach(r => revealObserver.observe(r));
+        } else {
+            reveals.forEach(r => r.classList.add('active'));
+        }
 
         // --- Scroll Progress & Header (Throttled) ---
         const scrollBar = document.getElementById('scroll-bar');
         const header = document.getElementById('header');
+        const headerInner = document.getElementById('header-inner');
         let scrollTicking = false;
         
         window.addEventListener('scroll', () => {
@@ -708,11 +681,15 @@
                     scrollBar.style.width = scrolled + "%";
 
                     if (winScroll > 50) {
-                        header.classList.add('bg-slate-950/80', 'backdrop-blur-xl', 'border-slate-800', 'py-3');
-                        header.classList.remove('py-5', 'border-transparent');
+                        header.classList.add('bg-slate-950/80', 'backdrop-blur-xl', 'border-slate-800');
+                        header.classList.remove('border-transparent');
+                        headerInner.classList.remove('py-5');
+                        headerInner.classList.add('py-3');
                     } else {
-                        header.classList.remove('bg-slate-950/80', 'backdrop-blur-xl', 'border-slate-800', 'py-3');
-                        header.classList.add('py-5', 'border-transparent');
+                        header.classList.remove('bg-slate-950/80', 'backdrop-blur-xl', 'border-slate-800');
+                        header.classList.add('border-transparent');
+                        headerInner.classList.remove('py-3');
+                        headerInner.classList.add('py-5');
                     }
                     scrollTicking = false;
                 });
@@ -720,36 +697,70 @@
             }
         }, { passive: true });
 
-        // Mobile Menu
+        // Mobile Menu with focus trap
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileOverlay = document.getElementById('mobile-menu-overlay');
+        const mainContent = document.getElementById('main-content');
+        let lastFocusedBeforeMenu = null;
+
+        function getMenuFocusables() {
+            return [...mobileMenu.querySelectorAll('a, button')].filter(
+                el => !el.hasAttribute('disabled') && el.offsetParent !== null
+            );
+        }
         
         function toggleMenu(open) {
             const isOpen = open !== undefined ? open : !mobileMenu.classList.contains('open');
             mobileMenu.classList.toggle('open', isOpen);
             mobileOverlay.classList.toggle('open', isOpen);
-            menuButton.setAttribute('aria-expanded', isOpen);
-            mobileOverlay.setAttribute('aria-hidden', !isOpen);
-            document.body.style.overflow = isOpen ? 'hidden' : '';
+            menuButton.setAttribute('aria-expanded', String(isOpen));
+            menuButton.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+            mobileOverlay.setAttribute('aria-hidden', String(!isOpen));
+            mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+            if (isOpen) {
+                mobileMenu.removeAttribute('inert');
+                lastFocusedBeforeMenu = document.activeElement;
+                document.body.style.overflow = 'hidden';
+                if (mainContent) mainContent.setAttribute('aria-hidden', 'true');
+                const focusables = getMenuFocusables();
+                if (focusables[0]) focusables[0].focus();
+            } else {
+                mobileMenu.setAttribute('inert', '');
+                document.body.style.overflow = '';
+                if (mainContent) mainContent.removeAttribute('aria-hidden');
+                (lastFocusedBeforeMenu || menuButton).focus();
+            }
         }
         
         menuButton.addEventListener('click', () => toggleMenu());
         mobileOverlay.addEventListener('click', () => toggleMenu(false));
         
-        // Close menu on link click
         mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => toggleMenu(false));
         });
         
-        // Close menu on Escape key
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+            if (!mobileMenu.classList.contains('open')) return;
+            if (e.key === 'Escape') {
                 toggleMenu(false);
+                return;
+            }
+            if (e.key !== 'Tab') return;
+            const focusables = getMenuFocusables();
+            if (!focusables.length) return;
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
             }
         });
         
-        // Experience Accordion (Enhanced)
+        // Experience Accordion
         const expItems = document.querySelectorAll('.experience-item');
         expItems.forEach(item => {
             const button = item.querySelector('button');
@@ -758,30 +769,130 @@
             button.addEventListener('click', () => {
                 const isActive = item.classList.contains('active');
                 
-                // Close all items
                 expItems.forEach(other => {
                     if (other !== item) {
                         other.classList.remove('active');
                         other.querySelector('button').setAttribute('aria-expanded', 'false');
+                        const otherDetails = other.querySelector('.experience-details');
+                        if (otherDetails) otherDetails.setAttribute('inert', '');
                     }
                 });
 
-                // Toggle clicked item
-                item.classList.toggle('active', !isActive);
-                button.setAttribute('aria-expanded', !isActive);
-            });
-            
-            // Keyboard support
-            button.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    button.click();
-                }
+                const willOpen = !isActive;
+                item.classList.toggle('active', willOpen);
+                button.setAttribute('aria-expanded', String(willOpen));
+                if (willOpen) details.removeAttribute('inert');
+                else details.setAttribute('inert', '');
             });
         });
         
-        // Set year (fallback for static sites)
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        // --- 3D Wireframe Terrain (lazy-loaded, skipped for reduced motion) ---
+        (function initTerrain() {
+            const canvas = document.querySelector('#bg-canvas');
+            if (!canvas) return;
+
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (prefersReducedMotion.matches) {
+                canvas.remove();
+                return;
+            }
+
+            function startTerrain() {
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                
+                camera.position.set(0, 8, 12);
+                camera.lookAt(0, 0, 0);
+
+                const geometry = new THREE.PlaneGeometry(60, 60, 40, 40);
+                const material = new THREE.MeshBasicMaterial({ 
+                    color: 0x0ea5e9, 
+                    wireframe: true, 
+                    transparent: true, 
+                    opacity: 0.15 
+                });
+                const plane = new THREE.Mesh(geometry, material);
+                plane.rotation.x = -Math.PI / 2;
+                scene.add(plane);
+
+                let mouseX = 0;
+                let animationId = null;
+                const clock = new THREE.Clock();
+                
+                let ticking = false;
+                window.addEventListener('mousemove', (e) => {
+                    if (!ticking) {
+                        requestAnimationFrame(() => {
+                            mouseX = (e.clientX / window.innerWidth) - 0.5;
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                }, { passive: true });
+
+                function animate() {
+                    const t = clock.getElapsedTime();
+                    const positions = plane.geometry.attributes.position;
+
+                    for (let i = 0, l = positions.count; i < l; i++) {
+                        const x = positions.getX(i);
+                        const y = positions.getY(i);
+                        const z = 1.5 * Math.sin(x / 8 + t * 0.15) * Math.cos(y / 8 + t * 0.08) +
+                                  0.3 * Math.sin(x / 1.5 + t * 0.3);
+                        positions.setZ(i, z);
+                    }
+                    positions.needsUpdate = true;
+                    
+                    plane.rotation.z = mouseX * 0.03;
+                    plane.rotation.y = mouseX * 0.03;
+                    
+                    renderer.render(scene, camera);
+                    animationId = requestAnimationFrame(animate);
+                }
+                
+                animate();
+
+                window.addEventListener('beforeunload', () => {
+                    if (animationId) cancelAnimationFrame(animationId);
+                    renderer.dispose();
+                    geometry.dispose();
+                    material.dispose();
+                });
+
+                let resizeTimeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        camera.aspect = window.innerWidth / window.innerHeight;
+                        camera.updateProjectionMatrix();
+                        renderer.setSize(window.innerWidth, window.innerHeight);
+                        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                    }, 100);
+                }, { passive: true });
+            }
+
+            const load = () => {
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+                script.crossOrigin = 'anonymous';
+                script.referrerPolicy = 'no-referrer';
+                script.onload = startTerrain;
+                script.onerror = () => canvas.remove();
+                document.head.appendChild(script);
+            };
+
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(load, { timeout: 2000 });
+            } else {
+                window.addEventListener('load', () => setTimeout(load, 200));
+            }
+        })();
     </script>
 </body>
 </html>
