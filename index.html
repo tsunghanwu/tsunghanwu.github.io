@@ -28,7 +28,20 @@
             --accent: #38bdf8;
             --text-light: #f1f5f9;
             --text-muted: #94a3b8;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
         }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-dark);
@@ -41,7 +54,7 @@
             background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all var(--transition-normal);
         }
         .glass-card:hover {
             border-color: rgba(14, 165, 233, 0.4);
@@ -53,6 +66,7 @@
             background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .reveal {
@@ -80,6 +94,7 @@
             background: linear-gradient(90deg, var(--primary), var(--accent));
             z-index: 100;
             width: 0%;
+            transform-origin: left;
         }
 
         .nav-link {
@@ -91,9 +106,14 @@
             bottom: -4px; left: 0;
             width: 0; height: 1px;
             background: var(--primary);
-            transition: width 0.3s;
+            transition: width var(--transition-fast);
         }
         .nav-link:hover::after { width: 100%; }
+        .nav-link:focus-visible {
+            outline: none;
+            color: var(--primary);
+        }
+        .nav-link:focus-visible::after { width: 100%; }
 
         .experience-details {
             max-height: 0;
@@ -106,71 +126,127 @@
             margin-top: 1.5rem;
         }
         .chevron-icon {
-            transition: transform 0.3s ease;
+            transition: transform var(--transition-fast);
         }
         .experience-item.active .chevron-icon {
             transform: rotate(180deg);
         }
+
+        .focus-ring:focus-visible {
+            outline: none;
+            ring: 2px;
+            ring-offset: 2px;
+            ring-offset-slate-950;
+            ring-sky-500;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 7rem);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                position: fixed;
+                top: 0; right: 0; bottom: 0;
+                width: 80%;
+                max-width: 320px;
+                background: rgba(15, 23, 42, 0.95);
+                backdrop-filter: blur(20px);
+                border-left: 1px solid rgba(255, 255, 255, 0.08);
+                z-index: 60;
+                transform: translateX(100%);
+                transition: transform var(--transition-normal);
+                padding: 6rem 2rem 2rem;
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .mobile-menu.open {
+                transform: translateX(0);
+            }
+            .mobile-menu-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 50;
+                opacity: 0;
+                visibility: hidden;
+                transition: all var(--transition-fast);
+            }
+            .mobile-menu-overlay.open {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="scroll-progress" id="scroll-bar"></div>
-    <canvas id="bg-canvas"></canvas>
+    <div class="scroll-progress" id="scroll-bar" aria-hidden="true"></div>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
     <!-- Header -->
-    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b border-transparent">
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b border-transparent" role="banner">
         <div class="container mx-auto px-6 py-5 flex justify-between items-center">
-            <a href="#" class="text-xl font-bold font-mono tracking-tighter text-sky-400 flex items-center gap-2">
-                <span class="w-2 h-2 bg-sky-500 rounded-full animate-pulse"></span>
+            <a href="#" class="text-xl font-bold font-mono tracking-tighter text-sky-400 flex items-center gap-2 focus-ring rounded-md px-2 py-1 -mx-2 -my-1" aria-label="Tsung-Han Wu Home">
+                <span class="w-2 h-2 bg-sky-500 rounded-full animate-pulse" aria-hidden="true"></span>
                 tsunghanwu.io
             </a>
-            <nav class="hidden md:flex space-x-12 items-center text-xs font-bold tracking-[0.2em]">
+            <nav class="hidden md:flex space-x-12 items-center text-xs font-bold tracking-[0.2em]" aria-label="Main navigation">
                 <a href="#about" class="nav-link text-slate-400 hover:text-white transition-colors">ABOUT</a>
                 <a href="#experience" class="nav-link text-slate-400 hover:text-white transition-colors">EXPERIENCE</a>
                 <a href="#skills" class="nav-link text-slate-400 hover:text-white transition-colors">SKILLS</a>
-                <a href="#contact" class="px-6 py-2 glass-card hover:bg-sky-500 hover:text-slate-950 hover:border-transparent rounded-full transition-all duration-300">CONNECT</a>
+                <a href="#contact" class="px-6 py-2 glass-card hover:bg-sky-500 hover:text-slate-950 hover:border-transparent rounded-full transition-all duration-300 focus-ring">CONNECT</a>
             </nav>
-            <button id="mobile-menu-button" class="md:hidden text-2xl" aria-label="Toggle Menu">
-                <i class="fas fa-bars"></i>
+            <button id="mobile-menu-button" class="md:hidden text-2xl p-2 focus-ring rounded-lg" aria-label="Toggle Menu" aria-expanded="false" aria-controls="mobile-menu">
+                <i class="fas fa-bars" aria-hidden="true"></i>
             </button>
         </div>
     </header>
 
-    <main class="container mx-auto px-6 relative z-10">
+    <!-- Mobile Menu -->
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay" aria-hidden="true"></div>
+    <nav id="mobile-menu" class="mobile-menu md:hidden" aria-label="Mobile navigation">
+        <a href="#about" class="text-lg font-medium text-slate-300 hover:text-sky-400 transition-colors focus-ring rounded px-2 py-1">About</a>
+        <a href="#experience" class="text-lg font-medium text-slate-300 hover:text-sky-400 transition-colors focus-ring rounded px-2 py-1">Experience</a>
+        <a href="#skills" class="text-lg font-medium text-slate-300 hover:text-sky-400 transition-colors focus-ring rounded px-2 py-1">Skills</a>
+        <a href="#contact" class="text-lg font-bold text-sky-400 hover:text-sky-300 transition-colors focus-ring rounded px-2 py-1">Connect</a>
+    </nav>
+
+    <main class="container mx-auto px-6 relative z-10" id="main-content">
 
         <!-- Hero Section -->
-        <section id="home" class="min-h-screen flex items-center pt-24 md:pt-0">
+        <section id="home" class="min-h-screen flex items-center pt-24 md:pt-0" aria-labelledby="hero-title">
             <div class="max-w-5xl">
-                <div class="inline-flex items-center px-3 py-1 mb-8 rounded-full glass-card border-sky-500/20 text-sky-400 text-[10px] font-bold tracking-[0.2em] font-mono">
-                    <span class="mr-2">⚡</span> MY DIGITAL BUSINESS CARD
+                <div class="inline-flex items-center px-3 py-1 mb-8 rounded-full glass-card border-sky-500/20 text-sky-400 text-[10px] font-bold tracking-[0.2em] font-mono" aria-hidden="true">
+                    <span class="mr-2" aria-hidden="true">⚡</span> MY DIGITAL BUSINESS CARD
                 </div>
-                <h1 class="text-6xl md:text-9xl font-bold leading-[0.9] tracking-tighter mb-10">
+                <h1 id="hero-title" class="hero-title font-bold leading-[0.9] tracking-tighter mb-10">
                     <span class="text-gradient">Tsung-Han Wu</span>
                 </h1>
                 <p class="text-xl md:text-2xl text-slate-400 max-w-2xl leading-relaxed mb-6">
                     Bridging processes technology and model-driven insights
                 </p>
                 <p class="font-mono text-slate-500 mb-12 uppercase tracking-widest text-sm">Sr. Staff Engineer | Process Modeling and ML | Silicon Technology Solutions</p>
-                <div class="flex gap-8 items-center">
-                    <a href="#experience" class="px-10 py-5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-2xl transition-all shadow-2xl shadow-sky-500/20 transform hover:scale-105">
+                <div class="flex flex-col sm:flex-row gap-4 items-center sm:items-center">
+                    <a href="#experience" class="px-10 py-5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-2xl transition-all shadow-2xl shadow-sky-500/20 transform hover:scale-105 focus-ring w-full sm:w-auto text-center" aria-label="View my experience">
                         View Experience
                     </a>
-                    <a href="#contact" class="group flex items-center gap-3 text-slate-300 hover:text-sky-400 transition-colors font-bold tracking-wide">
-                        Get in touch <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-2"></i>
+                    <a href="#contact" class="group flex items-center gap-3 text-slate-300 hover:text-sky-400 transition-colors font-bold tracking-wide focus-ring rounded-full px-4 py-2 w-full sm:w-auto justify-center" aria-label="Contact me">
+                        Get in touch <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-2" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-40 reveal">
+        <section id="about" class="py-40 reveal" aria-labelledby="about-title">
             <div class="grid md:grid-cols-2 gap-24 items-center">
                 <div class="relative">
                     <div class="w-full aspect-square rounded-3xl glass-card overflow-hidden group">
-                        <img src="MyAvatar.jpg" alt="Tsung-Han Wu" class="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                        <img src="MyAvatar.jpg" alt="Tsung-Han Wu, Senior Staff Engineer" class="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000" loading="lazy" width="400" height="400">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" aria-hidden="true"></div>
                     </div>
-                    <div class="absolute -bottom-8 -right-8 glass-card p-8 rounded-2xl hidden md:block">
+                    <div class="absolute -bottom-8 -right-8 glass-card p-8 rounded-2xl hidden md:block" aria-hidden="true">
                         <div class="flex gap-10">
                             <div>
                                 <p class="text-4xl font-bold text-sky-400 font-mono">10+</p>
@@ -180,7 +256,7 @@
                     </div>
                 </div>
                 <div>
-                    <h2 class="text-5xl font-bold mb-10 flex items-center gap-6">
+                    <h2 id="about-title" class="text-5xl font-bold mb-10 flex items-center gap-6">
                         <span class="text-sky-500 text-3xl font-mono">01.</span>
                         About Me
                     </h2>
@@ -194,18 +270,18 @@
                         <p>
                             Strong interpersonal skills facilitate effective collaboration and communication across teams.
                         </p>
-                        <div class="pt-8 grid grid-cols-2 gap-6">
-                            <div class="flex items-center gap-4 text-sm text-slate-300 font-medium">
-                                <span class="w-2 h-2 bg-sky-500 rounded-full shadow-[0_0_10px_rgba(14,165,233,0.5)]"></span> TCAD Process Modeling
+                        <div class="pt-8 grid grid-cols-2 gap-6" role="list" aria-label="Key expertise areas">
+                            <div class="flex items-center gap-4 text-sm text-slate-300 font-medium" role="listitem">
+                                <span class="w-2 h-2 bg-sky-500 rounded-full shadow-[0_0_10px_rgba(14,165,233,0.5)]" aria-hidden="true"></span> TCAD Process Modeling
                             </div>
-                            <div class="flex items-center gap-4 text-sm text-slate-300 font-medium">
-                                <span class="w-2 h-2 bg-sky-500 rounded-full shadow-[0_0_10px_rgba(14,165,233,0.5)]"></span> Applied Machine Learning
+                            <div class="flex items-center gap-4 text-sm text-slate-300 font-medium" role="listitem">
+                                <span class="w-2 h-2 bg-sky-500 rounded-full shadow-[0_0_10px_rgba(14,165,233,0.5)]" aria-hidden="true"></span> Applied Machine Learning
                             </div>
-                            <div class="flex items-center gap-4 text-sm text-slate-300 font-medium">
-                                <span class="w-2 h-2 bg-sky-500 rounded-full shadow-[0_0_10px_rgba(14,165,233,0.5)]"></span> DTCO Workflows
+                            <div class="flex items-center gap-4 text-sm text-slate-300 font-medium" role="listitem">
+                                <span class="w-2 h-2 bg-sky-500 rounded-full shadow-[0_0_10px_rgba(14,165,233,0.5)]" aria-hidden="true"></span> DTCO Workflows
                             </div>
-                            <div class="flex items-center gap-4 text-sm text-slate-300 font-medium">
-                                <span class="w-2 h-2 bg-sky-500 rounded-full shadow-[0_0_10px_rgba(14,165,233,0.5)]"></span> Optimization Methods
+                            <div class="flex items-center gap-4 text-sm text-slate-300 font-medium" role="listitem">
+                                <span class="w-2 h-2 bg-sky-500 rounded-full shadow-[0_0_10px_rgba(14,165,233,0.5)]" aria-hidden="true"></span> Optimization Methods
                             </div>
                         </div>
                     </div>
@@ -214,145 +290,145 @@
         </section>
 
         <!-- Experience Section -->
-        <section id="experience" class="py-40 reveal">
-            <h2 class="text-5xl font-bold mb-24 text-center flex justify-center items-center gap-6">
+        <section id="experience" class="py-40 reveal" aria-labelledby="experience-title">
+            <h2 id="experience-title" class="text-5xl font-bold mb-24 text-center flex justify-center items-center gap-6">
                 <span class="text-sky-500 text-3xl font-mono">02.</span>
                 Experience
             </h2>
-            <div class="max-w-4xl mx-auto space-y-6">
+            <div class="max-w-4xl mx-auto space-y-6" role="list" aria-label="Work experience">
                 <!-- Item 1 -->
-                <div class="experience-item glass-card p-8 rounded-3xl group cursor-pointer transition-all hover:border-sky-500/30">
-                    <div class="flex justify-between items-center">
-                        <div class="flex-1">
+                <article class="experience-item glass-card p-8 rounded-3xl group cursor-pointer transition-all hover:border-sky-500/30" role="listitem">
+                    <button class="w-full flex justify-between items-center text-left p-0 bg-transparent focus-ring rounded-xl" aria-expanded="false" aria-controls="exp-details-1">
+                        <div class="flex-1 pr-4">
                             <div class="flex flex-col md:flex-row justify-between mb-2">
                                 <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Senior Staff Applications Engineer</h3>
                                 <span class="text-slate-500 text-sm font-mono mt-2 md:mt-0 bg-slate-900/50 px-4 py-1 rounded-full self-start">Jun 2020 — Present</span>
                             </div>
                             <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Synopsys, Taiwan</p>
                         </div>
-                        <i class="fas fa-chevron-down text-slate-600 ml-6 chevron-icon group-hover:text-sky-400"></i>
-                    </div>
+                        <i class="fas fa-chevron-down text-slate-600 ml-6 chevron-icon group-hover:text-sky-400" aria-hidden="true"></i>
+                    </button>
                     
-                    <div class="experience-details">
-                        <ul class="space-y-4 text-slate-400 text-lg border-t border-slate-800/50 pt-6">
-                            <li class="flex gap-4">
-                                <span class="text-sky-500">▹</span>
+                    <div id="exp-details-1" class="experience-details" role="region" aria-label="Role details">
+                        <ul class="space-y-4 text-slate-400 text-lg border-t border-slate-800/50 pt-6" role="list">
+                            <li class="flex gap-4" role="listitem">
+                                <span class="text-sky-500" aria-hidden="true">▹</span>
                                 Develop and optimize TCAD applications for process modeling, ML, and DTCO.
                             </li>
-                            <li class="flex gap-4">
-                                <span class="text-sky-500">▹</span>
+                            <li class="flex gap-4" role="listitem">
+                                <span class="text-sky-500" aria-hidden="true">▹</span>
                                 Develop and optimize model generation and calibration flows / methodologies.
                             </li>
-                            <li class="flex gap-4">
-                                <span class="text-sky-500">▹</span>
+                            <li class="flex gap-4" role="listitem">
+                                <span class="text-sky-500" aria-hidden="true">▹</span>
                                 Model nano-scale plasma etching topographical effects and calibration flows.
                             </li>
                         </ul>
                     </div>
-                </div>
+                </article>
 
                 <!-- Item 2 -->
-                <div class="experience-item glass-card p-8 rounded-3xl group cursor-pointer transition-all hover:border-sky-500/30">
-                    <div class="flex justify-between items-center">
-                        <div class="flex-1">
+                <article class="experience-item glass-card p-8 rounded-3xl group cursor-pointer transition-all hover:border-sky-500/30" role="listitem">
+                    <button class="w-full flex justify-between items-center text-left p-0 bg-transparent focus-ring rounded-xl" aria-expanded="false" aria-controls="exp-details-2">
+                        <div class="flex-1 pr-4">
                             <div class="flex flex-col md:flex-row justify-between mb-2">
                                 <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Senior Process Analytics Engineer</h3>
                                 <span class="text-slate-500 text-sm font-mono mt-2 md:mt-0 bg-slate-900/50 px-4 py-1 rounded-full self-start">Jan 2019 — Jun 2020</span>
                             </div>
                             <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Lam Research, Taiwan</p>
                         </div>
-                        <i class="fas fa-chevron-down text-slate-600 ml-6 chevron-icon group-hover:text-sky-400"></i>
-                    </div>
+                        <i class="fas fa-chevron-down text-slate-600 ml-6 chevron-icon group-hover:text-sky-400" aria-hidden="true"></i>
+                    </button>
                     
-                    <div class="experience-details">
-                        <ul class="space-y-4 text-slate-400 text-lg border-t border-slate-800/50 pt-6">
-                            <li class="flex gap-4">
-                                <span class="text-sky-500">▹</span>
+                    <div id="exp-details-2" class="experience-details" role="region" aria-label="Role details">
+                        <ul class="space-y-4 text-slate-400 text-lg border-t border-slate-800/50 pt-6" role="list">
+                            <li class="flex gap-4" role="listitem">
+                                <span class="text-sky-500" aria-hidden="true">▹</span>
                                 Delivered smart manufacturing solutions, improving wafer-to-wafer etch depth variation.
                             </li>
-                            <li class="flex gap-4">
-                                <span class="text-sky-500">▹</span>
+                            <li class="flex gap-4" role="listitem">
+                                <span class="text-sky-500" aria-hidden="true">▹</span>
                                 Trained, optimized, and deployed machine learning models to production tools.
                             </li>
-                            <li class="flex gap-4">
-                                <span class="text-sky-500">▹</span>
+                            <li class="flex gap-4" role="listitem">
+                                <span class="text-sky-500" aria-hidden="true">▹</span>
                                 Performed data processing and statistical analysis with metrology and production data.
                             </li>
                         </ul>
                     </div>
-                </div>
+                </article>
 
                 <!-- Item 3 -->
-                <div class="experience-item glass-card p-8 rounded-3xl group cursor-pointer transition-all hover:border-sky-500/30">
-                    <div class="flex justify-between items-center">
-                        <div class="flex-1">
+                <article class="experience-item glass-card p-8 rounded-3xl group cursor-pointer transition-all hover:border-sky-500/30" role="listitem">
+                    <button class="w-full flex justify-between items-center text-left p-0 bg-transparent focus-ring rounded-xl" aria-expanded="false" aria-controls="exp-details-3">
+                        <div class="flex-1 pr-4">
                             <div class="flex flex-col md:flex-row justify-between mb-2">
                                 <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Senior Process Engineer</h3>
                                 <span class="text-slate-500 text-sm font-mono mt-2 md:mt-0 bg-slate-900/50 px-4 py-1 rounded-full self-start">Apr 2015 — Dec 2018</span>
                             </div>
                             <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Lam Research, Taiwan</p>
                         </div>
-                        <i class="fas fa-chevron-down text-slate-600 ml-6 chevron-icon group-hover:text-sky-400"></i>
-                    </div>
+                        <i class="fas fa-chevron-down text-slate-600 ml-6 chevron-icon group-hover:text-sky-400" aria-hidden="true"></i>
+                    </button>
                     
-                    <div class="experience-details">
-                        <ul class="space-y-4 text-slate-400 text-lg border-t border-slate-800/50 pt-6">
-                            <li class="flex gap-4">
-                                <span class="text-sky-500">▹</span>
+                    <div id="exp-details-3" class="experience-details" role="region" aria-label="Role details">
+                        <ul class="space-y-4 text-slate-400 text-lg border-t border-slate-800/50 pt-6" role="list">
+                            <li class="flex gap-4" role="listitem">
+                                <span class="text-sky-500" aria-hidden="true">▹</span>
                                 Collaborated with a key customer's R&D team on FEOL FinFET process development.                     
                             </li>
-                            <li class="flex gap-4">
-                                <span class="text-sky-500">▹</span>
+                            <li class="flex gap-4" role="listitem">
+                                <span class="text-sky-500" aria-hidden="true">▹</span>
                                 Developed in-spec plasma etching processes for multiple critical applications.
                             </li>
-                            <li class="flex gap-4">
-                                <span class="text-sky-500">▹</span>
+                            <li class="flex gap-4" role="listitem">
+                                <span class="text-sky-500" aria-hidden="true">▹</span>
                                 Improved process non-uniformity for multiple SADP applications.
                             </li>
                         </ul>
                     </div>
-                </div>
+                </article>
             </div>
         </section>
 
         <!-- Skills Section -->
-        <section id="skills" class="py-40 reveal">
-            <h2 class="text-5xl font-bold mb-24 text-center flex justify-center items-center gap-6">
+        <section id="skills" class="py-40 reveal" aria-labelledby="skills-title">
+            <h2 id="skills-title" class="text-5xl font-bold mb-24 text-center flex justify-center items-center gap-6">
                 <span class="text-sky-500 text-3xl font-mono">03.</span>
                 Expertise
             </h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
                 <div class="col-span-2 row-span-2 glass-card p-10 rounded-[2.5rem] flex flex-col justify-between overflow-hidden relative group">
-                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity" aria-hidden="true">
                         <i class="fas fa-brain text-9xl text-sky-400"></i>
                     </div>
                     <div>
                         <h3 class="text-3xl font-bold mb-6">Machine Learning</h3>
                         <p class="text-slate-400 text-lg leading-relaxed">Deep expertise in leveraging ML for physical process modeling and optimization.</p>
                     </div>
-                    <div class="flex flex-wrap gap-3 mt-10">
-                        <span class="px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20">PyTorch</span>
-                        <span class="px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20">TensorFlow</span>
-                        <span class="px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20">Scikit-Learn</span>
+                    <div class="flex flex-wrap gap-3 mt-10" role="list" aria-label="ML technologies">
+                        <span class="px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20" role="listitem">PyTorch</span>
+                        <span class="px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20" role="listitem">TensorFlow</span>
+                        <span class="px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20" role="listitem">Scikit-Learn</span>
                     </div>
                 </div>
                 <div class="col-span-2 row-span-2 glass-card p-10 rounded-[2.5rem] flex flex-col justify-between overflow-hidden relative group">
-                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity" aria-hidden="true">
                         <i class="fas fa-microchip text-9xl text-green-400"></i>
                     </div>
                     <div>
                         <h3 class="text-3xl font-bold mb-6">TCAD Process Modeling</h3>
                         <p class="text-slate-400 text-lg leading-relaxed">Expert in developing topographical models of semiconductor process steps.</p>
                     </div>
-                    <div class="flex flex-wrap gap-3 mt-10">
-                        <span class="px-4 py-2 bg-green-500/10 text-green-400 text-xs font-bold font-mono rounded-xl border border-green-500/20">Levelset Method</span>
-                        <span class="px-4 py-2 bg-green-500/10 text-green-400 text-xs font-bold font-mono rounded-xl border border-green-500/20">Particle Monte Carlo</span>
-                        <span class="px-4 py-2 bg-green-500/10 text-green-400 text-xs font-bold font-mono rounded-xl border border-green-500/20">Finite Element Analysis</span>
+                    <div class="flex flex-wrap gap-3 mt-10" role="list" aria-label="TCAD technologies">
+                        <span class="px-4 py-2 bg-green-500/10 text-green-400 text-xs font-bold font-mono rounded-xl border border-green-500/20" role="listitem">Levelset Method</span>
+                        <span class="px-4 py-2 bg-green-500/10 text-green-400 text-xs font-bold font-mono rounded-xl border border-green-500/20" role="listitem">Particle Monte Carlo</span>
+                        <span class="px-4 py-2 bg-green-500/10 text-green-400 text-xs font-bold font-mono rounded-xl border border-green-500/20" role="listitem">Finite Element Analysis</span>
                     </div>
                 </div>
-                <div class="col-span-2 glass-card p-8 rounded-[2rem] flex items-center justify-between group">
+                <div class="col-span-2 glass-card p-8 rounded-[2rem] flex items-center justify-between group hover:border-sky-500/30 transition-all" role="listitem">
                     <div class="flex items-center gap-6">
-                        <div class="w-16 h-16 bg-amber-500/10 rounded-2xl flex items-center justify-center border border-amber-500/20">
+                        <div class="w-16 h-16 bg-amber-500/10 rounded-2xl flex items-center justify-center border border-amber-500/20" aria-hidden="true">
                             <i class="fas fa-chart-line text-2xl text-amber-500"></i>
                         </div>
                         <div>
@@ -361,29 +437,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="glass-card p-8 rounded-[2rem] flex flex-col items-center justify-center text-center group hover:bg-blue-500/5">
-                    <i class="fab fa-python text-5xl text-blue-500 mb-6 group-hover:scale-110 transition-transform"></i>
+                <div class="glass-card p-8 rounded-[2rem] flex flex-col items-center justify-center text-center group hover:bg-blue-500/5 hover:border-blue-500/30 transition-all" role="listitem">
+                    <i class="fab fa-python text-5xl text-blue-500 mb-6 group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                     <span class="font-bold tracking-wider">Python</span>
                 </div>
-                <div class="glass-card p-8 rounded-[2rem] flex flex-col items-center justify-center text-center group hover:bg-white/5">
-                    <i class="fab fa-linux text-5xl text-white mb-6 group-hover:scale-110 transition-transform"></i>
+                <div class="glass-card p-8 rounded-[2rem] flex flex-col items-center justify-center text-center group hover:bg-white/5 hover:border-white/10 transition-all" role="listitem">
+                    <i class="fab fa-linux text-5xl text-white mb-6 group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                     <span class="font-bold tracking-wider">Linux</span>
                 </div>
-                <div class="glass-card p-8 rounded-[2rem] flex flex-col items-center justify-center text-center group hover:bg-orange-500/5">
-                    <i class="fab fa-git-alt text-5xl text-orange-500 mb-6 group-hover:scale-110 transition-transform"></i>
+                <div class="glass-card p-8 rounded-[2rem] flex flex-col items-center justify-center text-center group hover:bg-orange-500/5 hover:border-orange-500/30 transition-all" role="listitem">
+                    <i class="fab fa-git-alt text-5xl text-orange-500 mb-6 group-hover:scale-110 transition-transform" aria-hidden="true"></i>
                     <span class="font-bold tracking-wider">Git</span>
                 </div>
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-40 reveal">
+        <section id="contact" class="py-40 reveal" aria-labelledby="contact-title">
             <div class="max-w-5xl mx-auto glass-card rounded-[4rem] p-16 md:p-32 text-center relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-sky-500 to-transparent"></div>
-                <h2 class="text-5xl md:text-8xl font-bold mb-10 tracking-tighter">Let's Connect!</h2>
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-sky-500 to-transparent" aria-hidden="true"></div>
+                <h2 id="contact-title" class="text-5xl md:text-8xl font-bold mb-10 tracking-tighter">Let's Connect!</h2>
                 <div class="flex flex-col md:flex-row gap-8 justify-center items-center">
-                    <a href="https://linkedin.com/in/tsung-han-wu/" target="_blank" class="px-12 py-6 bg-white text-slate-950 font-bold rounded-2xl hover:bg-sky-400 transition-all flex items-center gap-4 text-xl shadow-2xl">
-                        <i class="fab fa-linkedin text-2xl"></i>
+                    <a href="https://linkedin.com/in/tsung-han-wu/" target="_blank" rel="noopener noreferrer" class="px-12 py-6 bg-white text-slate-950 font-bold rounded-2xl hover:bg-sky-400 transition-all flex items-center gap-4 text-xl shadow-2xl focus-ring" aria-label="Connect on LinkedIn">
+                        <i class="fab fa-linkedin text-2xl" aria-hidden="true"></i>
                         Connect
                     </a>
                 </div>
@@ -393,117 +469,208 @@
     </main>
     
     <!-- Footer -->
-    <footer class="border-t border-slate-900 py-12">
+    <footer class="border-t border-slate-900 py-12" role="contentinfo">
         <div class="container mx-auto text-center">
             <p class="font-mono text-sm text-slate-600 tracking-widest">
-                TSUNG-HAN WU &copy; <span id="year"></span> | DESIGNED FOR IMPACT
+                TSUNG-HAN WU &copy; <span id="year">2025</span> | DESIGNED FOR IMPACT
             </p>
         </div>
     </footer>
 
     <script>
-        // --- 3D Wireframe Terrain Animation ---
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg-canvas'), antialias: true, alpha: true });
-
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        
-        camera.position.set(0, 8, 12);
-        camera.lookAt(0, 0, 0);
-
-        const geometry = new THREE.PlaneGeometry(80, 80, 60, 60);
-        const material = new THREE.MeshBasicMaterial({ color: 0x0ea5e9, wireframe: true, transparent: true, opacity: 0.2 });
-        const plane = new THREE.Mesh(geometry, material);
-        plane.rotation.x = -Math.PI / 2;
-        scene.add(plane);
-
-        let mouseX = 0;
-        let mouseY = 0;
-        window.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX / window.innerWidth) - 0.5;
-            mouseY = (e.clientY / window.innerHeight) - 0.5;
-        });
-
-        const clock = new THREE.Clock();
-        function animate() {
-            const t = clock.getElapsedTime();
-            const positions = plane.geometry.attributes.position;
-
-            for (let i = 0; i < positions.count; i++) {
-                const x = positions.getX(i);
-                const y = positions.getY(i);
-                const z = 2 * Math.sin(x / 10 + t * 0.2) * Math.cos(y / 10 + t * 0.1) +
-                          0.5 * Math.sin(x / 2 + t * 0.5);
-                positions.setZ(i, z);
-            }
-            positions.needsUpdate = true;
+        // --- 3D Wireframe Terrain Animation (Optimized) ---
+        (function() {
+            const canvas = document.querySelector('#bg-canvas');
+            if (!canvas) return;
             
-            // Parallax effect
-            plane.rotation.z = mouseX * 0.05;
-            plane.rotation.y = mouseX * 0.05;
-            
-            renderer.render(scene, camera);
-            requestAnimationFrame(animate);
-        }
-        animate();
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
 
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+            
+            camera.position.set(0, 8, 12);
+            camera.lookAt(0, 0, 0);
+
+            // Reduced geometry complexity for better performance
+            const geometry = new THREE.PlaneGeometry(60, 60, 40, 40);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x0ea5e9, 
+                wireframe: true, 
+                transparent: true, 
+                opacity: 0.15 
+            });
+            const plane = new THREE.Mesh(geometry, material);
+            plane.rotation.x = -Math.PI / 2;
+            scene.add(plane);
+
+            let mouseX = 0;
+            let mouseY = 0;
+            let animationId = null;
+            const clock = new THREE.Clock();
+            
+            // Throttled mousemove handler
+            let ticking = false;
+            window.addEventListener('mousemove', (e) => {
+                if (!ticking) {
+                    requestAnimationFrame(() => {
+                        mouseX = (e.clientX / window.innerWidth) - 0.5;
+                        mouseY = (e.clientY / window.innerHeight) - 0.5;
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+
+            function animate() {
+                const t = clock.getElapsedTime();
+                const positions = plane.geometry.attributes.position;
+
+                // Batch update vertices for better performance
+                for (let i = 0, l = positions.count; i < l; i++) {
+                    const x = positions.getX(i);
+                    const y = positions.getY(i);
+                    const z = 1.5 * Math.sin(x / 8 + t * 0.15) * Math.cos(y / 8 + t * 0.08) +
+                              0.3 * Math.sin(x / 1.5 + t * 0.3);
+                    positions.setZ(i, z);
+                }
+                positions.needsUpdate = true;
+                
+                // Subtle parallax effect
+                plane.rotation.z = mouseX * 0.03;
+                plane.rotation.y = mouseX * 0.03;
+                
+                renderer.render(scene, camera);
+                animationId = requestAnimationFrame(animate);
+            }
+            
+            // Start animation only if not reduced motion
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (!prefersReducedMotion.matches) {
+                animate();
+            }
+
+            // Cleanup on page unload
+            window.addEventListener('beforeunload', () => {
+                if (animationId) cancelAnimationFrame(animationId);
+                renderer.dispose();
+                geometry.dispose();
+                material.dispose();
+            });
+
+            // Handle resize with debounce
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                }, 100);
+            }, { passive: true });
+        })();
 
         // --- Intersection Observer for Reveal ---
         const reveals = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target);
+                }
             });
-        }, { threshold: 0.1 });
-        reveals.forEach(r => observer.observe(r));
+        }, { threshold: 0.1, rootMargin: '50px' });
+        reveals.forEach(r => revealObserver.observe(r));
 
-        // --- Scroll Progress & Header ---
+        // --- Scroll Progress & Header (Throttled) ---
         const scrollBar = document.getElementById('scroll-bar');
         const header = document.getElementById('header');
+        let scrollTicking = false;
+        
         window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            scrollBar.style.width = scrolled + "%";
+            if (!scrollTicking) {
+                requestAnimationFrame(() => {
+                    const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+                    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+                    scrollBar.style.width = scrolled + "%";
 
-            if (winScroll > 50) {
-                header.classList.add('bg-slate-950/80', 'backdrop-blur-xl', 'border-slate-800', 'py-3');
-                header.classList.remove('py-5', 'border-transparent');
-            } else {
-                header.classList.remove('bg-slate-950/80', 'backdrop-blur-xl', 'border-slate-800', 'py-3');
-                header.classList.add('py-5', 'border-transparent');
+                    if (winScroll > 50) {
+                        header.classList.add('bg-slate-950/80', 'backdrop-blur-xl', 'border-slate-800', 'py-3');
+                        header.classList.remove('py-5', 'border-transparent');
+                    } else {
+                        header.classList.remove('bg-slate-950/80', 'backdrop-blur-xl', 'border-slate-800', 'py-3');
+                        header.classList.add('py-5', 'border-transparent');
+                    }
+                    scrollTicking = false;
+                });
+                scrollTicking = true;
+            }
+        }, { passive: true });
+
+        // Mobile Menu
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileOverlay = document.getElementById('mobile-menu-overlay');
+        
+        function toggleMenu(open) {
+            const isOpen = open !== undefined ? open : !mobileMenu.classList.contains('open');
+            mobileMenu.classList.toggle('open', isOpen);
+            mobileOverlay.classList.toggle('open', isOpen);
+            menuButton.setAttribute('aria-expanded', isOpen);
+            mobileOverlay.setAttribute('aria-hidden', !isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        }
+        
+        menuButton.addEventListener('click', () => toggleMenu());
+        mobileOverlay.addEventListener('click', () => toggleMenu(false));
+        
+        // Close menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => toggleMenu(false));
+        });
+        
+        // Close menu on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+                toggleMenu(false);
             }
         });
 
-        // Mobile Menu
-        const btn = document.getElementById('mobile-menu-button');
-        btn.onclick = () => { /* Simple toggle logic could be added here if needed */ };
-        
-        // Experience Accordion
+        // Experience Accordion (Enhanced)
         const expItems = document.querySelectorAll('.experience-item');
         expItems.forEach(item => {
-            item.addEventListener('click', () => {
+            const button = item.querySelector('button');
+            const details = item.querySelector('.experience-details');
+            
+            button.addEventListener('click', () => {
                 const isActive = item.classList.contains('active');
                 
                 // Close all items
                 expItems.forEach(other => {
-                    other.classList.remove('active');
+                    if (other !== item) {
+                        other.classList.remove('active');
+                        other.querySelector('button').setAttribute('aria-expanded', 'false');
+                    }
                 });
 
-                // If the clicked item wasn't active, open it
-                if (!isActive) {
-                    item.classList.add('active');
+                // Toggle clicked item
+                item.classList.toggle('active', !isActive);
+                button.setAttribute('aria-expanded', !isActive);
+            });
+            
+            // Keyboard support
+            button.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    button.click();
                 }
             });
         });
 
+        // Set year (fallback for static sites)
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
