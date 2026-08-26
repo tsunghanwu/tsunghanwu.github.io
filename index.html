@@ -340,20 +340,70 @@
                     </button>
                     
                     <div id="exp-details-1" class="experience-details" role="region" aria-label="Role details">
-                        <ul class="space-y-4 text-slate-400 text-lg border-t border-slate-800/50 pt-6" role="list">
-                            <li class="flex gap-4" role="listitem">
-                                <span class="text-sky-500" aria-hidden="true">▹</span>
-                                Develop and optimize TCAD applications for process modeling, ML, and DTCO.
-                            </li>
-                            <li class="flex gap-4" role="listitem">
-                                <span class="text-sky-500" aria-hidden="true">▹</span>
-                                Develop and optimize model generation and calibration flows / methodologies.
-                            </li>
-                            <li class="flex gap-4" role="listitem">
-                                <span class="text-sky-500" aria-hidden="true">▹</span>
-                                Model nano-scale plasma etching topographical effects and calibration flows.
-                            </li>
-                        </ul>
+                        <div class="role-progression mb-8">
+                            <div class="role-entry current">
+                                <div class="flex flex-col md:flex-row justify-between mb-2">
+                                    <h4 class="text-xl font-bold text-slate-200">Senior Applications Engineer</h4>
+                                    <span class="text-slate-500 text-sm font-mono bg-slate-900/50 px-3 py-1 rounded-full self-start">Jun 2020 — Jan 2023</span>
+                                </div>
+                                <ul class="space-y-3 text-slate-400 text-lg ml-4" role="list">
+                                    <li class="flex gap-4" role="listitem">
+                                        <span class="text-sky-500" aria-hidden="true">▹</span>
+                                        Developed and optimized TCAD applications for process modeling, ML, and DTCO.
+                                    </li>
+                                    <li class="flex gap-4" role="listitem">
+                                        <span class="text-sky-500" aria-hidden="true">▹</span>
+                                        Calibrated models for nano-scale plasma etching topographical effects.
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="role-entry">
+                                <div class="flex flex-col md:flex-row justify-between mb-2">
+                                    <h4 class="text-xl font-bold text-slate-200">Staff Applications Engineer</h4>
+                                    <span class="text-slate-500 text-sm font-mono bg-slate-900/50 px-3 py-1 rounded-full self-start">Feb 2023 — Apr 2026</span>
+                                </div>
+                                <ul class="space-y-3 text-slate-400 text-lg ml-4" role="list">
+                                    <li class="flex gap-4" role="listitem">
+                                        <span class="text-sky-500" aria-hidden="true">▹</span>
+                                        Led staff-level TCAD modeling initiatives and cross-team collaborations.
+                                    </li>
+                                    <li class="flex gap-4" role="listitem">
+                                        <span class="text-sky-500" aria-hidden="true">▹</span>
+                                        Designed and deployed machine learning-augmented process optimization flows.
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="role-entry">
+                                <div class="flex flex-col md:flex-row justify-between mb-2">
+                                    <h4 class="text-xl font-bold text-slate-200">Senior Staff Applications Engineer</h4>
+                                    <span class="text-slate-500 text-sm font-mono bg-slate-900/50 px-3 py-1 rounded-full self-start">May 2026 — Present</span>
+                                </div>
+                                <ul class="space-y-3 text-slate-400 text-lg ml-4" role="list">
+                                    <li class="flex gap-4" role="listitem">
+                                        <span class="text-sky-500" aria-hidden="true">▹</span>
+                                        Directed strategic process modeling roadmaps and AI/ML integration for semiconductor manufacturing.
+                                    </li>
+                                    <li class="flex gap-4" role="listitem">
+                                        <span class="text-sky-500" aria-hidden="true">▹</span>
+                                        Mentored junior engineers and shaped TCAD development methodology across the organization.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-card p-6 rounded-2xl border border-sky-500/20 bg-sky-500/5">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-sky-500/10 rounded-xl flex items-center justify-center flex-shrink-0" aria-hidden="true">
+                                    <i class="fas fa-arrow-up text-sky-400"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-sky-400 mb-2">Career Progression</h5>
+                                    <p class="text-slate-300 text-base leading-relaxed">
+                                        Progressed from Senior Applications Engineer to Staff Applications Engineer, and most recently to Senior Staff Applications Engineer, reflecting increasing responsibility in TCAD modeling, machine learning integration, and strategic leadership within process technology development.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </article>
 
@@ -683,7 +733,7 @@
                 toggleMenu(false);
             }
         });
-
+        
         // Experience Accordion (Enhanced)
         const expItems = document.querySelectorAll('.experience-item');
         expItems.forEach(item => {
@@ -714,7 +764,7 @@
                 }
             });
         });
-
+        
         // Set year (fallback for static sites)
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
