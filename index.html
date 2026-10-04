@@ -268,6 +268,96 @@
             background: #22c55e;
             box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3);
         }
+
+        /* Shared visual system and responsive layout. */
+        :root { --card-radius: 1.5rem; --section-space: clamp(3.5rem, 7vw, 6rem); }
+        body { background-image: radial-gradient(ellipse at 85% 5%, rgba(14,165,233,.07), transparent 40%); }
+        main.container, #header-inner { max-width: 1200px; }
+        main section { scroll-margin-top: 6rem; }
+        main section:not(#home) { padding-block: var(--section-space); }
+        main h2 { font-size: clamp(1.9rem, 4vw, 3rem); gap: 1rem; margin-bottom: 2.5rem; letter-spacing: -.035em; }
+        main h2 > span { font-size: 1rem; letter-spacing: 0; }
+        .glass-card { border-radius: var(--card-radius); background: rgba(15,23,42,.75); }
+        .glass-card:hover { transform: none; box-shadow: 0 8px 24px rgba(0,0,0,.12); border-color: rgba(56,189,248,.25); }
+        #bg-canvas { opacity: .2; }
+        .text-gradient { background-image: linear-gradient(120deg, #f1f5f9, #7dd3fc); }
+        #header nav { gap: 2rem; }
+        #header nav > * { margin-left: 0; }
+        #header nav a[href="#contact"] { border-radius: .75rem; }
+        #home { min-height: min(900px, 100svh); padding-block: 9rem 5rem; }
+        .hero-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 4rem; align-items: center; width: 100%; }
+        .hero-title { font-size: clamp(3rem, 5.6vw, 5.25rem); line-height: 1.05; margin-bottom: 1.5rem; }
+        .hero-eyebrow { color: #7dd3fc; font-size: .7rem; letter-spacing: .16em; margin-bottom: 1.5rem; }
+        .hero-role { font-size: clamp(1.15rem, 2vw, 1.5rem); font-weight: 600; color: #e2e8f0; margin-bottom: .75rem; }
+        .hero-specialties { color: #94a3b8; font-size: .875rem; line-height: 1.8; margin-bottom: 1.5rem; }
+        .hero-description { font-size: 1.125rem; line-height: 1.7; margin-bottom: 2rem; max-width: 32rem; }
+        .hero-actions a { border-radius: .75rem; padding: 1rem 1.5rem; font-size: .875rem; }
+        .hero-actions a:hover { transform: none; }
+        .hero-portrait { position: relative; margin: 0; padding: .75rem; border: 1px solid rgba(56,189,248,.2); border-radius: 2rem; background: rgba(15,23,42,.65); }
+        .hero-portrait picture { display: block; overflow: hidden; border-radius: 1.25rem; aspect-ratio: 4 / 5; }
+        .hero-portrait img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-portrait figcaption { display: flex; align-items: center; gap: .75rem; padding: 1rem .5rem .25rem; color: #cbd5e1; font-size: .75rem; }
+        .hero-portrait figcaption span { color: #7dd3fc; font-family: 'Roboto Mono', monospace; font-weight: 700; }
+        #about > div { grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: 4rem; align-items: start; }
+        .about-intro { border-top: 1px solid rgba(56,189,248,.3); padding-top: 1.5rem; }
+        .about-intro p { font-size: 1.4rem; line-height: 1.6; color: #e2e8f0; }
+        .about-intro span { display: block; margin-top: 1rem; color: #94a3b8; font-size: .875rem; }
+        #about .space-y-8 { font-size: 1.0625rem; line-height: 1.8; }
+        #about [role="list"] { padding-top: 1.5rem; }
+        #about [role="listitem"] > span { flex-shrink: 0; box-shadow: none; }
+        #experience > [role="list"] { max-width: none; }
+        .experience-item { padding: clamp(1.25rem, 3vw, 2rem); }
+        .experience-item button { align-items: flex-start; gap: 1rem; }
+        .experience-item button > div { min-width: 0; padding-right: 0; }
+        .experience-item button > div > div, .role-entry > div { gap: .75rem 1.5rem; }
+        .experience-item h3 { font-size: clamp(1.25rem, 2.5vw, 1.65rem); }
+        .experience-item button p { color: #94a3b8; font-family: 'Inter', sans-serif; letter-spacing: 0; font-weight: 400; margin-top: .5rem; }
+        .experience-item .chevron-icon { margin: .5rem 0 0; flex-shrink: 0; color: #94a3b8; }
+        .experience-item .font-mono.self-start { white-space: nowrap; flex-shrink: 0; color: #94a3b8; font-size: .75rem; }
+        .role-entry h4 { font-size: 1.0625rem; }
+        .role-entry ul { font-size: .9375rem; line-height: 1.8; margin-left: 0; }
+        .role-entry li { gap: .75rem; }
+        .experience-details-inner > .role-progression { border-top: 1px solid rgba(148,163,184,.15); padding-top: 1.5rem; }
+        #skills > [role="list"] { gap: 1rem; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+        #skills [role="listitem"].col-span-2 { grid-column: span 3; grid-row: span 1; }
+        #skills [role="listitem"] { padding: clamp(1.25rem, 3vw, 2rem); border-radius: var(--card-radius); }
+        #skills h3 { font-size: clamp(1.25rem, 2.5vw, 1.65rem); margin-bottom: 1rem; }
+        #skills p { font-size: .9375rem; line-height: 1.7; }
+        #skills [role="listitem"] > div.flex { gap: 1rem; }
+        #skills [role="listitem"] > div.flex > div:first-child { flex-shrink: 0; }
+        #skills .text-green-400, #skills .text-amber-500, #skills .text-blue-500, #skills .text-orange-500 { color: #7dd3fc; }
+        #skills .border-green-500\/20, #skills .border-amber-500\/20 { border-color: rgba(56,189,248,.2); }
+        #skills .bg-green-500\/10, #skills .bg-amber-500\/10 { background-color: rgba(14,165,233,.1); }
+        #contact > div { padding: clamp(2rem, 6vw, 4.5rem) clamp(1.25rem, 5vw, 4rem); border-radius: var(--card-radius); }
+        #contact h2 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem; }
+        .contact-description { color: #94a3b8; line-height: 1.7; margin: 0 auto 2rem; max-width: 30rem; }
+        #contact a { font-size: 1rem; padding: 1rem 1.5rem; border-radius: .75rem; background: #38bdf8; }
+        footer { padding-block: 2rem !important; }
+        footer p { color: #94a3b8 !important; font-size: .7rem !important; line-height: 1.8; padding-inline: 1.5rem; }
+        @media (max-width: 900px) {
+            .hero-layout { gap: 2rem; }
+            .experience-item button > div > div, .role-entry > div { flex-direction: column; }
+            #header nav { gap: 1.5rem; }
+        }
+        @media (max-width: 767px) {
+            #home { min-height: auto; padding-block: 8rem 3rem; }
+            .hero-layout { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+            .hero-title { font-size: clamp(2.5rem, 10vw, 4rem); }
+            .hero-portrait { max-width: 360px; width: 100%; justify-self: center; }
+            .hero-portrait picture { aspect-ratio: 1; }
+            #about > div { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+            #about [role="list"] { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+            #skills > [role="list"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            #skills [role="listitem"] { min-width: 0; }
+            #skills [role="listitem"].col-span-2 { grid-column: span 2; }
+            #skills [role="listitem"]:last-child { grid-column: span 2; }
+            #skills .flex-wrap { margin-top: 1.5rem; gap: .5rem; }
+            #skills .flex-wrap span { font-size: .65rem; padding: .5rem .625rem; }
+            #skills [role="listitem"] > div.flex > div:first-child { width: 2.75rem; height: 2.75rem; }
+            #skills [role="listitem"] > div.flex > div:last-child { min-width: 0; }
+            main h2 { justify-content: flex-start; text-align: left; }
+            #contact h2 { text-align: center; }
+        }
     </style>
 </head>
 <body class="no-js">
@@ -308,47 +398,34 @@
 
         <!-- Hero Section -->
         <section id="home" class="min-h-screen flex items-center pt-24 md:pt-0" aria-labelledby="hero-title">
-            <div class="max-w-5xl">
-                <div class="inline-flex items-center px-3 py-1 mb-8 rounded-full glass-card border-sky-500/20 text-sky-400 text-[10px] font-bold tracking-[0.2em] font-mono" aria-hidden="true">
-                    <span class="mr-2" aria-hidden="true">⚡</span> MY DIGITAL BUSINESS CARD
+            <div class="hero-layout">
+                <div>
+                    <p class="hero-eyebrow font-mono">PROCESS TECHNOLOGY · MODEL-DRIVEN INSIGHTS</p>
+                    <h1 id="hero-title" class="hero-title font-bold tracking-tighter"><span class="text-gradient">Tsung-Han Wu</span></h1>
+                    <p class="hero-role">Senior Staff Applications Engineer</p>
+                    <p class="hero-specialties">Process Modeling &amp; Machine Learning<br>Silicon Technology Solutions</p>
+                    <p class="hero-description text-slate-400">Bridging process technology and model-driven insights</p>
+                    <div class="hero-actions flex flex-col sm:flex-row gap-4">
+                        <a href="#experience" class="bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold transition-colors focus-ring text-center">View Experience</a>
+                        <a href="#contact" class="flex items-center justify-center gap-3 text-slate-300 hover:text-sky-400 font-bold focus-ring transition-colors">Get in touch <i class="fas fa-arrow-right text-xs" aria-hidden="true"></i></a>
+                    </div>
                 </div>
-                <h1 id="hero-title" class="hero-title font-bold leading-[0.9] tracking-tighter mb-10">
-                    <span class="text-gradient">Tsung-Han Wu</span>
-                </h1>
-                <p class="text-xl md:text-2xl text-slate-400 max-w-2xl leading-relaxed mb-6">
-                    Bridging process technology and model-driven insights
-                </p>
-                <p class="font-mono text-slate-500 mb-12 uppercase tracking-widest text-sm">Sr. Staff Engineer | Process Modeling and ML | Silicon Technology Solutions</p>
-                <div class="flex flex-col sm:flex-row gap-4 items-center sm:items-center">
-                    <a href="#experience" class="px-10 py-5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-2xl transition-all shadow-2xl shadow-sky-500/20 transform hover:scale-105 focus-ring w-full sm:w-auto text-center" aria-label="View my experience">
-                        View Experience
-                    </a>
-                    <a href="#contact" class="group flex items-center gap-3 text-slate-300 hover:text-sky-400 transition-colors font-bold tracking-wide focus-ring rounded-full px-4 py-2 w-full sm:w-auto justify-center" aria-label="Contact me">
-                        Get in touch <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-2" aria-hidden="true"></i>
-                    </a>
-                </div>
+                <figure class="hero-portrait">
+                    <picture>
+                        <source srcset="MyAvatar.webp" type="image/webp">
+                        <img src="MyAvatar.jpg" alt="Tsung-Han Wu, Senior Staff Engineer" width="800" height="800" decoding="async" fetchpriority="high">
+                    </picture>
+                    <figcaption><span>10+ years</span> in semiconductor engineering</figcaption>
+                </figure>
             </div>
         </section>
 
         <!-- About Section -->
         <section id="about" class="py-40 reveal" aria-labelledby="about-title">
             <div class="grid md:grid-cols-2 gap-24 items-center">
-                <div class="relative">
-                    <div class="w-full aspect-square rounded-3xl glass-card overflow-hidden group relative">
-                        <picture>
-                            <source srcset="MyAvatar.webp" type="image/webp">
-                            <img src="MyAvatar.jpg" alt="Tsung-Han Wu, Senior Staff Engineer" class="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000" width="800" height="800" decoding="async">
-                        </picture>
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" aria-hidden="true"></div>
-                    </div>
-                    <div class="absolute -bottom-8 -right-8 glass-card p-8 rounded-2xl hidden md:block" aria-hidden="true">
-                        <div class="flex gap-10">
-                            <div>
-                                <p class="text-4xl font-bold text-sky-400 font-mono">10+</p>
-                                <p class="text-[10px] text-slate-500 uppercase font-bold tracking-[0.2em]">Years Exp</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="about-intro">
+                    <p>Process expertise.<br>Model-driven thinking.</p>
+                    <span>Semiconductor engineering, simulation, and applied AI.</span>
                 </div>
                 <div>
                     <h2 id="about-title" class="text-5xl font-bold mb-10 flex items-center gap-6">
@@ -392,19 +469,19 @@
             </h2>
             <div class="max-w-4xl mx-auto space-y-6" role="list" aria-label="Work experience">
                 <!-- Item 1: Synopsys -->
-                <article class="experience-item glass-card p-8 rounded-3xl group transition-all hover:border-sky-500/30" role="listitem">
-                    <button class="w-full flex justify-between items-center text-left p-0 bg-transparent focus-ring rounded-xl" aria-expanded="false" aria-controls="exp-details-1" id="exp-trigger-1">
+                <article class="experience-item active glass-card p-8 rounded-3xl group transition-all hover:border-sky-500/30" role="listitem">
+                    <button class="w-full flex justify-between items-center text-left p-0 bg-transparent focus-ring rounded-xl" aria-expanded="true" aria-controls="exp-details-1" id="exp-trigger-1">
                         <div class="flex-1 pr-4">
                             <div class="flex flex-col md:flex-row justify-between mb-2">
-                                <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Senior Applications Engineer<br>→ Senior Staff Applications Engineer</h3>
+                                <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Synopsys</h3>
                                 <span class="text-slate-500 text-sm font-mono mt-2 md:mt-0 bg-slate-900/50 px-4 py-1 rounded-full self-start">Jun 2020 — Present</span>
                             </div>
-                            <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Synopsys, Taiwan</p>
+                            <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Senior Staff Applications Engineer · Taiwan</p>
                         </div>
                         <i class="fas fa-chevron-down text-slate-600 ml-6 chevron-icon group-hover:text-sky-400" aria-hidden="true"></i>
                     </button>
                     
-                    <div id="exp-details-1" class="experience-details" role="region" aria-labelledby="exp-trigger-1" inert>
+                    <div id="exp-details-1" class="experience-details" role="region" aria-labelledby="exp-trigger-1">
                         <div class="experience-details-inner">
                         <div class="role-progression mb-8">
                             <div class="role-entry current">
@@ -489,10 +566,10 @@
                     <button class="w-full flex justify-between items-center text-left p-0 bg-transparent focus-ring rounded-xl" aria-expanded="false" aria-controls="exp-details-2" id="exp-trigger-2">
                         <div class="flex-1 pr-4">
                             <div class="flex flex-col md:flex-row justify-between mb-2">
-                                <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Senior Process Engineer<br>→ Senior Process Analytics Engineer</h3>
+                                <h3 class="text-2xl font-bold text-slate-200 group-hover:text-sky-400 transition-colors">Lam Research</h3>
                                 <span class="text-slate-500 text-sm font-mono mt-2 md:mt-0 bg-slate-900/50 px-4 py-1 rounded-full self-start">Apr 2015 — Jun 2020</span>
                             </div>
-                            <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Lam Research, Taiwan</p>
+                            <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Senior Process Analytics Engineer · Taiwan</p>
                         </div>
                         <i class="fas fa-chevron-down text-slate-600 ml-6 chevron-icon group-hover:text-sky-400" aria-hidden="true"></i>
                     </button>
@@ -629,6 +706,7 @@
             <div class="max-w-5xl mx-auto glass-card rounded-[4rem] p-16 md:p-32 text-center relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-sky-500 to-transparent" aria-hidden="true"></div>
                 <h2 id="contact-title" class="text-5xl md:text-8xl font-bold mb-10 tracking-tighter">Let's Connect!</h2>
+                <p class="contact-description">Connect with me on LinkedIn to discuss process modeling, simulation, and applied machine learning.</p>
                 <div class="flex flex-col md:flex-row gap-8 justify-center items-center">
                     <a href="https://linkedin.com/in/tsung-han-wu/" target="_blank" rel="noopener noreferrer" class="px-12 py-6 bg-white text-slate-950 font-bold rounded-2xl hover:bg-sky-400 transition-all flex items-center gap-4 text-xl shadow-2xl focus-ring" aria-label="Connect on LinkedIn">
                         <i class="fab fa-linkedin text-2xl" aria-hidden="true"></i>
