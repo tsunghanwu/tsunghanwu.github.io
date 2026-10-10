@@ -69,3 +69,7 @@ If your title, profile links, or portrait change, also update the page title, de
 Before publishing, preview at desktop and mobile widths. Check navigation, keyboard access, experience expansion and collapse, portrait loading, and contact links. Confirm that dates and outcome metrics match the intended copy.
 
 Use a branch and pull request to review changes before merging into `main`. Check the repository's GitHub Pages settings for the configured publishing source, then verify the deployed website after publication.
+
+## Skill logos
+
+The six AI and ML badge logos are embedded SVGs from [Simple Icons v16.34.0](https://github.com/simple-icons/simple-icons/tree/16.34.0), distributed under CC0. Codex uses the OpenAI mark. Icons inherit the badge color and are hidden from assistive technology because each badge includes its tool name.
