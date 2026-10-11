@@ -351,7 +351,7 @@
             #about [role="list"] { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
             #skills > [role="list"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             #skills [role="listitem"] { min-width: 0; }
-            #skills [role="listitem"].col-span-2 { grid-column: span 2; }
+            #skills [role="listitem"].col-span-2 { grid-column: span 2; grid-row: span 1; }
             #skills .flex-wrap { margin-top: 1.5rem; gap: .5rem; }
             #skills .flex-wrap span { font-size: .65rem; padding: .5rem .625rem; }
             #skills [role="listitem"] > div.flex > div:first-child { width: 2.75rem; height: 2.75rem; }
@@ -629,17 +629,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="glass-card p-8 rounded-[2rem] flex flex-col items-center justify-center text-center group hover:bg-blue-500/5 hover:border-blue-500/30 transition-all" role="listitem">
-                    <i class="fab fa-python text-5xl text-blue-500 mb-6 group-hover:scale-110 transition-transform" aria-hidden="true"></i>
-                    <span class="font-bold tracking-wider">Python</span>
-                </div>
-                <div class="glass-card p-8 rounded-[2rem] flex flex-col items-center justify-center text-center group hover:bg-white/5 hover:border-white/10 transition-all" role="listitem">
-                    <i class="fab fa-linux text-5xl text-white mb-6 group-hover:scale-110 transition-transform" aria-hidden="true"></i>
-                    <span class="font-bold tracking-wider">Linux</span>
-                </div>
-                <div class="glass-card h-48 p-8 rounded-[2rem] flex flex-col items-center justify-center text-center group hover:bg-orange-500/5 hover:border-orange-500/30 transition-all" role="listitem">
-                    <i class="fab fa-git-alt text-5xl text-orange-500 mb-6 group-hover:scale-110 transition-transform" aria-hidden="true"></i>
-                    <span class="font-bold tracking-wider">Git</span>
+                <div class="col-span-2 glass-card p-8 rounded-[2rem] flex flex-col group hover:border-sky-500/30 transition-all" role="listitem">
+                    <div class="flex items-center gap-6">
+                        <div class="w-16 h-16 bg-sky-500/10 rounded-2xl flex items-center justify-center border border-sky-500/20" aria-hidden="true">
+                            <i class="fas fa-code text-2xl text-sky-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Software Engineering</h3>
+                            <p class="text-sm text-slate-400 font-mono mt-1">Scientific computing, development workflows, and engineering infrastructure.</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-3 mt-6" aria-label="Software engineering skills">
+                        <span class="skill-badge px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20">Python</span>
+                        <span class="skill-badge px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20">Linux</span>
+                        <span class="skill-badge px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20">Git</span>
+                    </div>
                 </div>
             </div>
         </section>
