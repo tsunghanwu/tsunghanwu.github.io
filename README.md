@@ -11,12 +11,13 @@ The site presents professional experience at Synopsys and Lam Research, technica
 Features include:
 
 - Responsive layouts and mobile navigation.
+- Light and dark themes that follow the visitor's system setting, with a header toggle that remembers their choice.
 - Expandable experience timelines.
 - Keyboard focus indicators and a skip-to-content link.
 - Reduced-motion support.
 - Search and social-sharing metadata, plus structured person data.
 - A WebP portrait with a JPEG fallback.
-- An animated wireframe background, skipped when reduced motion is requested.
+- A lightweight animated wireframe background that pauses in hidden tabs and is skipped when reduced motion is requested.
 - Navigation that highlights the section in view.
 - A print layout that expands every role history.
 
@@ -27,6 +28,9 @@ Features include:
 | `index.html` | Page content, styles, metadata, and interactive behavior |
 | `tailwind.css` | Compiled Tailwind CSS (generated; do not edit by hand) |
 | `src/tailwind.css`, `tailwind.config.js`, `package.json` | Tailwind build input and configuration |
+| `fonts/` | Self-hosted Inter and Roboto Mono (Latin subset, SIL OFL licenses included) |
+| `404.html` | Page shown for unknown URLs |
+| `robots.txt`, `sitemap.xml` | Search-engine crawling hints; update `lastmod` when content changes |
 | `MyAvatar.webp` | Primary portrait |
 | `MyAvatar.jpg` | Portrait fallback |
 | `og-image.jpg` | Social-sharing image |
@@ -35,7 +39,7 @@ Features include:
 
 ## Preview locally
 
-The site uses plain HTML, CSS, and JavaScript. Tailwind CSS is precompiled into `tailwind.css`, and icons are inline SVGs. Google Fonts and Three.js load from external services, so an internet connection is needed for those resources.
+The site uses plain HTML, CSS, and JavaScript. Tailwind CSS is precompiled into `tailwind.css`, icons are inline SVGs, fonts are self-hosted in `fonts/`, and the animated background is drawn on a 2D canvas. Nothing loads from an external service, so the site works offline.
 
 Clone the repository:
 
@@ -89,4 +93,4 @@ Use a branch and pull request to review changes before merging into `main`. Chec
 
 Interface and section icons are inline SVGs from [Font Awesome Free 6.4.0](https://fontawesome.com/license/free) (icons under CC BY 4.0).
 
-The six AI and ML badge logos are embedded SVGs from [Simple Icons v16.34.0](https://github.com/simple-icons/simple-icons/tree/16.34.0), distributed under CC0. Codex uses the OpenAI mark. Icons inherit the badge color and are hidden from assistive technology because each badge includes its tool name.
+The seven AI and ML badge logos are embedded SVGs from [Simple Icons v16.34.0](https://github.com/simple-icons/simple-icons/tree/16.34.0), distributed under CC0. Codex uses the OpenAI mark, and Claude Code uses the Claude mark. Icons inherit the badge color and are hidden from assistive technology because each badge includes its tool name.
