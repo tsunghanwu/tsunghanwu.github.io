@@ -11,6 +11,7 @@ The site presents professional experience at Synopsys and Lam Research, technica
 Features include:
 
 - Responsive layouts and mobile navigation.
+- Light and dark themes that follow the visitor's system setting, with a header toggle that remembers their choice.
 - Expandable experience timelines.
 - Keyboard focus indicators and a skip-to-content link.
 - Reduced-motion support.
