@@ -31,9 +31,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/roboto-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 
     <script type="application/ld+json">
     {
@@ -62,6 +61,28 @@
     </script>
     
     <style>
+        @font-face {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 100 900;
+            font-display: swap;
+            src: url('fonts/inter-latin-wght-normal.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Roboto Mono';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url('fonts/roboto-mono-latin-400-normal.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Roboto Mono';
+            font-style: normal;
+            font-weight: 700;
+            font-display: swap;
+            src: url('fonts/roboto-mono-latin-700-normal.woff2') format('woff2');
+        }
+
         :root {
             --bg-dark: #020617;
             --bg-medium: #0f172a;
@@ -311,7 +332,7 @@
         #header nav { gap: 2rem; }
         #header nav > * { margin-left: 0; }
         #header nav a[href="#contact"] { border-radius: .75rem; }
-        #home { min-height: min(900px, 100svh); padding-block: 9rem 5rem; }
+        #home { min-height: min(760px, 100svh); padding-block: 8rem 3rem; }
         .hero-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 4rem; align-items: center; width: 100%; }
         .hero-title { font-size: clamp(3rem, 5.6vw, 5.25rem); line-height: 1.05; margin-bottom: 1.5rem; }
         .hero-eyebrow { color: #7dd3fc; font-size: .7rem; letter-spacing: .16em; margin-bottom: 1.5rem; }
@@ -423,12 +444,12 @@
         <div id="header-inner" class="container mx-auto px-6 py-5 flex justify-between items-center transition-all duration-500">
             <a href="#home" class="text-xl font-bold font-mono tracking-tighter text-sky-400 flex items-center gap-2 focus-ring rounded-md px-2 py-1 -mx-2 -my-1" aria-label="Tsung-Han Wu Home">
                 <span class="w-2 h-2 bg-sky-500 rounded-full animate-pulse" aria-hidden="true"></span>
-                tsunghanwu.io
+                tsunghanwu.github.io
             </a>
             <nav class="hidden md:flex space-x-12 items-center text-xs font-bold tracking-[0.2em]" aria-label="Main navigation">
                 <a href="#about" class="nav-link text-slate-400 hover:text-white transition-colors">ABOUT</a>
                 <a href="#experience" class="nav-link text-slate-400 hover:text-white transition-colors">EXPERIENCE</a>
-                <a href="#skills" class="nav-link text-slate-400 hover:text-white transition-colors">SKILLS</a>
+                <a href="#skills" class="nav-link text-slate-400 hover:text-white transition-colors">EXPERTISE</a>
                 <a href="#contact" class="px-6 py-2 glass-card hover:bg-sky-500 hover:text-slate-950 hover:border-transparent rounded-full transition-all duration-300 focus-ring">CONNECT</a>
             </nav>
             <button id="mobile-menu-button" class="md:hidden text-2xl p-2 focus-ring rounded-lg" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -445,7 +466,7 @@
         </button>
         <a href="#about" class="text-lg font-medium text-slate-300 hover:text-sky-400 transition-colors focus-ring rounded px-2 py-1">About</a>
         <a href="#experience" class="text-lg font-medium text-slate-300 hover:text-sky-400 transition-colors focus-ring rounded px-2 py-1">Experience</a>
-        <a href="#skills" class="text-lg font-medium text-slate-300 hover:text-sky-400 transition-colors focus-ring rounded px-2 py-1">Skills</a>
+        <a href="#skills" class="text-lg font-medium text-slate-300 hover:text-sky-400 transition-colors focus-ring rounded px-2 py-1">Expertise</a>
         <a href="#contact" class="text-lg font-bold text-sky-400 hover:text-sky-300 transition-colors focus-ring rounded px-2 py-1">Connect</a>
     </nav>
 
@@ -459,7 +480,7 @@
                     <h1 id="hero-title" class="hero-title font-bold tracking-tighter"><span class="text-gradient">Tsung-Han Wu</span></h1>
                     <p class="hero-role">Senior Staff Applications Engineer</p>
                     <p class="hero-specialties">Process Modeling<br>Applied ML &amp; Agentic AI</p>
-                    <p class="hero-description text-slate-400">Bridging process technology and model-driven insights</p>
+                    <p class="hero-description text-slate-400">Modeling semiconductor etch and deposition, and applying machine learning and agentic AI to speed up engineering workflows.</p>
                     <div class="hero-actions flex flex-col sm:flex-row gap-4">
                         <a href="#experience" class="bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold transition-colors focus-ring text-center">View Experience</a>
                         <a href="#contact" class="flex items-center justify-center gap-3 text-slate-300 hover:text-sky-400 font-bold focus-ring transition-colors">Get in touch <svg class="icon text-xs" aria-hidden="true" focusable="false" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></a>
@@ -470,7 +491,7 @@
                         <source srcset="MyAvatar.webp" type="image/webp">
                         <img src="MyAvatar.jpg" alt="Tsung-Han Wu, Senior Staff Engineer" width="800" height="800" decoding="async" fetchpriority="high">
                     </picture>
-                    <figcaption><span>10+ years</span> in semiconductor engineering</figcaption>
+                    <figcaption><span id="years">10+ years</span> in semiconductor engineering</figcaption>
                 </figure>
             </div>
         </section>
@@ -729,7 +750,7 @@
     <footer class="border-t border-slate-900 py-12" role="contentinfo">
         <div class="container mx-auto text-center">
             <p class="font-mono text-sm text-slate-600 tracking-widest">
-                TSUNG-HAN WU &copy; <span id="year">2026</span> | DESIGNED FOR IMPACT
+                TSUNG-HAN WU &copy; <span id="year">2026</span> | PROCESS MODELING &middot; APPLIED ML
             </p>
         </div>
     </footer>
@@ -892,112 +913,123 @@
             });
         });
         
-        document.getElementById('year').textContent = new Date().getFullYear();
+        const now = new Date();
+        document.getElementById('year').textContent = now.getFullYear();
+        // Career started April 2015 (Lam Research).
+        const careerYears = now.getFullYear() - 2015 - (now.getMonth() < 3 ? 1 : 0);
+        document.getElementById('years').textContent = careerYears + '+ years';
 
-        // --- 3D Wireframe Terrain (lazy-loaded, skipped for reduced motion) ---
+        // --- Wireframe terrain background (2D canvas; skipped for reduced motion) ---
         (function initTerrain() {
             const canvas = document.querySelector('#bg-canvas');
             if (!canvas) return;
 
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-            if (prefersReducedMotion.matches) {
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            const ctx = canvas.getContext('2d');
+            if (reducedMotion.matches || !ctx) {
                 canvas.remove();
                 return;
             }
 
-            function startTerrain() {
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+            const SEGMENTS = 40;
+            const SIZE = 60;
+            const FOCAL_TAN = Math.tan(37.5 * Math.PI / 180);
+            // Camera at (0, 8, 12) looking at the origin: forward, then the up vector perpendicular to it.
+            const CAM_Y = 8, CAM_Z = 12, LEN = Math.hypot(CAM_Y, CAM_Z);
+            const FWD_Y = -CAM_Y / LEN, FWD_Z = -CAM_Z / LEN;
+            const UP_Y = CAM_Z / LEN, UP_Z = -CAM_Y / LEN;
 
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                
-                camera.position.set(0, 8, 12);
-                camera.lookAt(0, 0, 0);
+            const grid = SEGMENTS + 1;
+            const px = new Float32Array(grid * grid);
+            const py = new Float32Array(grid * grid);
+            let width = 0, height = 0, mouseX = 0, running = false, last = 0;
 
-                const geometry = new THREE.PlaneGeometry(60, 60, 40, 40);
-                const material = new THREE.MeshBasicMaterial({ 
-                    color: 0x0ea5e9, 
-                    wireframe: true, 
-                    transparent: true, 
-                    opacity: 0.15 
-                });
-                const plane = new THREE.Mesh(geometry, material);
-                plane.rotation.x = -Math.PI / 2;
-                scene.add(plane);
+            function resize() {
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = Math.round(width * dpr);
+                canvas.height = Math.round(height * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
 
-                let mouseX = 0;
-                let animationId = null;
-                const clock = new THREE.Clock();
-                
-                let ticking = false;
-                window.addEventListener('mousemove', (e) => {
-                    if (!ticking) {
-                        requestAnimationFrame(() => {
-                            mouseX = (e.clientX / window.innerWidth) - 0.5;
-                            ticking = false;
-                        });
-                        ticking = true;
-                    }
-                }, { passive: true });
-
-                function animate() {
-                    const t = clock.getElapsedTime();
-                    const positions = plane.geometry.attributes.position;
-
-                    for (let i = 0, l = positions.count; i < l; i++) {
-                        const x = positions.getX(i);
-                        const y = positions.getY(i);
-                        const z = 1.5 * Math.sin(x / 8 + t * 0.15) * Math.cos(y / 8 + t * 0.08) +
+            function draw(t) {
+                const focal = (height / 2) / FOCAL_TAN;
+                const tilt = mouseX * 0.03;
+                for (let j = 0; j < grid; j++) {
+                    for (let i = 0; i < grid; i++) {
+                        const x = (i / SEGMENTS - 0.5) * SIZE;
+                        const depth = (j / SEGMENTS - 0.5) * SIZE;
+                        const h = 1.5 * Math.sin(x / 8 + t * 0.15) * Math.cos(depth / 8 + t * 0.08) +
                                   0.3 * Math.sin(x / 1.5 + t * 0.3);
-                        positions.setZ(i, z);
+                        // World position relative to the camera; the mouse adds a slight sideways sway.
+                        const dx = x + depth * tilt;
+                        const dy = h - CAM_Y;
+                        const dz = -depth - CAM_Z;
+                        const zc = dy * FWD_Y + dz * FWD_Z;
+                        const k = j * grid + i;
+                        if (zc < 0.1) { px[k] = NaN; continue; }
+                        px[k] = width / 2 + (dx / zc) * focal;
+                        py[k] = height / 2 - ((dy * UP_Y + dz * UP_Z) / zc) * focal;
                     }
-                    positions.needsUpdate = true;
-                    
-                    plane.rotation.z = mouseX * 0.03;
-                    plane.rotation.y = mouseX * 0.03;
-                    
-                    renderer.render(scene, camera);
-                    animationId = requestAnimationFrame(animate);
                 }
-                
-                animate();
 
-                window.addEventListener('beforeunload', () => {
-                    if (animationId) cancelAnimationFrame(animationId);
-                    renderer.dispose();
-                    geometry.dispose();
-                    material.dispose();
-                });
-
-                let resizeTimeout;
-                window.addEventListener('resize', () => {
-                    clearTimeout(resizeTimeout);
-                    resizeTimeout = setTimeout(() => {
-                        camera.aspect = window.innerWidth / window.innerHeight;
-                        camera.updateProjectionMatrix();
-                        renderer.setSize(window.innerWidth, window.innerHeight);
-                        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-                    }, 100);
-                }, { passive: true });
+                ctx.clearRect(0, 0, width, height);
+                ctx.strokeStyle = 'rgba(14, 165, 233, 0.22)';
+                ctx.lineWidth = 1;
+                // Rows run along x, columns along depth; each is one polyline.
+                ctx.beginPath();
+                for (let a = 0; a < grid; a++) {
+                    for (let b = 0; b < grid; b++) {
+                        const row = a * grid + b;
+                        if (b === 0) { ctx.moveTo(px[row], py[row]); } else { ctx.lineTo(px[row], py[row]); }
+                    }
+                }
+                ctx.stroke();
+                ctx.beginPath();
+                for (let a = 0; a < grid; a++) {
+                    for (let b = 0; b < grid; b++) {
+                        const col = b * grid + a;
+                        if (b === 0) { ctx.moveTo(px[col], py[col]); } else { ctx.lineTo(px[col], py[col]); }
+                    }
+                }
+                ctx.stroke();
             }
 
-            const load = () => {
-                const script = document.createElement('script');
-                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-                script.crossOrigin = 'anonymous';
-                script.referrerPolicy = 'no-referrer';
-                script.onload = startTerrain;
-                script.onerror = () => canvas.remove();
-                document.head.appendChild(script);
-            };
-
-            if ('requestIdleCallback' in window) {
-                requestIdleCallback(load, { timeout: 2000 });
-            } else {
-                window.addEventListener('load', () => setTimeout(load, 200));
+            function frame(now) {
+                if (!running) return;
+                // About 30 fps is plenty for a slow, faint effect.
+                if (now - last >= 33) {
+                    last = now;
+                    draw(now / 1000);
+                }
+                requestAnimationFrame(frame);
             }
+
+            function setRunning(next) {
+                if (next === running) return;
+                running = next;
+                if (running) requestAnimationFrame(frame);
+            }
+
+            window.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) - 0.5;
+            }, { passive: true });
+
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => { resize(); draw(performance.now() / 1000); }, 100);
+            }, { passive: true });
+
+            document.addEventListener('visibilitychange', () => setRunning(!document.hidden));
+            reducedMotion.addEventListener('change', (e) => {
+                if (e.matches) { setRunning(false); canvas.remove(); }
+            });
+
+            resize();
+            draw(performance.now() / 1000);
+            setRunning(!document.hidden);
         })();
     </script>
 </body>

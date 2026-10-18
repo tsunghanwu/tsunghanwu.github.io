@@ -16,7 +16,7 @@ Features include:
 - Reduced-motion support.
 - Search and social-sharing metadata, plus structured person data.
 - A WebP portrait with a JPEG fallback.
-- An animated wireframe background, skipped when reduced motion is requested.
+- A lightweight animated wireframe background that pauses in hidden tabs and is skipped when reduced motion is requested.
 - Navigation that highlights the section in view.
 - A print layout that expands every role history.
 
@@ -27,6 +27,9 @@ Features include:
 | `index.html` | Page content, styles, metadata, and interactive behavior |
 | `tailwind.css` | Compiled Tailwind CSS (generated; do not edit by hand) |
 | `src/tailwind.css`, `tailwind.config.js`, `package.json` | Tailwind build input and configuration |
+| `fonts/` | Self-hosted Inter and Roboto Mono (Latin subset, SIL OFL licenses included) |
+| `404.html` | Page shown for unknown URLs |
+| `robots.txt`, `sitemap.xml` | Search-engine crawling hints; update `lastmod` when content changes |
 | `MyAvatar.webp` | Primary portrait |
 | `MyAvatar.jpg` | Portrait fallback |
 | `og-image.jpg` | Social-sharing image |
@@ -35,7 +38,7 @@ Features include:
 
 ## Preview locally
 
-The site uses plain HTML, CSS, and JavaScript. Tailwind CSS is precompiled into `tailwind.css`, and icons are inline SVGs. Google Fonts and Three.js load from external services, so an internet connection is needed for those resources.
+The site uses plain HTML, CSS, and JavaScript. Tailwind CSS is precompiled into `tailwind.css`, icons are inline SVGs, fonts are self-hosted in `fonts/`, and the animated background is drawn on a 2D canvas. Nothing loads from an external service, so the site works offline.
 
 Clone the repository:
 
