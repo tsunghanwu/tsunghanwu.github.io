@@ -1,0 +1,12 @@
+{
+  "name": "tsunghanwu.github.io",
+  "private": true,
+  "description": "Personal website of Tsung-Han Wu",
+  "scripts": {
+    "build:css": "tailwindcss -i src/tailwind.css -o tailwind.css --minify",
+    "watch:css": "tailwindcss -i src/tailwind.css -o tailwind.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.19"
+  }
+}
