@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex">
     <meta name="theme-color" content="#020617">
+    <script>
+        (function () {
+            var saved = null;
+            try { saved = localStorage.getItem('theme'); } catch (e) {}
+            var light = saved ? saved === 'light' : window.matchMedia('(prefers-color-scheme: light)').matches;
+            document.documentElement.setAttribute('data-theme', light ? 'light' : 'dark');
+        })();
+    </script>
     <title>Page not found | Tsung-Han Wu</title>
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -24,6 +32,8 @@
             font-display: swap;
             src: url('/fonts/roboto-mono-latin-700-normal.woff2') format('woff2');
         }
+        :root { color-scheme: dark; --bg: #020617; --text: #f1f5f9; --muted: #94a3b8; --code: #7dd3fc; --glow: rgba(14,165,233,.07); }
+        [data-theme="light"] { color-scheme: light; --bg: #f8fafc; --text: #0f172a; --muted: #475569; --code: #0369a1; --glow: rgba(14,165,233,.1); }
         * { box-sizing: border-box; }
         body {
             margin: 0;
@@ -32,13 +42,13 @@
             place-items: center;
             padding: 1.5rem;
             font-family: 'Inter', sans-serif;
-            background: #020617 radial-gradient(ellipse at 85% 5%, rgba(14,165,233,.07), transparent 40%);
-            color: #f1f5f9;
+            background: var(--bg) radial-gradient(ellipse at 85% 5%, var(--glow), transparent 40%);
+            color: var(--text);
             text-align: center;
         }
-        .code { font-family: 'Roboto Mono', monospace; font-weight: 700; font-size: .8rem; letter-spacing: .16em; color: #7dd3fc; }
+        .code { font-family: 'Roboto Mono', monospace; font-weight: 700; font-size: .8rem; letter-spacing: .16em; color: var(--code); }
         h1 { margin: 1rem 0; font-size: clamp(2rem, 6vw, 3.5rem); letter-spacing: -.035em; }
-        p { margin: 0 auto 2rem; max-width: 26rem; color: #94a3b8; line-height: 1.7; }
+        p { margin: 0 auto 2rem; max-width: 26rem; color: var(--muted); line-height: 1.7; }
         a {
             display: inline-block;
             padding: 1rem 1.5rem;

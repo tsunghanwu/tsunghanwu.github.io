@@ -7,6 +7,15 @@
     <meta name="description" content="Tsung-Han Wu — Sr. Staff Engineer specializing in semiconductor process modeling, simulation, applied machine learning, and agentic AI.">
     <link rel="canonical" href="https://tsunghanwu.github.io/">
     <meta name="theme-color" content="#020617">
+    <script>
+        // Apply the saved or system theme before first paint to avoid a flash.
+        (function () {
+            var saved = null;
+            try { saved = localStorage.getItem('theme'); } catch (e) {}
+            var light = saved ? saved === 'light' : window.matchMedia('(prefers-color-scheme: light)').matches;
+            document.documentElement.setAttribute('data-theme', light ? 'light' : 'dark');
+        })();
+    </script>
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -408,6 +417,56 @@
             #contact h2 { text-align: center; }
         }
 
+        /* Theme toggle */
+        :root { color-scheme: dark; }
+        .theme-toggle { padding: .5rem; font-size: 1.15rem; color: var(--text-muted); transition: color var(--transition-fast); }
+        .theme-toggle:hover { color: var(--text-light); }
+        .icon-moon { display: none; }
+        [data-theme="light"] .icon-sun { display: none; }
+        [data-theme="light"] .icon-moon { display: inline-block; }
+
+        /* Light theme */
+        [data-theme="light"] {
+            color-scheme: light;
+            --bg-dark: #f8fafc;
+            --bg-medium: #ffffff;
+            --primary: #0284c7;
+            --accent: #0ea5e9;
+            --text-light: #0f172a;
+            --text-muted: #475569;
+        }
+        [data-theme="light"] body { background-image: radial-gradient(ellipse at 85% 5%, rgba(14,165,233,.1), transparent 40%); }
+        [data-theme="light"] .glass-card { background: rgba(255,255,255,.85); border-color: rgba(15,23,42,.08); box-shadow: 0 1px 2px rgba(15,23,42,.04); }
+        [data-theme="light"] .glass-card:hover { border-color: rgba(2,132,199,.3); box-shadow: 0 8px 24px rgba(15,23,42,.08); }
+        [data-theme="light"] .text-gradient { background-image: linear-gradient(120deg, #0f172a, #0369a1); }
+        [data-theme="light"] .text-white, [data-theme="light"] .text-slate-200 { color: #0f172a; }
+        [data-theme="light"] .text-slate-300 { color: #334155; }
+        [data-theme="light"] .text-slate-400 { color: #475569; }
+        [data-theme="light"] .text-slate-500, [data-theme="light"] .text-slate-600 { color: #64748b; }
+        [data-theme="light"] .hover\:text-white:hover { color: #0f172a; }
+        [data-theme="light"] .text-sky-400, [data-theme="light"] .text-sky-500 { color: #0369a1; }
+        [data-theme="light"] .hover\:text-sky-400:hover, [data-theme="light"] .hover\:text-sky-300:hover,
+        [data-theme="light"] .group:hover .group-hover\:text-sky-400 { color: #0284c7; }
+        [data-theme="light"] .text-violet-400 { color: #6d28d9; }
+        [data-theme="light"] #skills .text-green-400, [data-theme="light"] #skills .text-amber-500 { color: #0369a1; }
+        [data-theme="light"] .bg-slate-900\/50 { background-color: #f1f5f9; }
+        [data-theme="light"] .bg-slate-950\/80 { background-color: rgba(248,250,252,.85); }
+        [data-theme="light"] .border-slate-800, [data-theme="light"] .border-slate-900 { border-color: #e2e8f0; }
+        [data-theme="light"] .nav-link[aria-current] { color: #0f172a; }
+        [data-theme="light"] #mobile-menu a[aria-current] { color: #0284c7; }
+        [data-theme="light"] .mobile-menu { background: rgba(255,255,255,.97); border-left-color: rgba(15,23,42,.08); }
+        [data-theme="light"] .mobile-menu-overlay { background: rgba(15,23,42,.3); }
+        [data-theme="light"] .hero-eyebrow, [data-theme="light"] .hero-portrait figcaption span { color: #0369a1; }
+        [data-theme="light"] .hero-role, [data-theme="light"] .about-intro p { color: #1e293b; }
+        [data-theme="light"] .hero-specialties, [data-theme="light"] .hero-portrait figcaption,
+        [data-theme="light"] .about-intro span, [data-theme="light"] .contact-description { color: #475569; }
+        [data-theme="light"] .hero-portrait { background: #fff; border-color: rgba(2,132,199,.2); }
+        [data-theme="light"] .about-intro { border-top-color: rgba(2,132,199,.3); }
+        [data-theme="light"] .experience-item .chevron-icon { color: #64748b; }
+        [data-theme="light"] .experience-item .font-mono.self-start { color: #475569; }
+        [data-theme="light"] .experience-details-inner > .role-progression { border-top-color: rgba(148,163,184,.35); }
+        [data-theme="light"] footer p { color: #64748b !important; }
+
         /* Print: a clean, résumé-style page with every role history expanded. */
         @media print {
             @page { margin: 1.5cm; }
@@ -446,15 +505,23 @@
                 <span class="w-2 h-2 bg-sky-500 rounded-full animate-pulse" aria-hidden="true"></span>
                 tsunghanwu.github.io
             </a>
-            <nav class="hidden md:flex space-x-12 items-center text-xs font-bold tracking-[0.2em]" aria-label="Main navigation">
-                <a href="#about" class="nav-link text-slate-400 hover:text-white transition-colors">ABOUT</a>
-                <a href="#experience" class="nav-link text-slate-400 hover:text-white transition-colors">EXPERIENCE</a>
-                <a href="#skills" class="nav-link text-slate-400 hover:text-white transition-colors">EXPERTISE</a>
-                <a href="#contact" class="px-6 py-2 glass-card hover:bg-sky-500 hover:text-slate-950 hover:border-transparent rounded-full transition-all duration-300 focus-ring">CONNECT</a>
-            </nav>
-            <button id="mobile-menu-button" class="md:hidden text-2xl p-2 focus-ring rounded-lg" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-                <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
-            </button>
+            <div class="flex items-center md:gap-6">
+                <nav class="hidden md:flex space-x-12 items-center text-xs font-bold tracking-[0.2em]" aria-label="Main navigation">
+                    <a href="#about" class="nav-link text-slate-400 hover:text-white transition-colors">ABOUT</a>
+                    <a href="#experience" class="nav-link text-slate-400 hover:text-white transition-colors">EXPERIENCE</a>
+                    <a href="#skills" class="nav-link text-slate-400 hover:text-white transition-colors">EXPERTISE</a>
+                    <a href="#contact" class="px-6 py-2 glass-card hover:bg-sky-500 hover:text-slate-950 hover:border-transparent rounded-full transition-all duration-300 focus-ring">CONNECT</a>
+                </nav>
+                <div class="flex items-center gap-1 -mr-2">
+                    <button id="theme-toggle" type="button" class="theme-toggle focus-ring rounded-lg" aria-label="Switch to light theme">
+                        <svg class="icon icon-sun" aria-hidden="true" focusable="false" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"/></svg>
+                        <svg class="icon icon-moon" aria-hidden="true" focusable="false" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"/></svg>
+                    </button>
+                    <button id="mobile-menu-button" class="md:hidden text-2xl p-2 focus-ring rounded-lg" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+                        <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
+                    </button>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -885,6 +952,31 @@
             }
         });
         
+        // --- Theme toggle ---
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeMeta = document.querySelector('meta[name="theme-color"]');
+        const systemLight = window.matchMedia('(prefers-color-scheme: light)');
+
+        function applyTheme(theme) {
+            root.setAttribute('data-theme', theme);
+            themeMeta.setAttribute('content', theme === 'light' ? '#f8fafc' : '#020617');
+            themeToggle.setAttribute('aria-label', theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
+        }
+        applyTheme(root.getAttribute('data-theme') || 'dark');
+
+        themeToggle.addEventListener('click', () => {
+            const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            applyTheme(next);
+            try { localStorage.setItem('theme', next); } catch (e) {}
+        });
+        // Follow system changes until the visitor picks a theme themselves.
+        systemLight.addEventListener('change', (e) => {
+            let saved = null;
+            try { saved = localStorage.getItem('theme'); } catch (err) {}
+            if (!saved) applyTheme(e.matches ? 'light' : 'dark');
+        });
+
         // Experience Accordion
         const expItems = document.querySelectorAll('.experience-item');
         expItems.forEach(item => {
@@ -975,7 +1067,9 @@
                 }
 
                 ctx.clearRect(0, 0, width, height);
-                ctx.strokeStyle = 'rgba(14, 165, 233, 0.22)';
+                ctx.strokeStyle = document.documentElement.getAttribute('data-theme') === 'light'
+                    ? 'rgba(2, 132, 199, 0.3)'
+                    : 'rgba(14, 165, 233, 0.22)';
                 ctx.lineWidth = 1;
                 // Rows run along x, columns along depth; each is one polyline.
                 ctx.beginPath();
