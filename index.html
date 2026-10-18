@@ -336,7 +336,7 @@
         main h2 > span { font-size: 1rem; letter-spacing: 0; }
         .glass-card { border-radius: var(--card-radius); background: rgba(15,23,42,.75); }
         .glass-card:hover { transform: none; box-shadow: 0 8px 24px rgba(0,0,0,.12); border-color: rgba(56,189,248,.25); }
-        #bg-canvas { opacity: .2; }
+        #bg-canvas { opacity: .55; }
         .text-gradient { background-image: linear-gradient(120deg, #f1f5f9, #7dd3fc); }
         #header nav { gap: 2rem; }
         #header nav > * { margin-left: 0; }
@@ -1011,8 +1011,10 @@
         const careerYears = now.getFullYear() - 2015 - (now.getMonth() < 3 ? 1 : 0);
         document.getElementById('years').textContent = careerYears + '+ years';
 
-        // --- Wireframe terrain background (2D canvas; skipped for reduced motion) ---
-        (function initTerrain() {
+        // --- Level-set contour background (2D canvas; skipped for reduced motion) ---
+        // A smooth scalar field drawn as iso-lines with marching squares, like an evolving
+        // etch front. The zero level is the highlighted "interface".
+        (function initLevelSet() {
             const canvas = document.querySelector('#bg-canvas');
             if (!canvas) return;
 
@@ -1023,18 +1025,22 @@
                 return;
             }
 
-            const SEGMENTS = 40;
-            const SIZE = 60;
-            const FOCAL_TAN = Math.tan(37.5 * Math.PI / 180);
-            // Camera at (0, 8, 12) looking at the origin: forward, then the up vector perpendicular to it.
-            const CAM_Y = 8, CAM_Z = 12, LEN = Math.hypot(CAM_Y, CAM_Z);
-            const FWD_Y = -CAM_Y / LEN, FWD_Z = -CAM_Z / LEN;
-            const UP_Y = CAM_Z / LEN, UP_Z = -CAM_Y / LEN;
+            const CELL = 22;           // Grid spacing in CSS pixels; contours are interpolated between samples.
+            const LEVEL_STEP = 0.14;
+            const LEVELS = 6;          // Iso-lines on each side of the zero level.
+            // Moving bumps: [amplitude, x speed, y speed, x phase, y phase, radius].
+            const BUMPS = [
+                [ 1.00, 0.050, 0.070, 0.0, 1.3, 0.34],
+                [-0.85, 0.060, 0.045, 2.1, 0.4, 0.30],
+                [ 0.75, 0.040, 0.065, 4.2, 2.6, 0.26],
+                [-0.70, 0.070, 0.035, 1.0, 4.9, 0.32],
+                [ 0.60, 0.035, 0.055, 5.3, 3.4, 0.24]
+            ];
 
-            const grid = SEGMENTS + 1;
-            const px = new Float32Array(grid * grid);
-            const py = new Float32Array(grid * grid);
-            let width = 0, height = 0, mouseX = 0, running = false, last = 0;
+            let width = 0, height = 0, cols = 0, rows = 0, field = null;
+            let colFactors = new Float32Array(0), rowFactors = new Float32Array(0);
+            let mouseX = -1, mouseY = -1, probeX = -1, probeY = -1, probeAmp = 0;
+            let running = false, last = 0;
 
             function resize() {
                 const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -1043,57 +1049,113 @@
                 canvas.width = Math.round(width * dpr);
                 canvas.height = Math.round(height * dpr);
                 ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                cols = Math.ceil(width / CELL) + 1;
+                rows = Math.ceil(height / CELL) + 1;
+                field = new Float32Array(cols * rows);
+            }
+
+            // Each Gaussian bump is separable, exp(k(dx² + dy²)) = exp(k·dx²)·exp(k·dy²), and so is the
+            // background ripple, so per-row and per-column factors are computed once and multiplied per sample.
+            function sample(t) {
+                const scale = Math.max(width, height);
+                const bumps = BUMPS.map(([a, sx, sy, px, py, r]) => [
+                    a,
+                    width * (0.5 + 0.42 * Math.sin(t * sx + px)),
+                    height * (0.5 + 0.42 * Math.sin(t * sy + py)),
+                    -1 / ((r * scale) ** 2)
+                ]);
+                // The cursor acts like a slow etch probe that eases toward the pointer.
+                if (probeAmp > 0.01) bumps.push([-0.55 * probeAmp, probeX, probeY, -1 / ((0.09 * scale) ** 2)]);
+                const n = bumps.length;
+                if (colFactors.length !== cols * (n + 1)) colFactors = new Float32Array(cols * (n + 1));
+                if (rowFactors.length !== rows * (n + 1)) rowFactors = new Float32Array(rows * (n + 1));
+                for (let i = 0; i < cols; i++) {
+                    const x = i * CELL;
+                    colFactors[i * (n + 1)] = 0.12 * Math.sin(x / scale * 9 + t * 0.12);
+                    for (let b = 0; b < n; b++) {
+                        const dx = x - bumps[b][1];
+                        colFactors[i * (n + 1) + b + 1] = bumps[b][0] * Math.exp(dx * dx * bumps[b][3]);
+                    }
+                }
+                for (let j = 0; j < rows; j++) {
+                    const y = j * CELL;
+                    rowFactors[j * (n + 1)] = Math.cos(y / scale * 7 - t * 0.09);
+                    for (let b = 0; b < n; b++) {
+                        const dy = y - bumps[b][2];
+                        rowFactors[j * (n + 1) + b + 1] = Math.exp(dy * dy * bumps[b][3]);
+                    }
+                }
+                for (let j = 0; j < rows; j++) {
+                    const ro = j * (n + 1);
+                    for (let i = 0; i < cols; i++) {
+                        const co = i * (n + 1);
+                        let v = colFactors[co] * rowFactors[ro];
+                        for (let b = 1; b <= n; b++) v += colFactors[co + b] * rowFactors[ro + b];
+                        field[j * cols + i] = v;
+                    }
+                }
+            }
+
+            // Adds the marching-squares segments for one level to the current path.
+            function contour(level) {
+                for (let j = 0; j < rows - 1; j++) {
+                    const y0 = j * CELL, y1 = y0 + CELL;
+                    for (let i = 0; i < cols - 1; i++) {
+                        const k = j * cols + i;
+                        const a = field[k] - level, b = field[k + 1] - level;
+                        const c = field[k + cols + 1] - level, d = field[k + cols] - level;
+                        const idx = (a > 0 ? 8 : 0) | (b > 0 ? 4 : 0) | (c > 0 ? 2 : 0) | (d > 0 ? 1 : 0);
+                        if (idx === 0 || idx === 15) continue;
+                        const x0 = i * CELL, x1 = x0 + CELL;
+                        // Edge crossings: top, right, bottom, left.
+                        const tx = x0 + CELL * a / (a - b), ry = y0 + CELL * b / (b - c);
+                        const bx = x0 + CELL * d / (d - c), ly = y0 + CELL * a / (a - d);
+                        switch (idx) {
+                            case 1: case 14: ctx.moveTo(x0, ly); ctx.lineTo(bx, y1); break;
+                            case 2: case 13: ctx.moveTo(bx, y1); ctx.lineTo(x1, ry); break;
+                            case 3: case 12: ctx.moveTo(x0, ly); ctx.lineTo(x1, ry); break;
+                            case 4: case 11: ctx.moveTo(tx, y0); ctx.lineTo(x1, ry); break;
+                            case 6: case 9:  ctx.moveTo(tx, y0); ctx.lineTo(bx, y1); break;
+                            case 7: case 8:  ctx.moveTo(x0, ly); ctx.lineTo(tx, y0); break;
+                            case 5: ctx.moveTo(x0, ly); ctx.lineTo(tx, y0); ctx.moveTo(bx, y1); ctx.lineTo(x1, ry); break;
+                            case 10: ctx.moveTo(tx, y0); ctx.lineTo(x1, ry); ctx.moveTo(x0, ly); ctx.lineTo(bx, y1); break;
+                        }
+                    }
+                }
             }
 
             function draw(t) {
-                const focal = (height / 2) / FOCAL_TAN;
-                const tilt = mouseX * 0.03;
-                for (let j = 0; j < grid; j++) {
-                    for (let i = 0; i < grid; i++) {
-                        const x = (i / SEGMENTS - 0.5) * SIZE;
-                        const depth = (j / SEGMENTS - 0.5) * SIZE;
-                        const h = 1.5 * Math.sin(x / 8 + t * 0.15) * Math.cos(depth / 8 + t * 0.08) +
-                                  0.3 * Math.sin(x / 1.5 + t * 0.3);
-                        // World position relative to the camera; the mouse adds a slight sideways sway.
-                        const dx = x + depth * tilt;
-                        const dy = h - CAM_Y;
-                        const dz = -depth - CAM_Z;
-                        const zc = dy * FWD_Y + dz * FWD_Z;
-                        const k = j * grid + i;
-                        if (zc < 0.1) { px[k] = NaN; continue; }
-                        px[k] = width / 2 + (dx / zc) * focal;
-                        py[k] = height / 2 - ((dy * UP_Y + dz * UP_Z) / zc) * focal;
-                    }
+                if (mouseX >= 0) {
+                    probeX = probeX < 0 ? mouseX : probeX + (mouseX - probeX) * 0.08;
+                    probeY = probeY < 0 ? mouseY : probeY + (mouseY - probeY) * 0.08;
+                    probeAmp += (1 - probeAmp) * 0.05;
+                } else {
+                    probeAmp *= 0.95;
                 }
+                sample(t);
 
+                const light = document.documentElement.getAttribute('data-theme') === 'light';
                 ctx.clearRect(0, 0, width, height);
-                ctx.strokeStyle = document.documentElement.getAttribute('data-theme') === 'light'
-                    ? 'rgba(2, 132, 199, 0.3)'
-                    : 'rgba(14, 165, 233, 0.22)';
                 ctx.lineWidth = 1;
-                // Rows run along x, columns along depth; each is one polyline.
+                ctx.strokeStyle = light ? 'rgba(2, 132, 199, 0.32)' : 'rgba(14, 165, 233, 0.26)';
                 ctx.beginPath();
-                for (let a = 0; a < grid; a++) {
-                    for (let b = 0; b < grid; b++) {
-                        const row = a * grid + b;
-                        if (b === 0) { ctx.moveTo(px[row], py[row]); } else { ctx.lineTo(px[row], py[row]); }
-                    }
+                for (let n = 1; n <= LEVELS; n++) {
+                    contour(n * LEVEL_STEP);
+                    contour(-n * LEVEL_STEP);
                 }
                 ctx.stroke();
+
+                ctx.lineWidth = 1.6;
+                ctx.strokeStyle = light ? 'rgba(124, 58, 237, 0.45)' : 'rgba(167, 139, 250, 0.55)';
                 ctx.beginPath();
-                for (let a = 0; a < grid; a++) {
-                    for (let b = 0; b < grid; b++) {
-                        const col = b * grid + a;
-                        if (b === 0) { ctx.moveTo(px[col], py[col]); } else { ctx.lineTo(px[col], py[col]); }
-                    }
-                }
+                contour(0);
                 ctx.stroke();
             }
 
             function frame(now) {
                 if (!running) return;
-                // About 30 fps is plenty for a slow, faint effect.
-                if (now - last >= 33) {
+                // About 24 fps is plenty for slow, faint motion.
+                if (now - last >= 42) {
                     last = now;
                     draw(now / 1000);
                 }
@@ -1106,9 +1168,13 @@
                 if (running) requestAnimationFrame(frame);
             }
 
-            window.addEventListener('mousemove', (e) => {
-                mouseX = (e.clientX / window.innerWidth) - 0.5;
-            }, { passive: true });
+            if (window.matchMedia('(pointer: fine)').matches) {
+                window.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                }, { passive: true });
+                document.documentElement.addEventListener('mouseleave', () => { mouseX = mouseY = -1; });
+            }
 
             let resizeTimeout;
             window.addEventListener('resize', () => {
@@ -1121,9 +1187,17 @@
                 if (e.matches) { setRunning(false); canvas.remove(); }
             });
 
-            resize();
-            draw(performance.now() / 1000);
-            setRunning(!document.hidden);
+            // Start after first paint so the background never delays the page content.
+            const start = () => {
+                resize();
+                draw(performance.now() / 1000);
+                setRunning(!document.hidden);
+            };
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(start, { timeout: 500 });
+            } else {
+                setTimeout(start, 0);
+            }
         })();
     </script>
 </body>
