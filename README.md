@@ -17,7 +17,7 @@ Features include:
 - Reduced-motion support.
 - Search and social-sharing metadata, plus structured person data.
 - A WebP portrait with a JPEG fallback.
-- A lightweight animated wireframe background that pauses in hidden tabs and is skipped when reduced motion is requested.
+- A lightweight animated level-set contour background, inspired by etch-front simulation, that starts after the page renders, pauses in hidden tabs and is skipped when reduced motion is requested.
 - Navigation that highlights the section in view.
 - A print layout that expands every role history.
 
@@ -39,7 +39,7 @@ Features include:
 
 ## Preview locally
 
-The site uses plain HTML, CSS, and JavaScript. Tailwind CSS is precompiled into `tailwind.css`, icons are inline SVGs, fonts are self-hosted in `fonts/`, and the animated background is drawn on a 2D canvas. Nothing loads from an external service, so the site works offline.
+The site uses plain HTML, CSS, and JavaScript. Tailwind CSS is precompiled into `tailwind.css`, icons are inline SVGs, fonts are self-hosted in `fonts/`, and the animated contour background is drawn on a 2D canvas. Nothing loads from an external service, so the site works offline.
 
 Clone the repository:
 
