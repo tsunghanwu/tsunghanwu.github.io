@@ -16,19 +16,21 @@
     <meta property="og:image" content="https://tsunghanwu.github.io/og-image.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Tsung-Han Wu, Senior Staff Applications Engineer">
+    <meta property="og:site_name" content="Tsung-Han Wu">
+    <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Tsung-Han Wu | Sr. Staff Engineer, Process Modeling &amp; ML">
     <meta name="twitter:description" content="Sr. Staff Engineer specializing in semiconductor process modeling, simulation, applied machine learning, and agentic AI.">
     <meta name="twitter:image" content="https://tsunghanwu.github.io/og-image.jpg">
+    <meta name="twitter:image:alt" content="Tsung-Han Wu, Senior Staff Applications Engineer">
 
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -52,6 +54,8 @@
         "Process Modeling",
         "TCAD",
         "Machine Learning",
+        "Agentic AI",
+        "Plasma Etch and Deposition Modeling",
         "Semiconductor Process Engineering"
       ]
     }
@@ -154,8 +158,18 @@
             height: 3px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             z-index: 100;
-            width: 0%;
+            width: 100%;
+            transform: scaleX(0);
             transform-origin: left;
+        }
+
+        .icon {
+            display: inline-block;
+            height: 1em;
+            width: auto;
+            vertical-align: -0.125em;
+            fill: currentColor;
+            overflow: visible;
         }
 
         .nav-link {
@@ -174,7 +188,20 @@
             outline: none;
             color: var(--primary);
         }
-        .nav-link:focus-visible::after { width: 100%; }
+        .nav-link:focus-visible::after,
+        .nav-link[aria-current]::after { width: 100%; }
+        .nav-link[aria-current] { color: #fff; }
+        #mobile-menu a[aria-current] { color: var(--accent); }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.5rem;
+            padding: 0.5rem;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+        }
+        .mobile-menu-close:hover { color: var(--text-light); }
 
         .experience-details {
             display: grid;
@@ -359,7 +386,31 @@
             main h2 { justify-content: flex-start; text-align: left; }
             #contact h2 { text-align: center; }
         }
+
+        /* Print: a clean, résumé-style page with every role history expanded. */
+        @media print {
+            @page { margin: 1.5cm; }
+            body { background: #fff !important; color: #0f172a !important; }
+            #bg-canvas, .scroll-progress, .skip-link, #header, #mobile-menu, #mobile-menu-overlay,
+            .hero-actions, .experience-item > button, footer { display: none !important; }
+            #home { min-height: 0; padding-block: 0 1rem; }
+            main section:not(#home) { padding-block: 1.5rem; }
+            .reveal { opacity: 1 !important; transform: none !important; }
+            .text-gradient { background: none; -webkit-text-fill-color: currentColor; color: #0f172a; }
+            .glass-card { background: none !important; backdrop-filter: none; border-color: #cbd5e1 !important; box-shadow: none !important; }
+            .role-entry, #skills [role="listitem"], #contact > div { break-inside: avoid; }
+            main h2, .experience-item h3 { break-after: avoid; }
+            #skills [role="listitem"] > .absolute { display: none; }
+            .experience-details { grid-template-rows: 1fr !important; margin-top: 1.5rem !important; }
+            main h2, main h3, main h4, .hero-role, .about-intro p { color: #0f172a !important; }
+            main p, main li, main span, .hero-specialties, .hero-description { color: #334155 !important; }
+            .hero-portrait { max-width: 220px; }
+            #contact > div { padding: 1.5rem !important; }
+            #contact a { background: none !important; color: #0f172a !important; padding: 0 !important; }
+            #contact a::after { content: " (" attr(href) ")"; font-weight: 400; }
+        }
     </style>
+    <link rel="stylesheet" href="tailwind.css">
 </head>
 <body class="no-js">
     <script>document.body.classList.remove('no-js');</script>
@@ -381,7 +432,7 @@
                 <a href="#contact" class="px-6 py-2 glass-card hover:bg-sky-500 hover:text-slate-950 hover:border-transparent rounded-full transition-all duration-300 focus-ring">CONNECT</a>
             </nav>
             <button id="mobile-menu-button" class="md:hidden text-2xl p-2 focus-ring rounded-lg" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-                <i class="fas fa-bars" aria-hidden="true"></i>
+                <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
             </button>
         </div>
     </header>
@@ -389,6 +440,9 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu-overlay" class="mobile-menu-overlay md:hidden" aria-hidden="true"></div>
     <nav id="mobile-menu" class="mobile-menu md:hidden" aria-label="Mobile navigation" aria-hidden="true" inert>
+        <button id="mobile-menu-close" class="mobile-menu-close focus-ring rounded-lg" aria-label="Close menu">
+            <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+        </button>
         <a href="#about" class="text-lg font-medium text-slate-300 hover:text-sky-400 transition-colors focus-ring rounded px-2 py-1">About</a>
         <a href="#experience" class="text-lg font-medium text-slate-300 hover:text-sky-400 transition-colors focus-ring rounded px-2 py-1">Experience</a>
         <a href="#skills" class="text-lg font-medium text-slate-300 hover:text-sky-400 transition-colors focus-ring rounded px-2 py-1">Skills</a>
@@ -408,7 +462,7 @@
                     <p class="hero-description text-slate-400">Bridging process technology and model-driven insights</p>
                     <div class="hero-actions flex flex-col sm:flex-row gap-4">
                         <a href="#experience" class="bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold transition-colors focus-ring text-center">View Experience</a>
-                        <a href="#contact" class="flex items-center justify-center gap-3 text-slate-300 hover:text-sky-400 font-bold focus-ring transition-colors">Get in touch <i class="fas fa-arrow-right text-xs" aria-hidden="true"></i></a>
+                        <a href="#contact" class="flex items-center justify-center gap-3 text-slate-300 hover:text-sky-400 font-bold focus-ring transition-colors">Get in touch <svg class="icon text-xs" aria-hidden="true" focusable="false" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></a>
                     </div>
                 </div>
                 <figure class="hero-portrait">
@@ -487,7 +541,7 @@
                     </ul>
                     <button class="mt-6 inline-flex items-center gap-3 text-sm font-medium text-sky-400 focus-ring rounded-md px-2 py-1" aria-expanded="false" aria-controls="exp-details-1" id="exp-trigger-1" aria-label="Synopsys role history">
                         <span class="experience-toggle-label">View role history</span>
-                        <i class="fas fa-chevron-down chevron-icon" aria-hidden="true"></i>
+                        <svg class="icon chevron-icon" aria-hidden="true" focusable="false" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
                     </button>
                     
                     <div id="exp-details-1" class="experience-details" role="region" aria-labelledby="exp-trigger-1" inert>
@@ -546,7 +600,7 @@
                     </ul>
                     <button class="mt-6 inline-flex items-center gap-3 text-sm font-medium text-sky-400 focus-ring rounded-md px-2 py-1" aria-expanded="false" aria-controls="exp-details-2" id="exp-trigger-2" aria-label="Lam Research role history">
                         <span class="experience-toggle-label">View role history</span>
-                        <i class="fas fa-chevron-down chevron-icon" aria-hidden="true"></i>
+                        <svg class="icon chevron-icon" aria-hidden="true" focusable="false" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
                     </button>
                     
                     <div id="exp-details-2" class="experience-details" role="region" aria-labelledby="exp-trigger-2" inert>
@@ -589,7 +643,7 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto" role="list" aria-label="Expertise areas">
                 <div class="col-span-2 row-span-2 glass-card p-10 rounded-[2.5rem] flex flex-col justify-between overflow-hidden relative group" role="listitem">
                     <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity" aria-hidden="true">
-                        <i class="fas fa-brain text-9xl text-sky-400"></i>
+                        <svg class="icon text-9xl text-sky-400" aria-hidden="true" focusable="false" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M184 0c30.9 0 56 25.1 56 56V456c0 30.9-25.1 56-56 56c-28.9 0-52.7-21.9-55.7-50.1c-5.2 1.4-10.7 2.1-16.3 2.1c-35.3 0-64-28.7-64-64c0-7.4 1.3-14.6 3.6-21.2C21.4 367.4 0 338.2 0 304c0-31.9 18.7-59.5 45.8-72.3C37.1 220.8 32 207 32 192c0-30.7 21.6-56.3 50.4-62.6C80.8 123.9 80 118 80 112c0-29.9 20.6-55.1 48.3-62.1C131.3 21.9 155.1 0 184 0zM328 0c28.9 0 52.6 21.9 55.7 49.9c27.8 7 48.3 32.1 48.3 62.1c0 6-.8 11.9-2.4 17.4c28.8 6.2 50.4 31.9 50.4 62.6c0 15-5.1 28.8-13.8 39.7C493.3 244.5 512 272.1 512 304c0 34.2-21.4 63.4-51.6 74.8c2.3 6.6 3.6 13.8 3.6 21.2c0 35.3-28.7 64-64 64c-5.6 0-11.1-.7-16.3-2.1c-3 28.2-26.8 50.1-55.7 50.1c-30.9 0-56-25.1-56-56V56c0-30.9 25.1-56 56-56z"/></svg>
                     </div>
                     <div>
                         <h3 class="text-3xl font-bold mb-6">Agentic AI &amp; Machine Learning</h3>
@@ -606,7 +660,7 @@
                 </div>
                 <div class="col-span-2 row-span-2 glass-card p-10 rounded-[2.5rem] flex flex-col justify-between overflow-hidden relative group" role="listitem">
                     <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity" aria-hidden="true">
-                        <i class="fas fa-microchip text-9xl text-green-400"></i>
+                        <svg class="icon text-9xl text-green-400" aria-hidden="true" focusable="false" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M176 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64c-35.3 0-64 28.7-64 64H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64c0 35.3 28.7 64 64 64v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448c35.3 0 64-28.7 64-64h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V280h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V176h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448c0-35.3-28.7-64-64-64V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H280V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H176V24zM160 128H352c17.7 0 32 14.3 32 32V352c0 17.7-14.3 32-32 32H160c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32zm192 32H160V352H352V160z"/></svg>
                     </div>
                     <div>
                         <h3 class="text-3xl font-bold mb-6">TCAD Process Modeling</h3>
@@ -621,7 +675,7 @@
                 <div class="col-span-2 glass-card p-8 rounded-[2rem] flex flex-col group hover:border-sky-500/30 transition-all" role="listitem">
                     <div class="flex items-center gap-6">
                         <div class="w-16 h-16 bg-amber-500/10 rounded-2xl flex items-center justify-center border border-amber-500/20" aria-hidden="true">
-                            <i class="fas fa-chart-line text-2xl text-amber-500"></i>
+                            <svg class="icon text-2xl text-amber-500" aria-hidden="true" focusable="false" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/></svg>
                         </div>
                         <div>
                             <h3 class="text-xl font-bold text-white">Process Analytics</h3>
@@ -637,7 +691,7 @@
                 <div class="col-span-2 glass-card p-8 rounded-[2rem] flex flex-col group hover:border-sky-500/30 transition-all" role="listitem">
                     <div class="flex items-center gap-6">
                         <div class="w-16 h-16 bg-sky-500/10 rounded-2xl flex items-center justify-center border border-sky-500/20" aria-hidden="true">
-                            <i class="fas fa-code text-2xl text-sky-400"></i>
+                            <svg class="icon text-2xl text-sky-400" aria-hidden="true" focusable="false" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg"><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg>
                         </div>
                         <div>
                             <h3 class="text-xl font-bold text-white">Software Engineering</h3>
@@ -645,9 +699,9 @@
                         </div>
                     </div>
                     <div class="flex flex-wrap gap-3 mt-6" aria-label="Software engineering skills">
-                        <span class="skill-badge px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20"><i class="fab fa-python text-sm" aria-hidden="true"></i>Python</span>
-                        <span class="skill-badge px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20"><i class="fab fa-linux text-sm" aria-hidden="true"></i>Linux</span>
-                        <span class="skill-badge px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20"><i class="fab fa-git-alt text-sm" aria-hidden="true"></i>Git</span>
+                        <span class="skill-badge px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20"><svg class="icon text-sm" aria-hidden="true" focusable="false" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6zM286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3zM167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4zm-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3z"/></svg>Python</span>
+                        <span class="skill-badge px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20"><svg class="icon text-sm" aria-hidden="true" focusable="false" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.6.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.4zM420 403.8c-3.6-4-5.3-11.6-7.2-19.7-1.8-8.1-3.9-16.8-10.5-22.4-1.3-1.1-2.6-2.1-4-2.9-1.3-.8-2.7-1.5-4.1-2 9.2-27.3 5.6-54.5-3.7-79.1-11.4-30.1-31.3-56.4-46.5-74.4-17.1-21.5-33.7-41.9-33.4-72C311.1 85.4 315.7.1 234.8 0 132.4-.2 158 103.4 156.9 135.2c-1.7 23.4-6.4 41.8-22.5 64.7-18.9 22.5-45.5 58.8-58.1 96.7-6 17.9-8.8 36.1-6.2 53.3-6.5 5.8-11.4 14.7-16.6 20.2-4.2 4.3-10.3 5.9-17 8.3s-14 6-18.5 14.5c-2.1 3.9-2.8 8.1-2.8 12.4 0 3.9.6 7.9 1.2 11.8 1.2 8.1 2.5 15.7.8 20.8-5.2 14.4-5.9 24.4-2.2 31.7 3.8 7.3 11.4 10.5 20.1 12.3 17.3 3.6 40.8 2.7 59.3 12.5 19.8 10.4 39.9 14.1 55.9 10.4 11.6-2.6 21.1-9.6 25.9-20.2 12.5-.1 26.3-5.4 48.3-6.6 14.9-1.2 33.6 5.3 55.1 4.1.6 2.3 1.4 4.6 2.5 6.7v.1c8.3 16.7 23.8 24.3 40.3 23 16.6-1.3 34.1-11 48.3-27.9 13.6-16.4 36-23.2 50.9-32.2 7.4-4.5 13.4-10.1 13.9-18.3.4-8.2-4.4-17.3-15.5-29.7zM223.7 87.3c9.8-22.2 34.2-21.8 44-.4 6.5 14.2 3.6 30.9-4.3 40.4-1.6-.8-5.9-2.6-12.6-4.9 1.1-1.2 3.1-2.7 3.9-4.6 4.8-11.8-.2-27-9.1-27.3-7.3-.5-13.9 10.8-11.8 23-4.1-2-9.4-3.5-13-4.4-1-6.9-.3-14.6 2.9-21.8zM183 75.8c10.1 0 20.8 14.2 19.1 33.5-3.5 1-7.1 2.5-10.2 4.6 1.2-8.9-3.3-20.1-9.6-19.6-8.4.7-9.8 21.2-1.8 28.1 1 .8 1.9-.2-5.9 5.5-15.6-14.6-10.5-52.1 8.4-52.1zm-13.6 60.7c6.2-4.6 13.6-10 14.1-10.5 4.7-4.4 13.5-14.2 27.9-14.2 7.1 0 15.6 2.3 25.9 8.9 6.3 4.1 11.3 4.4 22.6 9.3 8.4 3.5 13.7 9.7 10.5 18.2-2.6 7.1-11 14.4-22.7 18.1-11.1 3.6-19.8 16-38.2 14.9-3.9-.2-7-1-9.6-2.1-8-3.5-12.2-10.4-20-15-8.6-4.8-13.2-10.4-14.7-15.3-1.4-4.9 0-9 4.2-12.3zm3.3 334c-2.7 35.1-43.9 34.4-75.3 18-29.9-15.8-68.6-6.5-76.5-21.9-2.4-4.7-2.4-12.7 2.6-26.4v-.2c2.4-7.6.6-16-.6-23.9-1.2-7.8-1.8-15 .9-20 3.5-6.7 8.5-9.1 14.8-11.3 10.3-3.7 11.8-3.4 19.6-9.9 5.5-5.7 9.5-12.9 14.3-18 5.1-5.5 10-8.1 17.7-6.9 8.1 1.2 15.1 6.8 21.9 16l19.6 35.6c9.5 19.9 43.1 48.4 41 68.9zm-1.4-25.9c-4.1-6.6-9.6-13.6-14.4-19.6 7.1 0 14.2-2.2 16.7-8.9 2.3-6.2 0-14.9-7.4-24.9-13.5-18.2-38.3-32.5-38.3-32.5-13.5-8.4-21.1-18.7-24.6-29.9s-3-23.3-.3-35.2c5.2-22.9 18.6-45.2 27.2-59.2 2.3-1.7.8 3.2-8.7 20.8-8.5 16.1-24.4 53.3-2.6 82.4.6-20.7 5.5-41.8 13.8-61.5 12-27.4 37.3-74.9 39.3-112.7 1.1.8 4.6 3.2 6.2 4.1 4.6 2.7 8.1 6.7 12.6 10.3 12.4 10 28.5 9.2 42.4 1.2 6.2-3.5 11.2-7.5 15.9-9 9.9-3.1 17.8-8.6 22.3-15 7.7 30.4 25.7 74.3 37.2 95.7 6.1 11.4 18.3 35.5 23.6 64.6 3.3-.1 7 .4 10.9 1.4 13.8-35.7-11.7-74.2-23.3-84.9-4.7-4.6-4.9-6.6-2.6-6.5 12.6 11.2 29.2 33.7 35.2 59 2.8 11.6 3.3 23.7.4 35.7 16.4 6.8 35.9 17.9 30.7 34.8-2.2-.1-3.2 0-4.2 0 3.2-10.1-3.9-17.6-22.8-26.1-19.6-8.6-36-8.6-38.3 12.5-12.1 4.2-18.3 14.7-21.4 27.3-2.8 11.2-3.6 24.7-4.4 39.9-.5 7.7-3.6 18-6.8 29-32.1 22.9-76.7 32.9-114.3 7.2zm257.4-11.5c-.9 16.8-41.2 19.9-63.2 46.5-13.2 15.7-29.4 24.4-43.6 25.5s-26.5-4.8-33.7-19.3c-4.7-11.1-2.4-23.1 1.1-36.3 3.7-14.2 9.2-28.8 9.9-40.6.8-15.2 1.7-28.5 4.2-38.7 2.6-10.3 6.6-17.2 13.7-21.1.3-.2.7-.3 1-.5.8 13.2 7.3 26.6 18.8 29.5 12.6 3.3 30.7-7.5 38.4-16.3 9-.3 15.7-.9 22.6 5.1 9.9 8.5 7.1 30.3 17.1 41.6 10.6 11.6 14 19.5 13.7 24.6zM173.3 148.7c2 1.9 4.7 4.5 8 7.1 6.6 5.2 15.8 10.6 27.3 10.6 11.6 0 22.5-5.9 31.8-10.8 4.9-2.6 10.9-7 14.8-10.4s5.9-6.3 3.1-6.6-2.6 2.6-6 5.1c-4.4 3.2-9.7 7.4-13.9 9.8-7.4 4.2-19.5 10.2-29.9 10.2s-18.7-4.8-24.9-9.7c-3.1-2.5-5.7-5-7.7-6.9-1.5-1.4-1.9-4.6-4.3-4.9-1.4-.1-1.8 3.7 1.7 6.5z"/></svg>Linux</span>
+                        <span class="skill-badge px-4 py-2 bg-sky-500/10 text-sky-400 text-xs font-bold font-mono rounded-xl border border-sky-500/20"><svg class="icon text-sm" aria-hidden="true" focusable="false" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>Git</span>
                     </div>
                 </div>
             </div>
@@ -661,7 +715,7 @@
                 <p class="contact-description">Connect with me on LinkedIn to discuss process modeling, simulation, and applied machine learning.</p>
                 <div class="flex flex-col md:flex-row gap-8 justify-center items-center">
                     <a href="https://linkedin.com/in/tsung-han-wu/" target="_blank" rel="noopener noreferrer" class="px-12 py-6 bg-white text-slate-950 font-bold rounded-2xl hover:bg-sky-400 transition-all flex items-center gap-4 text-xl shadow-2xl focus-ring" aria-label="Connect on LinkedIn">
-                        <i class="fab fa-linkedin text-2xl" aria-hidden="true"></i>
+                        <svg class="icon text-2xl" aria-hidden="true" focusable="false" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
                         Connect
                     </a>
                 </div>
@@ -701,31 +755,49 @@
         const header = document.getElementById('header');
         const headerInner = document.getElementById('header-inner');
         let scrollTicking = false;
-        
+
+        function updateScrollState() {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = height > 0 ? winScroll / height : 0;
+            scrollBar.style.transform = `scaleX(${scrolled})`;
+
+            const compact = winScroll > 50;
+            header.classList.toggle('bg-slate-950/80', compact);
+            header.classList.toggle('backdrop-blur-xl', compact);
+            header.classList.toggle('border-slate-800', compact);
+            header.classList.toggle('border-transparent', !compact);
+            headerInner.classList.toggle('py-3', compact);
+            headerInner.classList.toggle('py-5', !compact);
+            scrollTicking = false;
+        }
+
         window.addEventListener('scroll', () => {
             if (!scrollTicking) {
-                requestAnimationFrame(() => {
-                    const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
-                    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-                    scrollBar.style.width = scrolled + "%";
-
-                    if (winScroll > 50) {
-                        header.classList.add('bg-slate-950/80', 'backdrop-blur-xl', 'border-slate-800');
-                        header.classList.remove('border-transparent');
-                        headerInner.classList.remove('py-5');
-                        headerInner.classList.add('py-3');
-                    } else {
-                        header.classList.remove('bg-slate-950/80', 'backdrop-blur-xl', 'border-slate-800');
-                        header.classList.add('border-transparent');
-                        headerInner.classList.remove('py-3');
-                        headerInner.classList.add('py-5');
-                    }
-                    scrollTicking = false;
-                });
+                requestAnimationFrame(updateScrollState);
                 scrollTicking = true;
             }
         }, { passive: true });
+        // Apply the right header state when the page loads already scrolled (reload or deep link).
+        updateScrollState();
+
+        // --- Highlight the nav link for the section in view ---
+        const navLinks = document.querySelectorAll('#header nav a[href^="#"], #mobile-menu a[href^="#"]');
+        // Observe every section (including the hero) so no link stays highlighted at the top of the page.
+        const navSections = document.querySelectorAll('main section[id]');
+        if (navSections.length && 'IntersectionObserver' in window) {
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const id = '#' + entry.target.id;
+                    navLinks.forEach(link => {
+                        if (link.getAttribute('href') === id) link.setAttribute('aria-current', 'true');
+                        else link.removeAttribute('aria-current');
+                    });
+                });
+            }, { rootMargin: '-45% 0px -50% 0px' });
+            navSections.forEach(section => sectionObserver.observe(section));
+        }
 
         // Mobile Menu with focus trap
         const menuButton = document.getElementById('mobile-menu-button');
@@ -765,6 +837,7 @@
         
         menuButton.addEventListener('click', () => toggleMenu());
         mobileOverlay.addEventListener('click', () => toggleMenu(false));
+        document.getElementById('mobile-menu-close').addEventListener('click', () => toggleMenu(false));
         
         mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => toggleMenu(false));
