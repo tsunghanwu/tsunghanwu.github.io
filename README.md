@@ -17,12 +17,16 @@ Features include:
 - Search and social-sharing metadata, plus structured person data.
 - A WebP portrait with a JPEG fallback.
 - An animated wireframe background, skipped when reduced motion is requested.
+- Navigation that highlights the section in view.
+- A print layout that expands every role history.
 
 ## Files
 
 | File | Purpose |
 | --- | --- |
 | `index.html` | Page content, styles, metadata, and interactive behavior |
+| `tailwind.css` | Compiled Tailwind CSS (generated; do not edit by hand) |
+| `src/tailwind.css`, `tailwind.config.js`, `package.json` | Tailwind build input and configuration |
 | `MyAvatar.webp` | Primary portrait |
 | `MyAvatar.jpg` | Portrait fallback |
 | `og-image.jpg` | Social-sharing image |
@@ -31,7 +35,7 @@ Features include:
 
 ## Preview locally
 
-No build step or package installation is required. The site uses plain HTML, CSS, and JavaScript, with Tailwind CSS, Font Awesome, Google Fonts, and Three.js loaded from external services. An internet connection is needed for those resources.
+The site uses plain HTML, CSS, and JavaScript. Tailwind CSS is precompiled into `tailwind.css`, and icons are inline SVGs. Google Fonts and Three.js load from external services, so an internet connection is needed for those resources.
 
 Clone the repository:
 
@@ -64,12 +68,25 @@ Keep experience highlights concise and put supporting detail in the expandable r
 
 If your title, profile links, or portrait change, also update the page title, description, social metadata, and structured data in the document head.
 
+## Rebuild the CSS
+
+`tailwind.css` contains only the Tailwind classes used in `index.html`. If you add or change Tailwind classes, rebuild it with [Node.js](https://nodejs.org/) 18 or later:
+
+```sh
+npm install
+npm run build:css
+```
+
+Commit the updated `tailwind.css` with your change. Use `npm run watch:css` to rebuild automatically while editing. A GitHub Actions check fails on pull requests whose `tailwind.css` is out of date. Content-only edits that don't add new classes don't need a rebuild.
+
 ## Review changes
 
 Before publishing, preview at desktop and mobile widths. Check navigation, keyboard access, experience expansion and collapse, portrait loading, and contact links. Confirm that dates and outcome metrics match the intended copy.
 
 Use a branch and pull request to review changes before merging into `main`. Check the repository's GitHub Pages settings for the configured publishing source, then verify the deployed website after publication.
 
-## Skill logos
+## Icons
+
+Interface and section icons are inline SVGs from [Font Awesome Free 6.4.0](https://fontawesome.com/license/free) (icons under CC BY 4.0).
 
 The six AI and ML badge logos are embedded SVGs from [Simple Icons v16.34.0](https://github.com/simple-icons/simple-icons/tree/16.34.0), distributed under CC0. Codex uses the OpenAI mark. Icons inherit the badge color and are hidden from assistive technology because each badge includes its tool name.

@@ -1,0 +1,20 @@
+name: Check compiled CSS
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  tailwind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build:css
+      - name: Fail if tailwind.css is out of date
+        run: git diff --exit-code -- tailwind.css || (echo "::error::Run 'npm run build:css' and commit tailwind.css." && exit 1)
