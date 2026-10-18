@@ -89,4 +89,4 @@ Use a branch and pull request to review changes before merging into `main`. Chec
 
 Interface and section icons are inline SVGs from [Font Awesome Free 6.4.0](https://fontawesome.com/license/free) (icons under CC BY 4.0).
 
-The six AI and ML badge logos are embedded SVGs from [Simple Icons v16.34.0](https://github.com/simple-icons/simple-icons/tree/16.34.0), distributed under CC0. Codex uses the OpenAI mark. Icons inherit the badge color and are hidden from assistive technology because each badge includes its tool name.
+The seven AI and ML badge logos are embedded SVGs from [Simple Icons v16.34.0](https://github.com/simple-icons/simple-icons/tree/16.34.0), distributed under CC0. Codex uses the OpenAI mark, and Claude Code uses the Claude mark. Icons inherit the badge color and are hidden from assistive technology because each badge includes its tool name.
