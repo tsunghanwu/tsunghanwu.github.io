@@ -1028,7 +1028,7 @@
             }
 
             const CELL = 22;           // Field sample spacing in CSS pixels.
-            const MESH = 3;            // Mesh lines every MESH samples (66px).
+            const MESH = 2;            // Mesh lines every MESH samples (44px).
             const MARGIN = 3 * CELL;   // Sample beyond the edges so displaced lines never leave gaps.
             const GAIN = 1400;         // Displacement in pixels per unit field change per sample.
             const MAX_SHIFT = 0.42 * MESH * CELL;  // Keeps neighboring lines from crossing.
@@ -1172,7 +1172,7 @@
                 const light = document.documentElement.getAttribute('data-theme') === 'light';
                 ctx.clearRect(0, 0, width, height);
                 ctx.lineWidth = 1;
-                ctx.strokeStyle = light ? 'rgba(2, 132, 199, 0.4)' : 'rgba(56, 189, 248, 0.34)';
+                ctx.strokeStyle = light ? 'rgba(2, 132, 199, 0.28)' : 'rgba(56, 189, 248, 0.24)';
                 ctx.beginPath();
                 mesh();
                 ctx.stroke();
