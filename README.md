@@ -1,6 +1,6 @@
 # Tsung-Han Wu — Personal Website
 
-Personal website of Tsung-Han Wu, Senior Staff Applications Engineer specializing in semiconductor process modeling, simulation, applied machine learning, and agentic AI.
+Personal website of Tsung-Han Wu, Senior Staff Applications Engineer specializing in semiconductor process modeling, simulation, applied AI, and agentic workflows.
 
 [Visit the website](https://tsunghanwu.github.io/) · [Connect on LinkedIn](https://linkedin.com/in/tsung-han-wu/)
 
