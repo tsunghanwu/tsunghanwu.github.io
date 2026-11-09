@@ -328,16 +328,16 @@
         }
 
         /* Shared visual system and responsive layout. */
-        :root { --card-radius: 1.5rem; --section-space: clamp(3.5rem, 7vw, 6rem); }
+        :root { --card-radius: 1.5rem; --section-space: clamp(2.5rem, 5vw, 4rem); }
         body { background-image: radial-gradient(ellipse at 85% 5%, rgba(14,165,233,.07), transparent 40%); }
         main.container, #header-inner { max-width: 1200px; }
         main section { scroll-margin-top: 6rem; }
         main section:not(#home) { padding-block: var(--section-space); }
-        main h2 { font-size: clamp(1.9rem, 4vw, 3rem); gap: 1rem; margin-bottom: 2.5rem; letter-spacing: -.035em; }
-        main h2 > span { font-size: 1rem; letter-spacing: 0; }
+        #main-content section:not(#contact) h2 { font-size: clamp(1.9rem, 4vw, 3rem); gap: 1rem; margin-bottom: 2.5rem; letter-spacing: -.035em; }
+        #main-content section:not(#contact) h2 > span { font-size: 1rem; letter-spacing: 0; }
         .glass-card { border-radius: var(--card-radius); background: rgba(15,23,42,.75); }
         .glass-card:hover { transform: none; box-shadow: 0 8px 24px rgba(0,0,0,.12); border-color: rgba(56,189,248,.25); }
-        #bg-canvas { opacity: .55; }
+        #bg-canvas { opacity: .28; }
         .text-gradient { background-image: linear-gradient(120deg, #f1f5f9, #7dd3fc); }
         #header nav { gap: 2rem; }
         #header nav > * { margin-left: 0; }
@@ -400,10 +400,15 @@
             #header nav { gap: 1.5rem; }
         }
         @media (max-width: 767px) {
-            #home { min-height: auto; padding-block: 8rem 3rem; }
-            .hero-layout { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+            #home { min-height: auto; padding-block: 6.5rem 1.5rem; }
+            .hero-layout { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
             .hero-title { font-size: clamp(2.5rem, 10vw, 4rem); }
-            .hero-portrait { max-width: 360px; width: 100%; justify-self: center; }
+            .hero-portrait { max-width: 260px; width: 100%; justify-self: center; }
+            .hero-portrait figcaption { flex-wrap: wrap; gap: .25rem .5rem; }
+            .hero-eyebrow, .hero-title, .hero-specialties { margin-bottom: 1rem; }
+            .hero-description { font-size: 1rem; margin-bottom: 1.25rem; }
+            .hero-actions { gap: .5rem; }
+            #main-content section:not(#contact) h2 { font-size: clamp(2rem, 9.2vw, 2.5rem); margin-bottom: 2rem; }
             .hero-portrait picture { aspect-ratio: 1; }
             #about > div { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
             #about [role="list"] { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
@@ -414,8 +419,31 @@
             #skills .flex-wrap span { font-size: .65rem; padding: .5rem .625rem; }
             #skills [role="listitem"] > div.flex > div:first-child { width: 2.75rem; height: 2.75rem; }
             #skills [role="listitem"] > div.flex > div:last-child { min-width: 0; }
-            main h2 { justify-content: flex-start; text-align: left; }
+            #main-content section:not(#contact) h2 { justify-content: flex-start; text-align: left; }
             #contact h2 { text-align: center; }
+        }
+
+        /* Consistent expertise cards and visible career outcomes. */
+        #skills [role="listitem"] { justify-content: flex-start; }
+        #skills .expertise-icon { display: flex; align-items: center; justify-content: center; width: 3rem; height: 3rem; margin-bottom: 1.25rem; border: 1px solid rgba(56,189,248,.2); border-radius: .85rem; background: rgba(14,165,233,.1); }
+        #skills .expertise-icon svg { font-size: 1.5rem; color: var(--accent); }
+        #skills [role="listitem"] > div.flex:not(.flex-wrap) { display: block; }
+        #skills p { font-family: 'Inter', sans-serif; letter-spacing: 0; }
+        #skills .flex-wrap { margin-top: auto; padding-top: 1.5rem; }
+        #skills [role="listitem"] > div.flex > .expertise-icon { width: 3rem; height: 3rem; }
+        .achievement-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+        #experience .achievement-list > li + li { margin-top: 0; }
+        .achievement-list > li:last-child { grid-column: 1 / -1; }
+        .achievement-list .achievement { display: block; padding: 1.25rem; border-left: 2px solid var(--primary); background: rgba(14,165,233,.06); border-radius: 0 .75rem .75rem 0; }
+        .achievement strong { display: block; color: var(--accent); font-size: clamp(1.75rem, 3vw, 2.25rem); line-height: 1.2; margin-bottom: .75rem; letter-spacing: -.04em; }
+        [data-theme="light"] .achievement strong, [data-theme="light"] #skills .expertise-icon svg { color: #0369a1; }
+        @media (max-width: 767px) {
+            .achievement-list { grid-template-columns: minmax(0, 1fr); }
+            #skills h3 { font-size: 1.25rem; }
+        }
+
+        @media (max-width: 400px) {
+            #header-inner > a { font-size: 1rem; }
         }
 
         /* Theme toggle */
@@ -623,9 +651,9 @@
                             <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Senior Staff Applications Engineer · Taiwan</p>
                         </div>
                     </div>
-                    <ul class="space-y-3 text-slate-400 mt-6 text-base leading-relaxed" aria-label="Synopsys highlights">
-                            <li class="flex gap-3"><span class="text-sky-500" aria-hidden="true">▹</span><span>Develop process models for advanced semiconductor technology nodes, specializing in nanoscale etch and deposition simulation.</span></li>
-                            <li class="flex gap-3"><span class="text-sky-500" aria-hidden="true">▹</span><span>Combine machine learning, optimization, and Python/Tcl automation to accelerate model calibration and simulation workflows.</span></li>
+                    <ul class="achievement-list space-y-3 text-slate-400 mt-6 text-base leading-relaxed" aria-label="Synopsys highlights">
+                            <li class="achievement"><strong>nm-scale</strong><span>Realistic etch and deposition simulation for advanced semiconductor structures.</span></li>
+                            <li class="achievement"><strong>&gt;50%</strong><span>Reduction in model calibration time using machine learning, optimization, and Python/Tcl automation.</span></li>
                             <li class="flex gap-3"><span class="text-sky-500" aria-hidden="true">▹</span><span>Lead enterprise LLM solution deployment and translate strategic customer needs into new simulation capabilities with R&amp;D and product teams.</span></li>
                     </ul>
                     <button class="mt-6 inline-flex items-center gap-3 text-sm font-medium text-sky-400 focus-ring rounded-md px-2 py-1" aria-expanded="false" aria-controls="exp-details-1" id="exp-trigger-1" aria-label="Synopsys role history">
@@ -682,9 +710,9 @@
                             <p class="text-sky-500 font-mono text-sm font-bold tracking-wider">Senior Process Analytics Engineer · Taiwan</p>
                         </div>
                     </div>
-                    <ul class="space-y-3 text-slate-400 mt-6 text-base leading-relaxed" aria-label="Lam Research highlights">
-                            <li class="flex gap-3"><span class="text-sky-500" aria-hidden="true">▹</span><span>Reduced wafer-to-wafer etch depth variation by more than <strong>30%</strong> using spectral predictive models for process control.</span></li>
-                            <li class="flex gap-3"><span class="text-sky-500" aria-hidden="true">▹</span><span>Reduced non-uniformity by <strong>40–50%</strong> across multiple SADP applications through experimental design and statistical analysis.</span></li>
+                    <ul class="achievement-list space-y-3 text-slate-400 mt-6 text-base leading-relaxed" aria-label="Lam Research highlights">
+                            <li class="achievement"><strong>&gt;30%</strong><span>Reduction in wafer-to-wafer etch depth variation using spectral predictive models for process control.</span></li>
+                            <li class="achievement"><strong>40–50%</strong><span>Reduction in non-uniformity across multiple SADP applications through experimental design and statistical analysis.</span></li>
                             <li class="flex gap-3"><span class="text-sky-500" aria-hidden="true">▹</span><span>Helped secure <strong>three successive generations of critical process wins</strong>; received the Outstanding Employee award in 2016.</span></li>
                     </ul>
                     <button class="mt-6 inline-flex items-center gap-3 text-sm font-medium text-sky-400 focus-ring rounded-md px-2 py-1" aria-expanded="false" aria-controls="exp-details-2" id="exp-trigger-2" aria-label="Lam Research role history">
@@ -731,7 +759,7 @@
             </h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto" role="list" aria-label="Expertise areas">
                 <div class="col-span-2 row-span-2 glass-card p-10 rounded-[2.5rem] flex flex-col justify-between overflow-hidden relative group" role="listitem">
-                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity" aria-hidden="true">
+                    <div class="expertise-icon" aria-hidden="true">
                         <svg class="icon text-9xl text-sky-400" aria-hidden="true" focusable="false" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M184 0c30.9 0 56 25.1 56 56V456c0 30.9-25.1 56-56 56c-28.9 0-52.7-21.9-55.7-50.1c-5.2 1.4-10.7 2.1-16.3 2.1c-35.3 0-64-28.7-64-64c0-7.4 1.3-14.6 3.6-21.2C21.4 367.4 0 338.2 0 304c0-31.9 18.7-59.5 45.8-72.3C37.1 220.8 32 207 32 192c0-30.7 21.6-56.3 50.4-62.6C80.8 123.9 80 118 80 112c0-29.9 20.6-55.1 48.3-62.1C131.3 21.9 155.1 0 184 0zM328 0c28.9 0 52.6 21.9 55.7 49.9c27.8 7 48.3 32.1 48.3 62.1c0 6-.8 11.9-2.4 17.4c28.8 6.2 50.4 31.9 50.4 62.6c0 15-5.1 28.8-13.8 39.7C493.3 244.5 512 272.1 512 304c0 34.2-21.4 63.4-51.6 74.8c2.3 6.6 3.6 13.8 3.6 21.2c0 35.3-28.7 64-64 64c-5.6 0-11.1-.7-16.3-2.1c-3 28.2-26.8 50.1-55.7 50.1c-30.9 0-56-25.1-56-56V56c0-30.9 25.1-56 56-56z"/></svg>
                     </div>
                     <div>
@@ -749,7 +777,7 @@
                     </div>
                 </div>
                 <div class="col-span-2 row-span-2 glass-card p-10 rounded-[2.5rem] flex flex-col justify-between overflow-hidden relative group" role="listitem">
-                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity" aria-hidden="true">
+                    <div class="expertise-icon" aria-hidden="true">
                         <svg class="icon text-9xl text-green-400" aria-hidden="true" focusable="false" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M176 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64c-35.3 0-64 28.7-64 64H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64c0 35.3 28.7 64 64 64v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448c35.3 0 64-28.7 64-64h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V280h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V176h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448c0-35.3-28.7-64-64-64V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H280V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H176V24zM160 128H352c17.7 0 32 14.3 32 32V352c0 17.7-14.3 32-32 32H160c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32zm192 32H160V352H352V160z"/></svg>
                     </div>
                     <div>
@@ -764,7 +792,7 @@
                 </div>
                 <div class="col-span-2 glass-card p-8 rounded-[2rem] flex flex-col group hover:border-sky-500/30 transition-all" role="listitem">
                     <div class="flex items-center gap-6">
-                        <div class="w-16 h-16 bg-amber-500/10 rounded-2xl flex items-center justify-center border border-amber-500/20" aria-hidden="true">
+                        <div class="expertise-icon" aria-hidden="true">
                             <svg class="icon text-2xl text-amber-500" aria-hidden="true" focusable="false" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/></svg>
                         </div>
                         <div>
@@ -780,7 +808,7 @@
                 </div>
                 <div class="col-span-2 glass-card p-8 rounded-[2rem] flex flex-col group hover:border-sky-500/30 transition-all" role="listitem">
                     <div class="flex items-center gap-6">
-                        <div class="w-16 h-16 bg-sky-500/10 rounded-2xl flex items-center justify-center border border-sky-500/20" aria-hidden="true">
+                        <div class="expertise-icon" aria-hidden="true">
                             <svg class="icon text-2xl text-sky-400" aria-hidden="true" focusable="false" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg"><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg>
                         </div>
                         <div>
